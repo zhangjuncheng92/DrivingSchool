@@ -1,34 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
-    android:gravity="bottom"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon" />
-
-    <TextView
+    <RelativeLayout
+        android:id="@+id/personal_main_frg_rl_detail"
+        style="@style/comm_layout_four"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Android Studio"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/personal_main_frg_sd_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:roundedCornerRadius="@dimen/layout_margin_lss"
+            fresco:roundingBorderColor="@color/comm_circle_gary"
+            fresco:roundingBorderWidth="1dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/layout_margin_ml"
+            android:layout_toRightOf="@+id/personal_main_frg_sd_icon"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/personal_main_frg_tv_name"
+                style="@style/comm_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/personal_main_frg_tv_organization"
+                style="@style/comm_body_gary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/personal_main_frg_tv_name"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/personal_main_frg_tv_role"
+                style="@style/comm_body_gary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/personal_main_frg_tv_organization" />
+
+            <TextView
+                android:id="@+id/personal_main_frg_tv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/comm_label_pink"
+                android:singleLine="true"
+                android:text="二维码"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

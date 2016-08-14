@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <gradient android:endColor="@color/comm_white_grey" android:startColor="@color/comm_white_grey" />
+
+            <corners android:radius="@dimen/layout_padding_min" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient android:endColor="@color/comm_pink" android:startColor="@color/comm_pink" />
+            <corners android:radius="@dimen/layout_padding_min" />
+        </shape>
+    </item>
+
+</selector>

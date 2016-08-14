@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="comm_layout_one">
+        <item name="android:background">@color/comm_white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/layout_padding_ml</item>
+        <item name="android:paddingLeft">@dimen/layout_margin_h</item>
+        <item name="android:paddingRight">@dimen/layout_margin_h</item>
+        <item name="android:paddingTop">@dimen/layout_padding_ml</item>
+    </style>
+
+    <style name="comm_layout_two">
+        <item name="android:background">@color/comm_white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/layout_padding_l</item>
+        <item name="android:paddingLeft">@dimen/layout_margin_ml</item>
+        <item name="android:paddingRight">@dimen/layout_margin_ml</item>
+        <item name="android:paddingTop">@dimen/layout_padding_l</item>
+    </style>
+
+    <style name="comm_layout_three">
+        <item name="android:background">@drawable/comm_white_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/layout_padding_l</item>
+        <item name="android:paddingLeft">@dimen/layout_margin_m</item>
+        <item name="android:paddingRight">@dimen/layout_margin_m</item>
+        <item name="android:paddingTop">@dimen/layout_padding_l</item>
+    </style>
+
+    <style name="comm_layout_four">
+        <item name="android:background">@drawable/comm_white_frame_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/layout_padding_ml</item>
+        <item name="android:paddingLeft">@dimen/layout_margin_m</item>
+        <item name="android:paddingRight">@dimen/layout_margin_m</item>
+        <item name="android:paddingTop">@dimen/layout_padding_ml</item>
+    </style>
+
+    <style name="comm_layout_card">
+        <item name="android:background">@drawable/comm_card_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/layout_padding_ml</item>
+        <item name="android:paddingLeft">@dimen/layout_margin_m</item>
+        <item name="android:paddingRight">@dimen/layout_margin_m</item>
+        <item name="android:paddingTop">@dimen/layout_padding_ml</item>
+    </style>
+</resources>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="comm_title">
+        <item name="android:textColor">@color/comm_black</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="comm_title_white">
+        <item name="android:textColor">@color/comm_white</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="comm_title_orange">
+        <item name="android:textColor">@color/comm_orange</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="comm_title_blue">
+        <item name="android:textColor">@color/comm_blue</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="comm_title_gary">
+        <item name="android:textColor">@color/comm_gary</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="comm_subtitle_white">
+        <item name="android:textColor">@color/comm_white</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+    </style>
+
+    <style name="comm_subtitle_pink">
+        <item name="android:textColor">@color/comm_pink</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+    </style>
+
+    <style name="comm_subtitle_orange">
+        <item name="android:textColor">@color/comm_orange</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+    </style>
+
+    <style name="comm_subtitle_gary">
+        <item name="android:textColor">@color/comm_gary</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+    </style>
+
+    <style name="comm_subtitle_blue">
+        <item name="android:textColor">@color/comm_blue</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+    </style>
+
+    <style name="comm_subtitle_black">
+        <item name="android:textColor">@color/comm_black</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+    </style>
+
+
+    <style name="comm_body_pink">
+        <item name="android:textColor">@color/comm_pink</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="comm_body_gary">
+        <item name="android:textColor">@color/comm_gary</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="comm_body_white">
+        <item name="android:textColor">@color/comm_white</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="comm_body_black">
+        <item name="android:textColor">@color/comm_black</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="comm_body_orange">
+        <item name="android:textColor">@color/comm_orange</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="comm_body_blue">
+        <item name="android:textColor">@color/comm_blue</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+
+    <style name="comm_ten_blue">
+        <item name="android:textColor">@color/comm_blue</item>
+        <item name="android:textSize">@dimen/text_size_ten</item>
+    </style>
+
+    <style name="comm_ten_gary">
+        <item name="android:textColor">@color/comm_gary</item>
+        <item name="android:textSize">@dimen/text_size_ten</item>
+    </style>
+
+
+    <style name="comm_main_two">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:paddingTop">@dimen/layout_padding_ls</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+    </style>
+
+    <style name="comm_title_one" parent="comm_title_blue"> <!-- 普通标题风格 -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_margin">@dimen/layout_margin_l</item>
+        <item name="android:drawablePadding">@dimen/layout_padding_l</item>
+    </style>
+
+    <style name="personal_detail_title"> <!-- 普通标题风格2 -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@dimen/layout_padding_l</item>
+    </style>
+</resources>

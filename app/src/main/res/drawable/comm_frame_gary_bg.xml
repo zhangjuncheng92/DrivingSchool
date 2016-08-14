@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/transparent" android:startColor="@color/transparent" />
+
+            <corners android:radius="@dimen/layout_margin_ls" />
+            <padding android:bottom="@dimen/layout_margin_ls" android:left="@dimen/layout_padding_m" android:right="@dimen/layout_padding_m" android:top="@dimen/layout_margin_ls" />
+
+            <stroke android:width="0.5dp" android:color="@color/registration_pink" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/comm_white_bg_press" android:startColor="@color/comm_white_bg_press" />
+
+            <corners android:radius="@dimen/layout_margin_ls" />
+            <padding android:bottom="@dimen/layout_margin_ls" android:left="@dimen/layout_padding_m" android:right="@dimen/layout_padding_m" android:top="@dimen/layout_margin_ls" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/transparent" android:startColor="@color/transparent" />
+
+            <corners android:radius="@dimen/layout_margin_ls" />
+            <padding android:bottom="@dimen/layout_margin_ls" android:left="@dimen/layout_padding_m" android:right="@dimen/layout_padding_m" android:top="@dimen/layout_margin_ls" />
+
+            <stroke android:width="0.5dp" android:color="@color/comm_gary" />
+        </shape>
+    </item>
+
+</selector>

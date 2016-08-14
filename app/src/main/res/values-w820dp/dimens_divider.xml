@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="comm_divider_line">0.5dp</dimen>
+    <dimen name="comm_divider_line_1">1dp</dimen>
+    <dimen name="comm_divider_one">@dimen/layout_margin_l</dimen>
+</resources>

@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#f2f2f2</color>
+    <color name="colorPrimaryDark">@color/comm_black</color>
+    <color name="colorAccent">#f2f2f2</color>
+
+    <color name="comm_divider">@color/comm_white_gary</color>
+    <color name="comm_divider_gary">@color/comm_gary</color>
+    <color name="comm_divider_trans">@color/transparent</color>
+    <color name="comm_circle_gary">@color/comm_white_gary</color>
+    <color name="comm_white_bg_press">@color/comm_white_gary</color>
+    <color name="comm_white_bg_normal">@color/comm_white</color>
+    <color name="registration_pink">@color/comm_pink</color>
+
+
+    <!--二维码扫描-->
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
 </resources>
