@@ -1,0 +1,7 @@
+<resources>
+    <!-- Error View -->
+    <string name="error_view_click_to_refresh">网络缓慢，请求超时</string>
+    <string name="error_view_no_data">暂无内容</string>
+    <string name="error_view_loading">加载中</string>
+    <string name="error_view_network_error_click_to_refresh">暂无网络</string>
+</resources>

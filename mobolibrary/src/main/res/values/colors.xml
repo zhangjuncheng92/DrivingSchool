@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="google_red">#d62d20</color>
+    <color name="google_blue">#0057e7</color>
+    <color name="google_green">#008744</color>
+    <color name="google_yellow">#ec6806</color>
+
+    <color name="gray">#ff9a9b9c</color>
+    <color name="Black">#ff000000</color>
+    <color name="Orange">#ff8B6914</color>
+    <color name="Gray">#ff515151</color>
+    <color name="DarkGray">#ff404040</color>
+    <color name="VeryGray">#ff333333</color>
+    <color name="DeepGray">#ff212121</color>
+    <color name="LightOrange">#ff8B7355</color>
+    <color name="LightWhite">#ffC6E2FF</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="comm_white">#ffffffff</color>
+    <color name="comm_white_gary">#e7e9e6</color>
+    <color name="comm_white_grey">#f5f6f5</color>
+    <color name="comm_black">#040d16</color>
+    <color name="comm_blue">#59cbd9</color>
+    <color name="comm_pink">#fc8473</color>
+    <color name="comm_tarmac">#72cd94</color>
+    <color name="comm_green">#3ed8c0</color>
+    <color name="comm_sky_blue">#83d3f4</color>
+    <color name="comm_red">#ff485c</color>
+    <color name="comm_orange">#ff7e00</color>
+    <color name="comm_gary">#878787</color>
+
+    <color name="windowBackground">@color/comm_white_grey</color>
+    <color name="main_title">@color/comm_blue</color>
+
+</resources>
