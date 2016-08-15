@@ -141,4 +141,15 @@
         <item name="android:layout_height">35dp</item>
         <item name="android:background">@drawable/comm_select_orange</item>
     </style>
+
+    <!-- 我的账户-->
+    <style name="comm_select_style2">
+        <item name="android:textColor">@color/comm_black</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:layout_marginLeft">@dimen/layout_padding_xxxh</item>
+        <item name="android:layout_marginRight">@dimen/layout_padding_xxxh</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/comm_select_grey</item>
+    </style>
 </resources>

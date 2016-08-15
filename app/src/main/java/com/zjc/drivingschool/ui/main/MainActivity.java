@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.main_action_account) {
-            // Handle the camera action
+            Intent intent = new Intent(MainActivity.this, AccountManagerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.main_action_collect) {
 
         } else if (id == R.id.main_action_history) {

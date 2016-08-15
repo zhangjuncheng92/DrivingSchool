@@ -24,6 +24,19 @@
 
     <!--我的钱包-->
     <string name="title_account">我的钱包</string>
+    <string name="account_surplus">账户余额</string>
+    <string name="account_cost_record">消费记录</string>
+    <string name="account_recharge_title">账户充值</string>
+    <string name="account_recharge_record">充值记录</string>
+    <string name="account_recharge">充值</string>
+    <!-- 提现-->
+    <string name="account_withdraw">提现</string>
+    <string name="account_withdraw_record">提现记录</string>
+    <string name="account_can_withdraw">可提现金额</string>
+    <string name="account_withdraw_money">提现金额</string>
+    <string name="account_withdraw_unit">金额（元）</string>
+    <string name="account_withdraw_hint">请输入提现金额</string>
+    <string name="account_withdraw_hint2">提现至您最近用于支付或充值的资金账户</string>
 
     <!--我的收藏-->
     <string name="title_collect">我的收藏</string>

@@ -69,6 +69,13 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--我的账户-->
+        <activity
+            android:name=".ui.account.AccountManagerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
+
+
 
         <!--百度地图-->
         <meta-data
