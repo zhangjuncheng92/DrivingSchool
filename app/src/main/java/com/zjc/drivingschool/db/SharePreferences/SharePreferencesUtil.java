@@ -46,15 +46,14 @@ public class SharePreferencesUtil {
         Util.removePreferences(getApplication(), "password");
     }
 
-    public void saveUserName(String phone) {
-        Util.writePreferences(getApplication(), "userName", phone);
+    public void savePhone(String phone) {
+        Util.writePreferences(getApplication(), "phone", phone);
     }
 
     public String readPhone() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplication());
-        return sp.getString("userName", "");
+        return sp.getString("phone", "");
     }
-
     public void setLogin(boolean isLogin) {
         Util.writePreferences(getApplication(), "login", isLogin);
     }

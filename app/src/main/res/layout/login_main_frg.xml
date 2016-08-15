@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_margin_xh"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/setting_about_good"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_launcher" />
+        </RelativeLayout>
+
+        <LinearLayout
+            style="@style/comm_layout_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="-1dp"
+            android:layout_marginTop="@dimen/layout_margin_l"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/login_main_frg_edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/icon_login_phone"
+                android:drawablePadding="@dimen/layout_padding_ml"
+                android:hint="@string/login_username_hint"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:singleLine="true" />
+
+            <View
+                style="@style/line_horStyle"
+                android:layout_marginBottom="@dimen/layout_margin_l"
+                android:layout_marginTop="@dimen/layout_margin_l" />
+
+            <EditText
+                android:id="@+id/login_main_frg_edt_pawd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/icon_pawd"
+                android:drawablePadding="@dimen/layout_padding_ml"
+                android:hint="@string/login_password_hint"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/login_main_frg_tv_commit"
+            style="@style/comm_select_style"
+            android:layout_marginLeft="@dimen/layout_margin_m"
+            android:layout_marginRight="@dimen/layout_margin_m"
+            android:layout_marginTop="@dimen/layout_margin_h"
+            android:gravity="center"
+            android:text="登录" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="@dimen/layout_margin_m"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/login_main_frg_tv_register"
+            style="@style/comm_title_orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册新用户" />
+
+        <View
+            style="@style/line_verStyle"
+            android:layout_marginBottom="@dimen/layout_margin_lss"
+            android:layout_marginLeft="@dimen/layout_margin_l"
+            android:layout_marginRight="@dimen/layout_margin_l"
+            android:layout_marginTop="@dimen/layout_margin_lss" />
+
+        <TextView
+            android:id="@+id/login_main_frg_tv_forget"
+            style="@style/comm_title_orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码" />
+    </LinearLayout>
+
+</FrameLayout>

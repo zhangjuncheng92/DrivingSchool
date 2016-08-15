@@ -79,12 +79,7 @@ public class HealingMapFragment extends ZBaseFragment implements View.OnClickLis
     /**
      * 地图初始缩放等级
      */
-    public static float MAP_ZOOM = 13;
-    /**
-     * 地图具体显示资源的缩放等级
-     */
-    public static float MAP_ZOOM_HOSPITAL = 14;
-    public static float MAP_ZOOM_BASIC = 16;
+    public static float MAP_ZOOM = 16;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -183,7 +178,6 @@ public class HealingMapFragment extends ZBaseFragment implements View.OnClickLis
             setLocationIcon(location);
             upDateMapByLatOfTarget(new LatLng(location.getLatitude(), location.getLongitude()));
             getMedicalResourceOfCity();
-            Util.showCustomMsg(location.getCity());
         }
 
         public void onReceivePoi(BDLocation poiLocation) {

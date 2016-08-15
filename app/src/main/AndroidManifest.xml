@@ -63,6 +63,12 @@
             </intent-filter>
         </activity>
 
+        <!--登录控制器-->
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
+
 
         <!--百度地图-->
         <meta-data

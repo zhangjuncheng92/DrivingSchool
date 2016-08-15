@@ -1,0 +1,114 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_xxxxh"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/comm_layout_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="-1dp"
+            android:layout_marginTop="@dimen/layout_margin_l"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/login_forget_frg_edtphone"
+                style="@style/comm_subtitle_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/icon_login_phone"
+                android:drawablePadding="@dimen/layout_padding_ml"
+                android:hint="手机号"
+                android:inputType="phone"
+                android:maxLength="11" />
+
+            <View
+                style="@style/line_horStyle"
+                android:layout_marginBottom="@dimen/layout_margin_l"
+                android:layout_marginTop="@dimen/layout_margin_l" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/login_forget_frg_edtcode"
+                    style="@style/comm_subtitle_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/icon_code"
+                    android:drawablePadding="@dimen/layout_padding_ml"
+                    android:hint="@string/login_code_hint"
+                    android:inputType="number"
+                    android:maxLength="6" />
+
+                <TextView
+                    android:id="@+id/login_forget_frg_tvcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/comm_frame_pink_bg"
+                    android:text="@string/txt_getMsgCode_validate"
+                    android:textColor="@color/registration_pink" />
+            </LinearLayout>
+
+            <View
+                style="@style/line_horStyle"
+                android:layout_marginBottom="@dimen/layout_margin_l"
+                android:layout_marginTop="@dimen/layout_margin_l" />
+
+            <EditText
+                android:id="@+id/login_forget_frg_edtone"
+                style="@style/comm_subtitle_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/icon_pawd"
+                android:drawablePadding="@dimen/layout_padding_ml"
+                android:hint="@string/login_password_hint"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:maxLength="18"
+                android:singleLine="true" />
+
+            <View
+                style="@style/line_horStyle"
+                android:layout_marginBottom="@dimen/layout_margin_l"
+                android:layout_marginTop="@dimen/layout_margin_l" />
+
+            <EditText
+                android:id="@+id/login_forget_frg_edttwo"
+                style="@style/comm_subtitle_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/icon_confirm_pawd"
+                android:drawablePadding="@dimen/layout_padding_ml"
+                android:hint="@string/login_confirm_pwd"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:maxLength="18"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/login_forget_frg_tvcommit"
+            style="@style/comm_select_style"
+            android:layout_margin="@dimen/layout_margin_m"
+            android:gravity="center"
+            android:text="确定" />
+    </LinearLayout>
+</ScrollView>
+
+
+
+
