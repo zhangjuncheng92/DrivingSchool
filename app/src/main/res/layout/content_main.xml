@@ -37,6 +37,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/main_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_main_tab_bg"
@@ -52,6 +53,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/main_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_main_tab_bg"
@@ -67,6 +69,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/main_three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_main_tab_bg"
@@ -79,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/layout_margin_l"
+        android:layout_marginBottom="@dimen/layout_margin_ml"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -90,9 +93,10 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/comm_subtitle_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="预约练车" />
+                android:text="@string/title_apply" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,9 +107,10 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/comm_subtitle_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="报名学车" />
+                android:text="@string/title_learn" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,9 +121,10 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/comm_subtitle_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="预约考试" />
+                android:text="@string/title_examination" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

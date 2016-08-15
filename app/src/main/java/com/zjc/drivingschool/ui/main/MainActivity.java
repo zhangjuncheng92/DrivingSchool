@@ -11,38 +11,60 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
+import com.zjc.drivingschool.ui.apply.ApplyActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar toolbar;
     private DrawerLayout drawer;
+    private ImageView imgOne;
+    private ImageView imgTwo;
+    private ImageView imgThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        //设置标题
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        initToolBar();
+        initNavigation();
+        initView();
         initMap();
     }
 
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //设置标题
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    private void initNavigation() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initView() {
+        imgOne = (ImageView) findViewById(R.id.main_one);
+        imgTwo = (ImageView) findViewById(R.id.main_two);
+        imgThree = (ImageView) findViewById(R.id.main_three);
+
+        imgOne.setOnClickListener(this);
+        imgTwo.setOnClickListener(this);
+        imgThree.setOnClickListener(this);
+    }
+
+
     private void initMap() {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        HealingMapFragment healingMapFragment = new HealingMapFragment();
-        trans.add(R.id.main_map, healingMapFragment, "healingMapFragment").show(healingMapFragment).commit();
+        MainMapFragment mainMapFragment = new MainMapFragment();
+        trans.add(R.id.main_map, mainMapFragment, "mainMapFragment").show(mainMapFragment).commit();
     }
 
     @Override
@@ -103,5 +125,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         SharePreferencesUtil.getInstance().setLogin(false);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.main_one) {
+            //报名学车
+            Intent intent = new Intent(MainActivity.this, ApplyActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.main_two) {
+            //预约学车
+
+        } else if (id == R.id.main_three) {
+            //预约考试
+
+        }
     }
 }

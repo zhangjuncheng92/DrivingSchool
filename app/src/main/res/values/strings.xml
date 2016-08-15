@@ -20,8 +20,38 @@
     <string name="password">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="login_code_hint">请输入验证码</string>
 
-    <!--个人中心-->
+    <!--报名学车-->
+    <string name="title_apply">报名学车</string>
+    <string name="personal_title">我</string>
+    <string name="personal_detail_title">个人信息</string>
+    <string name="personal_detail_sex">性别</string>
+    <string name="personal_detail_name">姓名</string>
+    <string name="personal_detail_age">年龄</string>
+    <string name="personal_detail_phone">联系电话</string>
+    <string name="personal_detail_organization">机构</string>
+    <string name="personal_detail_address">机构地址</string>
+    <string name="personal_detail_appellation">头衔</string>
+    <string name="hierarchical_resident_create_birthday">出生日期</string>
+    <string name="hierarchical_resident_create_hint_name">请输入患者姓名</string>
+    <string name="hierarchical_resident_create_hint_card">身份证可自动获取性别，年龄</string>
+    <string name="hierarchical_resident_create_hint_sex">请选择患者性别</string>
+    <string name="hierarchical_resident_create_hint_phone">用于联系患者</string>
+    <string name="hierarchical_resident_create_hint_birthday">请选择出生日期</string>
+    <string name="hierarchical_resident_create_hint_medical">请输入患者的医保号</string>
+    <string name="hierarchical_resident_create_hint_patient">请输入患者的就诊卡号</string>
+    <string name="hierarchical_resident_create_hint_place">请输入患者的籍贯</string>
+    <string name="hierarchical_resident_create_hint_community">请选择所属社区</string>
+    <string name="hierarchical_resident_create_hint_address">请输入患者家庭住址</string>
+    <string name="login_register_age_small">年龄格式不正确，请重新选择</string>
 
+    <!--预约学车-->
+    <string name="title_learn">预约学车</string>
+
+    <!--预约考试-->
+    <string name="title_examination">预约考试</string>
+
+
+    <!--个人中心-->
     <!--我的钱包-->
     <string name="title_account">我的钱包</string>
     <string name="account_surplus">账户余额</string>

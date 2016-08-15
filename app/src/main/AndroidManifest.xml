@@ -74,7 +74,11 @@
             android:name=".ui.account.AccountManagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
-
+        <!--报名学车-->
+        <activity
+            android:name=".ui.apply.ApplyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
 
 
         <!--百度地图-->

@@ -6,6 +6,7 @@ import com.mobo.mobolibrary.util.Util;
 import com.mobo.mobolibrary.util.UtilPhoto;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
+import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.utils.Constants;
 
 import java.io.File;
@@ -227,4 +228,12 @@ public class ApiHttpClient {
         HttpUtilsAsync.post(Constants.BASE_URL + "account/getMyAccount", params, asyncHttpResponseHandler);
     }
 
+    /**
+     * 1.9.3患者信息保存
+     * http://localhost:8080/hms/appservices/patient/save
+     */
+    public void createResident(UserInfo userInfo, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        RequestParams params = new RequestParams();
+        HttpUtilsAsync.post(Constants.BASE_URL + "patient/save", params, asyncHttpResponseHandler);
+    }
 }

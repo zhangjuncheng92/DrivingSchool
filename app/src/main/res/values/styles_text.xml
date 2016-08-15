@@ -152,4 +152,8 @@
         <item name="android:layout_height">35dp</item>
         <item name="android:background">@drawable/comm_select_grey</item>
     </style>
+
+    <style name="referral_info_status_txt" parent="comm_subtitle_black">
+        <item name="android:textColor">@color/referral_info_status_txt</item>
+    </style>
 </resources>

@@ -52,11 +52,11 @@ import de.greenrobot.event.EventBus;
 
 /**
  * @author Z
- * @Filename HealingMapFragment.java
+ * @Filename MainMapFragment.java
  * @Date 2015.10.20
  * @description 看病抓药-医疗资源地图显示界面
  */
-public class HealingMapFragment extends ZBaseFragment implements View.OnClickListener, OnGetGeoCoderResultListener, BaiduMap.OnMapTouchListener, BaiduMap.OnMapStatusChangeListener {
+public class MainMapFragment extends ZBaseFragment implements View.OnClickListener, OnGetGeoCoderResultListener, BaiduMap.OnMapTouchListener, BaiduMap.OnMapStatusChangeListener {
     private MapView mMapView;
     private BaiduMap mBaiDuMap;
 

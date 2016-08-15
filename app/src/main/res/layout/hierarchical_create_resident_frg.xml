@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout style="@style/comm_layout_two">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/personal_detail_title"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_name" />
+
+            <com.zjc.drivingschool.widget.ContainsEmojiEditText
+                android:id="@+id/hierarchical_create_resident_frg_edt_name"
+                style="@style/referral_info_status_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/layout_margin_l"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@color/transparent"
+                android:gravity="right"
+                android:hint="@string/hierarchical_resident_create_hint_name"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_ml" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/comm_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/layout_padding_ml"
+            android:paddingRight="@dimen/layout_padding_m">
+
+            <TextView
+                android:id="@+id/tv_sex"
+                style="@style/personal_detail_title"
+                android:drawableLeft="@drawable/icon_sex"
+                android:text="@string/personal_detail_sex" />
+
+            <RelativeLayout
+                android:id="@+id/login_main_frg_rl_hospital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/hierarchical_create_resident_frg_sp_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/hierarchical_frg_sp_type_down"
+                    android:background="@color/transparent"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/hierarchical_frg_sp_type_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/layout_margin_l"
+                    android:src="@drawable/icon_arrow_down" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_ml" />
+
+        <RelativeLayout
+            android:id="@+id/friends_relay_age"
+            style="@style/comm_layout_two">
+
+            <TextView
+                android:id="@+id/tv_age"
+                style="@style/personal_detail_title"
+                android:drawableLeft="@drawable/icon_age"
+                android:text="@string/personal_detail_age" />
+
+            <com.zjc.drivingschool.widget.ContainsEmojiEditText
+                android:id="@+id/hierarchical_create_resident_frg_edt_age"
+                style="@style/referral_info_status_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/layout_margin_l"
+                android:layout_toLeftOf="@+id/tv_age_unit"
+                android:layout_toRightOf="@+id/tv_age"
+                android:background="@color/transparent"
+                android:gravity="right"
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/tv_age_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="岁" />
+        </RelativeLayout>
+
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_ml" />
+
+
+        <RelativeLayout style="@style/comm_layout_two">
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/personal_detail_title"
+                android:drawableLeft="@drawable/icon_login_phone"
+                android:text="@string/personal_detail_phone" />
+
+            <com.zjc.drivingschool.widget.ContainsEmojiEditText
+                android:id="@+id/hierarchical_create_resident_frg_edt_phone"
+                style="@style/referral_info_status_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/layout_margin_l"
+                android:layout_toRightOf="@+id/tv_phone"
+                android:background="@color/transparent"
+                android:gravity="right"
+                android:hint="@string/hierarchical_resident_create_hint_phone"
+                android:inputType="phone"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <View style="@style/line_horStyle" />
+    </LinearLayout>
+</ScrollView>
