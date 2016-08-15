@@ -3,34 +3,38 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/main_action_account"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="@string/title_account" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/main_action_collect"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="@string/title_collect" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/main_action_history"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="@string/title_history" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/main_action_notice"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="@string/title_notice" />
+        <item
+            android:id="@+id/main_action_more"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/title_more" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

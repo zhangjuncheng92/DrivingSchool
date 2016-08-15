@@ -18,6 +18,7 @@ import com.zjc.drivingschool.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //设置标题
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void verifyIsLogin() {
         if (SharePreferencesUtil.getInstance().isLogin()) {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //跳转到登录
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    SharePreferencesUtil.getInstance().setLogin(true);
                 }
             });
         }
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -86,21 +87,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.main_action_account) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.main_action_collect) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.main_action_history) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.main_action_notice) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.main_action_more) {
 
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         SharePreferencesUtil.getInstance().setLogin(false);
         return true;
