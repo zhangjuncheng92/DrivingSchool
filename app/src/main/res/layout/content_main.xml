@@ -7,7 +7,15 @@
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
-        android:id="@+id/lin"
+        android:id="@+id/main_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_bottom"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/main_bottom"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:layout_alignParentBottom="true"
@@ -17,7 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lin"
+        android:layout_above="@+id/main_bottom"
         android:layout_marginBottom="-36dp"
         android:orientation="horizontal">
 

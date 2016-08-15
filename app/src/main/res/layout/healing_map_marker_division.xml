@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/healing_marker_division_num"
+        style="@style/comm_subtitle_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_pink_background"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/healing_marker_division_name"
+        style="@style/regist_hospital_list_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/regist_hospital_list_label_pink" />
+</LinearLayout>

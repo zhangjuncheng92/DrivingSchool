@@ -1,6 +1,16 @@
 apply plugin: 'com.android.application'
 
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
 android {
+    signingConfigs {
+        config {
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
@@ -13,8 +23,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
 }

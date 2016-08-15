@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.app.MApp;
+import com.zjc.drivingschool.db.model.City;
 import com.zjc.drivingschool.db.model.NotificationTypeModel;
 import com.zjc.drivingschool.db.model.UserInfo;
 
@@ -201,5 +202,30 @@ public class SharePreferencesUtil {
     public void setHospitalId(int hospitalId) {
         Util.writePreferences(getApplication(), "hospitalId", hospitalId);
     }
+
+
+    public City readCity() {
+        City city = new City();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        String string2obj = sp.getString("city", "");
+        if (!TextUtils.isEmpty(string2obj)) {
+            try {
+                city = (City) SerializableUtil.str2Obj(string2obj);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return city;
+    }
+
+    public void saveCity(City city) {
+        try {
+            String obj2Str = SerializableUtil.obj2Str(city);
+            Util.writePreferences(getApplication(), "city", obj2Str);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

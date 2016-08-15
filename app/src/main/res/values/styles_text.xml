@@ -121,4 +121,13 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">@dimen/layout_padding_l</item>
     </style>
+
+    <style name="regist_hospital_list_label">
+        <item name="android:textColor">@color/registration_hospital_open</item>
+        <item name="android:textSize">@dimen/text_size_ten</item>
+        <item name="android:paddingBottom">@dimen/layout_padding_lss</item>
+        <item name="android:paddingLeft">@dimen/layout_padding_ls</item>
+        <item name="android:paddingRight">@dimen/layout_padding_ls</item>
+        <item name="android:paddingTop">@dimen/layout_padding_lss</item>
+    </style>
 </resources>

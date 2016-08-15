@@ -1,19 +1,20 @@
 package com.zjc.drivingschool.app;
 
 import android.os.Environment;
-import android.provider.SyncStateContract;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
 import com.mobo.mobolibrary.app.BaseApplication;
 import com.mobo.mobolibrary.logs.Logs;
-import com.mobo.mobolibrary.util.image.ImageLoader;
 import com.zjc.drivingschool.api.HttpUtilsAsync;
+import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.City;
+import com.zjc.drivingschool.db.model.LatLngLocal;
 import com.zjc.drivingschool.jpush.JPushUtil;
 import com.zjc.drivingschool.utils.Constants;
-import com.zjc.drivingschool.utils.ImageOptions;
 
 import java.io.File;
 
@@ -35,7 +36,11 @@ public class MApp extends BaseApplication {
         initFresco();
         initUniversalImage();
         JPushUtil.initJPush();
-        //        SDKInitializer.initialize(this);
+        SDKInitializer.initialize(this);
+
+        if (SharePreferencesUtil.getInstance().readCity().getLatLngLocal() == null) {
+            SharePreferencesUtil.getInstance().saveCity(new City("1", "武汉市", new LatLngLocal(30.543622, 114.433890)));
+        }
     }
 
     private void initUniversalImage() {
