@@ -1,7 +1,9 @@
 package com.zjc.drivingschool.api;
 
+import android.content.ContentValues;
 import android.content.Context;
 
+import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
@@ -14,10 +16,12 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +42,7 @@ public class HttpUtilsAsync {
     private static AsyncHttpClient client;
     private static int timeout = 20 * 1000;
     private static int retry = 1;
+    private static String CONTENT_TYPE= "application/json";
 
     static {
         client = new AsyncHttpClient();
@@ -70,13 +75,14 @@ public class HttpUtilsAsync {
 
     /**
      * Perform a HTTP GET request with {@link RequestParams}
-     *公共API的的请求方式
+     * 公共API的的请求方式
+     *
      * @param url
      * @param params
      * @param responseHandler
      */
     public static void getEducationHealth(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.addHeader("apikey","ab34223db3982366975167f31126d3a3");
+        client.addHeader("apikey", "ab34223db3982366975167f31126d3a3");
         client.getHttpClient();
         client.setTimeout(timeout);
         client.get(getAbsoluteUrl(url), params, responseHandler);
@@ -91,11 +97,26 @@ public class HttpUtilsAsync {
      */
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.setMaxRetriesAndTimeout(retry, timeout);
-        if (SharePreferencesUtil.getInstance().isLogin()) {
-            params.put("token", SharePreferencesUtil.getInstance().readUser().getToken());
-        }
         client.post(getAbsoluteUrl(url), params, responseHandler);
         Logs.i("HttpUtilsAsync", url.toString() + "?" + params.toString());
+    }
+
+    /**
+     * Perform a HTTP POST request with {@link RequestParams}
+     *
+     * @param url
+     * @param params
+     * @param responseHandler
+     */
+    public static void post(String url, JsonObject params, AsyncHttpResponseHandler responseHandler) {
+        client.setMaxRetriesAndTimeout(retry, timeout);
+        try {
+            StringEntity stringEntity = new StringEntity(params.toString());
+            client.post(MApp.getInstance().getApplicationContext(), url, stringEntity, CONTENT_TYPE, responseHandler);
+            Logs.i("HttpUtilsAsync", url.toString() + "?" + params.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -107,10 +128,7 @@ public class HttpUtilsAsync {
      * @param responseHandler
      */
     public static void postInfinite(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.setTimeout(90*1000);
-        if (SharePreferencesUtil.getInstance().isLogin()) {
-            params.put("token", SharePreferencesUtil.getInstance().readUser().getToken());
-        }
+        client.setTimeout(90 * 1000);
         client.post(getAbsoluteUrl(url), params, responseHandler);
         Logs.i("HttpUtilsAsync", url.toString() + "?" + params.toString());
     }

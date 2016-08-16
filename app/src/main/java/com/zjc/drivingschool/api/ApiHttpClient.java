@@ -1,5 +1,7 @@
 package com.zjc.drivingschool.api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mobo.mobolibrary.util.Util;
@@ -8,6 +10,8 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
 import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.utils.Constants;
+
+import org.apache.http.entity.StringEntity;
 
 import java.io.File;
 
@@ -39,10 +43,11 @@ public class ApiHttpClient {
      * 调用示例：http://localhost:8080/estate/guardservices/securityGuard/login?phone=13476131467&password=888888
      */
     public void login(String phone, String password, AsyncHttpResponseHandler asyncHttpResponseHandler) {
-        RequestParams params = new RequestParams(); // 绑定参数
-        params.put("phone", phone);
-        params.put("password", Util.encrypt(password));
-        HttpUtilsAsync.post(Constants.BASE_URL + "userinfo/login", params, asyncHttpResponseHandler);
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("username", phone);
+        postRequest.addProperty("password", password);
+
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/login", postRequest, asyncHttpResponseHandler);
     }
 
     /**
@@ -52,10 +57,10 @@ public class ApiHttpClient {
      * 调用示例：http://localhost:8080/estate/services/userinfo/getVerificationCode?phone=13026313632&type=1
      */
     public void getVerificationCode(String phone, int type, AsyncHttpResponseHandler asyncHttpResponseHandler) {
-        RequestParams params = new RequestParams();
-        params.put("phone", phone);
-        params.put("type", type);
-        HttpUtilsAsync.post(Constants.BASE_URL + "userinfo/getVerificationCode", params, asyncHttpResponseHandler);
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("phone", phone);
+        postRequest.addProperty("type", type);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/regcode", postRequest, asyncHttpResponseHandler);
     }
 
 
@@ -65,12 +70,11 @@ public class ApiHttpClient {
      * 参数：phone(手机号)，password(密码)
      * 调用示例：http://localhost:8080/estate/services/userinfo/userRegister?phone=13026313632&password=888888
      */
-    public void userRegister(int registerType, String phone, String password, AsyncHttpResponseHandler asyncHttpResponseHandler) {
-        RequestParams params = new RequestParams();
-        params.put("phone", phone);
-        params.put("registerType", registerType);
-        params.put("password", Util.encrypt(password));
-        HttpUtilsAsync.post(Constants.BASE_URL + "userinfo/userRegister", params, asyncHttpResponseHandler);
+    public void userRegister(String phone, String valcode, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("phone", phone);
+        postRequest.addProperty("valcode", valcode);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/register", postRequest, asyncHttpResponseHandler);
     }
 
     /**
@@ -207,7 +211,7 @@ public class ApiHttpClient {
         RequestParams params = new RequestParams();
         params.put("zoom", searchHospitalModel.getZoom());
         if (SharePreferencesUtil.getInstance().isLogin()) {
-            params.put("userId", SharePreferencesUtil.getInstance().readUser().getId());
+            params.put("userId", SharePreferencesUtil.getInstance().readUser().getIdentityno());
         }
         //上传经纬度和区域
         params.put("lng", searchHospitalModel.getLatLngLocal().getLongitude());

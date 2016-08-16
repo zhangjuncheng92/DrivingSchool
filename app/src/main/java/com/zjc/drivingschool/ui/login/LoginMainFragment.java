@@ -18,7 +18,9 @@ import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.BaseInfo;
 import com.zjc.drivingschool.db.model.UserInfo;
+import com.zjc.drivingschool.db.parser.BaseObjectParser;
 import com.zjc.drivingschool.db.parser.UserInfoParser;
 
 import java.util.List;
@@ -112,14 +114,14 @@ public class LoginMainFragment extends ZBaseToolBarFragment implements View.OnCl
             Util.showCustomMsg("请输入完整信息");
             return;
         }
-        ApiHttpClient.getInstance().login(edtPhone.getEditableText().toString(), edtPawd.getEditableText().toString(), new ResultResponseHandler<UserInfo>(getActivity(), "请稍等", new UserInfoParser()) {
+        ApiHttpClient.getInstance().login(edtPhone.getEditableText().toString(), edtPawd.getEditableText().toString(), new ResultResponseHandler(getActivity(), "请稍等") {
 
             @Override
-            public void onResultSuccess(List<UserInfo> result) {
-                UserInfo userInfoInfo = result.get(0);
-                SharePreferencesUtil.getInstance().savePhone(userInfoInfo.getPhone());
+            public void onResultSuccess(String result) {
+                UserInfo userInfo = new UserInfoParser().parseResultMessage(result);
+                SharePreferencesUtil.getInstance().savePhone(userInfo.getPhone());
                 SharePreferencesUtil.getInstance().savePwd(edtPawd.getEditableText().toString());
-                SharePreferencesUtil.getInstance().saveUser(userInfoInfo);
+                SharePreferencesUtil.getInstance().saveUser(userInfo);
                 SharePreferencesUtil.getInstance().setLogin(true);
                 setAlias();
                 getActivity().finish();

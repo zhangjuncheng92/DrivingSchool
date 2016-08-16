@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mobo.mobolibrary.model.ResultMessage;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * @author Z
@@ -19,7 +20,7 @@ public abstract class JsonParser<T> {
      * @param json Json字符串
      * @return ResultMessage
      */
-    public ResultMessage<T> parseResultMessage(String json) {
+    public T parseResultMessage(String json) {
         if (json == null) {
             return null;
         }
@@ -27,6 +28,26 @@ public abstract class JsonParser<T> {
         try {
             final Gson gson = new Gson();
             return gson.fromJson(json, getResultMessageType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 解析ResultMessage封装
+     *
+     * @param json Json字符串
+     * @return ResultMessage
+     */
+    public ArrayList<T> parseArrayResult(String json) {
+        if (json == null) {
+            return null;
+        }
+
+        try {
+            final Gson gson = new Gson();
+            return gson.fromJson(json, getArrayTypeToken());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,5 +66,5 @@ public abstract class JsonParser<T> {
      *
      * @return
      */
-    public abstract Type getTypeToken();
+    public abstract Type getArrayTypeToken();
 }

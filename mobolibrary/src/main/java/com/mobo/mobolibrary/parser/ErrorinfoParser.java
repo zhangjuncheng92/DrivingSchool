@@ -17,7 +17,7 @@ public class ErrorinfoParser extends JsonParser<Errorinfo> {
     }
 
     @Override
-    public Type getTypeToken() {
+    public Type getArrayTypeToken() {
         return new TypeToken<ArrayList<Errorinfo>>() {
         }.getType();
     }

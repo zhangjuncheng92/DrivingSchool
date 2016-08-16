@@ -9,8 +9,6 @@ import android.text.TextUtils;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.mobo.mobolibrary.logs.Logs;
-import com.mobo.mobolibrary.model.Errorinfo;
-import com.mobo.mobolibrary.model.ResultMessage;
 import com.mobo.mobolibrary.parser.JsonParser;
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.mobo.mobolibrary.ui.widget.empty.EmptyLayout;
@@ -19,11 +17,12 @@ import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.BaseInfo;
+import com.zjc.drivingschool.db.parser.BaseObjectParser;
+import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.utils.Constants;
 
 import org.apache.http.Header;
-
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -34,7 +33,7 @@ import cn.jpush.android.api.JPushInterface;
  * @Date 2015-05-30
  * @description 网络请求的结果返回消息队列
  */
-public abstract class ResultResponseHandler<T> extends TextHttpResponseHandler implements DialogInterface.OnDismissListener {
+public abstract class ResultResponseHandler extends TextHttpResponseHandler implements DialogInterface.OnDismissListener {
     /**
      * 请求类型码
      */
@@ -69,10 +68,9 @@ public abstract class ResultResponseHandler<T> extends TextHttpResponseHandler i
         requestCode = Constants.REQUEST_CODE_EMPTY;
     }
 
-    public ResultResponseHandler(Context mContext, String message, JsonParser jsonParser) {
+    public ResultResponseHandler(Context mContext, String message) {
         this.mContext = mContext;
         this.message = message;
-        this.jsonParser = jsonParser;
         requestCode = Constants.REQUEST_CODE_DIALOG;
     }
 
@@ -130,56 +128,57 @@ public abstract class ResultResponseHandler<T> extends TextHttpResponseHandler i
         try {
             Logs.i("ResultResponseHandler", s + "");
             if (s.startsWith("<")) {
-                onResultFailure(getFailErrorinfo());
+                onResultFailure(getFailErrorInfo());
                 return;
             }
-            if (jsonParser != null) {
-                if (requestCode == Constants.REQUEST_CODE_SWIPE_REFRESH) {
-                    onSwipeFail();
-                }
-
-                if (requestCode == Constants.REQUEST_CODE_EMPTY) {
-                    //如果是遮罩布局请求
-                    ResultMessage<T> resultMessage = jsonParser.parseResultMessage(s);
-                    if (resultMessage.isFlag()) {
-                        //如果empty不为空，并且获取的数据为0，则显示无数据界面。
-                        if (resultMessage.getResult() != null && resultMessage.getResult().size() == 0) {
-                            if (emptyLayout != null) {
-                                emptyLayout.setErrorType(EmptyLayout.NODATA_ENABLE_CLICK);
-                            }
-                            onNotDataSuccess(resultMessage.getResult());
-                            return;
-                        }
-                        Logs.i("ResultResponseHandler", resultMessage.getResult().size() + "");
-                        onSuccess(resultMessage.getResult());
-                    } else {
-                        onResultFailure(resultMessage.getErrorinfo());
-                    }
+            if (requestCode == Constants.REQUEST_CODE_SWIPE_REFRESH) {
+                onSwipeFail();
+            } else if (requestCode == Constants.REQUEST_CODE_EMPTY) {
+                //如果是遮罩布局请求
+                BaseInfo resultMessage = new BaseObjectParser().parseResultMessage(s);
+                if (resultMessage.getCode().equals("200")) {
+                    //如果empty不为空，并且获取的数据为0，则显示无数据界面。
+//                        if (resultMessage.getResult() != null && resultMessage.getResult().size() == 0) {
+//                            if (emptyLayout != null) {
+//                                emptyLayout.setErrorType(EmptyLayout.NODATA_ENABLE_CLICK);
+//                            }
+//                            onNotDataSuccess(resultMessage.getResult());
+//                            return;
+//                        }
+                    onSuccess(s);
                 } else {
-                    //如果是dialog请求
-                    ResultMessage<T> resultMessage = jsonParser.parseResultMessage(s);
-                    if (resultMessage.isFlag()) {
-                        onSuccess(resultMessage.getResult());
-                        Logs.i("ResultResponseHandler", resultMessage.getResult().size() + "");
-                    } else {
-                        onResultFailure(resultMessage.getErrorinfo());
-                    }
+                    onResultFailure(resultMessage);
+                }
+            } else if (requestCode == Constants.REQUEST_CODE_DIALOG) {
+                //如果是dialog请求
+                BaseInfo resultMessage = new BaseObjectParser().parseResultMessage(s);
+                if (resultMessage.getCode().equals("200")) {
+                    onSuccess(s);
+                    Util.showCustomMsgLong(resultMessage.getMessage());
+                } else {
+                    onResultFailure(resultMessage);
                 }
             }
         } catch (Exception e) {
-            onResultFailure(getFailErrorinfo());
+            onResultFailure(getFailErrorInfo());
             e.printStackTrace();
         }
     }
 
     @NonNull
-    private Errorinfo getNotNetErrorinfo() {
-        return new Errorinfo(404, mContext.getResources().getString(R.string.error_view_network_error_click_to_refresh));
+    private BaseInfo getNotNetErrorInfo() {
+        BaseInfo baseInfo = new BaseInfo();
+        baseInfo.setCode("404");
+        baseInfo.setMessage(mContext.getResources().getString(R.string.error_view_network_error_click_to_refresh));
+        return baseInfo;
     }
 
     @NonNull
-    private Errorinfo getFailErrorinfo() {
-        return new Errorinfo(404, mContext.getResources().getString(R.string.error_view_click_to_refresh));
+    private BaseInfo getFailErrorInfo() {
+        BaseInfo baseInfo = new BaseInfo();
+        baseInfo.setCode("404");
+        baseInfo.setMessage(mContext.getResources().getString(R.string.error_view_click_to_refresh));
+        return baseInfo;
     }
 
     @Override
@@ -190,14 +189,14 @@ public abstract class ResultResponseHandler<T> extends TextHttpResponseHandler i
         }
 
         if (BasicNetworkUtils.checkNetwork(MApp.getInstance().getApplicationContext())) {
-            onResultFailure(getFailErrorinfo());
+            onResultFailure(getFailErrorInfo());
         } else {
             //网络中断
-            onResultFailure(getNotNetErrorinfo());
+            onResultFailure(getNotNetErrorInfo());
         }
     }
 
-    public void onSuccess(List<T> result) {
+    public void onSuccess(String result) {
         if (requestCode == Constants.REQUEST_CODE_EMPTY) {
             //如果是遮罩布局请求
             emptyLayout.dismiss();
@@ -208,23 +207,23 @@ public abstract class ResultResponseHandler<T> extends TextHttpResponseHandler i
         onResultSuccess(result);
     }
 
-    public abstract void onResultSuccess(List<T> result);
+    public abstract void onResultSuccess(String result);
 
-    public void onNotDataSuccess(List<T> result) {
+    public void onNotDataSuccess(String result) {
     }
 
-    public void onResultFailure(Errorinfo errorinfo) {
+    public void onResultFailure(BaseInfo errorInfo) {
         try {
-            if (errorinfo != null) {
-                if (TextUtils.equals(errorinfo.getMessage(), "认证信息有误，请重新登录")) {
+            if (errorInfo != null) {
+                if (TextUtils.equals(errorInfo.getMessage(), "认证信息有误，请重新登录")) {
                     JPushInterface.setAlias(MApp.getInstance().getApplicationContext(), "", null);
                     SharePreferencesUtil.getInstance().removePwd();
                     SharePreferencesUtil.getInstance().setLogin(false);
-//                    ((ZBaseActivity) mContext).startActivity(LoginActivity.class);
+                    ((ZBaseActivity) mContext).startActivity(LoginActivity.class);
                     Util.showCustomMsgLong("当前账号已在别的设备登录，若非本人操作，您的登录密码可能已经泄露，请及时改密。");
                 } else {
                     if (requestCode != Constants.REQUEST_CODE_EMPTY) {
-                        Util.showCustomMsg(errorinfo.getMessage());
+                        Util.showCustomMsg(errorInfo.getMessage());
                     }
                 }
             }

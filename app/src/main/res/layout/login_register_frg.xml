@@ -50,6 +50,7 @@
                     android:drawableLeft="@drawable/icon_code"
                     android:drawablePadding="@dimen/layout_padding_ml"
                     android:hint="@string/login_code_hint"
+                    android:imeOptions="actionGo"
                     android:inputType="number"
                     android:maxLength="6"
                     android:singleLine="true" />
@@ -63,46 +64,45 @@
                     android:textColor="@color/registration_pink" />
             </LinearLayout>
 
-            <View
-                style="@style/line_horStyle"
-                android:layout_marginBottom="@dimen/layout_margin_l"
-                android:layout_marginTop="@dimen/layout_margin_l" />
+            <!--<View-->
+            <!--style="@style/line_horStyle"-->
+            <!--android:layout_marginBottom="@dimen/layout_margin_l"-->
+            <!--android:layout_marginTop="@dimen/layout_margin_l" />-->
 
-            <EditText
-                android:id="@+id/login_register_frg_edtone"
-                style="@style/comm_subtitle_black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/icon_pawd"
-                android:drawablePadding="@dimen/layout_padding_ml"
-                android:hint="@string/login_password_hint"
-                android:imeOptions="actionGo"
-                android:inputType="textPassword"
-                android:maxLength="18"
-                android:singleLine="true" />
+            <!--<EditText-->
+            <!--android:id="@+id/login_register_frg_edtone"-->
+            <!--style="@style/comm_subtitle_black"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:drawableLeft="@drawable/icon_pawd"-->
+            <!--android:drawablePadding="@dimen/layout_padding_ml"-->
+            <!--android:hint="@string/login_password_hint"-->
+            <!--android:imeOptions="actionGo"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:maxLength="18"-->
+            <!--android:singleLine="true" />-->
 
-            <View
-                style="@style/line_horStyle"
-                android:layout_marginBottom="@dimen/layout_margin_l"
-                android:layout_marginTop="@dimen/layout_margin_l" />
+            <!--<View-->
+            <!--style="@style/line_horStyle"-->
+            <!--android:layout_marginBottom="@dimen/layout_margin_l"-->
+            <!--android:layout_marginTop="@dimen/layout_margin_l" />-->
 
-            <EditText
-                android:id="@+id/login_register_frg_edttwo"
-                style="@style/comm_subtitle_black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/icon_confirm_pawd"
-                android:drawablePadding="@dimen/layout_padding_ml"
-                android:hint="@string/login_confirm_pwd"
-                android:imeOptions="actionGo"
-                android:inputType="textPassword"
-                android:maxLength="18"
-                android:singleLine="true" />
+            <!--<EditText-->
+            <!--android:id="@+id/login_register_frg_edttwo"-->
+            <!--style="@style/comm_subtitle_black"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:drawableLeft="@drawable/icon_confirm_pawd"-->
+            <!--android:drawablePadding="@dimen/layout_padding_ml"-->
+            <!--android:hint="@string/login_confirm_pwd"-->
+            <!--android:imeOptions="actionGo"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:maxLength="18"-->
+            <!--android:singleLine="true" />-->
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="wrap_content"

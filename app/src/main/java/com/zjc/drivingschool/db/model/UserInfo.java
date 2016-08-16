@@ -1,73 +1,39 @@
 package com.zjc.drivingschool.db.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 
-public class UserInfo implements Serializable {
+public class UserInfo extends BaseInfo{
+
+
     /**
-     *
+     * address : fsdafasf
+     * birthday : 2016-08-01
+     * email : fdsafsafa a
+     * gender : true
+     * identityno : fdsafsafasfaf
+     * loginname : 13797039695
+     * nickname : fdsfasf
+     * phone : 13797039695
+     * photourl : /upload/images/20160815/1471245751373555665.png
+     * qq : 2423424
+     * stuid : SJ16072767980000001
+     * uid : 42164b4381024eb1b6d6b9c0836aaa59
      */
-    private static final long serialVersionUID = 1L;
 
-    // 主键
     private int id;
-
-    //登录名
-    private String userName;
-
-    // 真实姓名
-    private String realName;
-
-    // 登录密码
-    private String pwd;
-
-    // 状态状态（1.启用 0.停用）
-    private int storeStatus;
-
-    // 创建操作员
-    private int createAdminId;
-
-    // 创建时间
-    private String createTime;
-
-    // 更新操作员
-    private int modifyAdminId;
-
-    // 更新时间
-    private String modifyTime;
-
-    private int roleId; // 角色ID
-
-    private int age;//年龄
-
-    private int sex;//性别
-
-    private int type;//类别 管理员、医生、护士、行政
-
-    private int typeSecond;//二级类别  系统管理员、平台管理员、上级机构医生、家庭医生等等
-
-    private int userId;//用户ID
-
-    private int organizationId;//机构ID
-
-    private String outReflectionId;
-
-    private String roleName;//角色名
-
-    private String organizationName;//机构
-
-    private int preOrganizationId;//上级ID
-
-    private String preOrganizationName;//上级名
-
-    private String token;
-
+    private String address;
+    private String birthday;
+    private String email;
+    private boolean gender;
+    private String identityno;
+    private String loginname;
+    private String nickname;
     private String phone;
-
-    private String img;
-
-
+    private String photourl;
+    private String qq;
+    private String stuid;
+    private String uid;
 
     public int getId() {
         return id;
@@ -77,124 +43,60 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getRealName() {
-        return realName;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getStoreStatus() {
-        return storeStatus;
+    public boolean isGender() {
+        return gender;
     }
 
-    public void setStoreStatus(int storeStatus) {
-        this.storeStatus = storeStatus;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
-    public int getCreateAdminId() {
-        return createAdminId;
+    public String getIdentityno() {
+        return identityno;
     }
 
-    public void setCreateAdminId(int createAdminId) {
-        this.createAdminId = createAdminId;
+    public void setIdentityno(String identityno) {
+        this.identityno = identityno;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getLoginname() {
+        return loginname;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
     }
 
-    public int getModifyAdminId() {
-        return modifyAdminId;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setModifyAdminId(int modifyAdminId) {
-        this.modifyAdminId = modifyAdminId;
-    }
-
-    public String getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(String modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getTypeSecond() {
-        return typeSecond;
-    }
-
-    public void setTypeSecond(int typeSecond) {
-        this.typeSecond = typeSecond;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getOutReflectionId() {
-        return outReflectionId;
-    }
-
-    public void setOutReflectionId(String outReflectionId) {
-        this.outReflectionId = outReflectionId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPhone() {
@@ -205,11 +107,35 @@ public class UserInfo implements Serializable {
         this.phone = phone;
     }
 
-    public String getImg() {
-        return img;
+    public String getPhotourl() {
+        return photourl;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setPhotourl(String photourl) {
+        this.photourl = photourl;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getStuid() {
+        return stuid;
+    }
+
+    public void setStuid(String stuid) {
+        this.stuid = stuid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

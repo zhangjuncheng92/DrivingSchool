@@ -322,10 +322,11 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
      * 查询整个市的医疗资源
      */
     public void getMedicalResourceOfCity() {
-        ApiHttpClient.getInstance().findHospitalPharmacy(searchHospitalModel, new ResultResponseHandler<Division>(getActivity(), "加载附近驾校", new DivisionParser()) {
+        ApiHttpClient.getInstance().findHospitalPharmacy(searchHospitalModel, new ResultResponseHandler(getActivity(), "加载附近驾校") {
                     @Override
-                    public void onResultSuccess(List<Division> result) {
-                        divisionAdapter.addAll(result);
+                    public void onResultSuccess(String result) {
+                        List<Division> divisions = new DivisionParser().parseArrayResult(result);
+                        divisionAdapter.addAll(divisions);
                     }
                 }
         );

@@ -14,10 +14,15 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
+
+import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar toolbar;
@@ -88,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //跳转到登录
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    SharePreferencesUtil.getInstance().setLogin(true);
                 }
             });
         }
@@ -120,10 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.main_action_notice) {
 
         } else if (id == R.id.main_action_more) {
-
+            logout();
         }
         drawer.closeDrawer(GravityCompat.START);
-        SharePreferencesUtil.getInstance().setLogin(false);
         return true;
     }
 
@@ -141,5 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //预约考试
 
         }
+    }
+
+    private void logout() {
+        JPushInterface.setAlias(MApp.getInstance().getApplicationContext(), "", null);
+        SharePreferencesUtil.getInstance().setLogin(false);
+        SharePreferencesUtil.getInstance().removePwd();
+        verifyIsLogin();
     }
 }

@@ -110,13 +110,13 @@ public class LoginForgetFragment extends ZBaseToolBarFragment implements View.On
     }
 
     public void getSMSCode() {
-        ApiHttpClient.getInstance().getVerificationCode(edtPhone.getEditableText().toString(), ConstantsParams.USER_FORGET, new ResultResponseHandler<UserCode>(getActivity(), "请稍等", new UserCodeParser()) {
+        ApiHttpClient.getInstance().getVerificationCode(edtPhone.getEditableText().toString(), ConstantsParams.USER_FORGET, new ResultResponseHandler(getActivity(), "请稍等") {
 
             @Override
-            public void onResultSuccess(List<UserCode> result) {
-                UserCode userCode = result.get(0);
+            public void onResultSuccess(String result) {
+                UserCode userCode = new UserCodeParser().parseResultMessage(result);
                 tvCode.setTag(userCode);
-                // Util.showCustomMsg("获取成功请注意查收");
+                Util.showCustomMsg("获取成功请注意查收");
             }
 
         });
@@ -162,9 +162,9 @@ public class LoginForgetFragment extends ZBaseToolBarFragment implements View.On
             return;
         }
 
-        ApiHttpClient.getInstance().forgetPwd(phone, edtConfirmPawd.getEditableText().toString(), new ResultResponseHandler<UserInfo>(getActivity(), "请稍等", new UserInfoParser()) {
+        ApiHttpClient.getInstance().forgetPwd(phone, edtConfirmPawd.getEditableText().toString(), new ResultResponseHandler(getActivity(), "请稍等") {
             @Override
-            public void onResultSuccess(List<UserInfo> result) {
+            public void onResultSuccess(String result) {
                 Util.showCustomMsg("修改成功");
                 getFragmentManager().popBackStack();
             }

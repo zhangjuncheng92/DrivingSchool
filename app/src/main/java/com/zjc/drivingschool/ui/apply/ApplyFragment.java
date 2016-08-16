@@ -11,23 +11,18 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.mingle.sweetpick.SweetSheet;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
-import com.mobo.mobolibrary.util.UtilDate;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.db.parser.UserInfoParser;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -137,9 +132,9 @@ public class ApplyFragment extends ZBaseToolBarFragment {
         }
 
 
-        ApiHttpClient.getInstance().createResident(null, new ResultResponseHandler<UserInfo>(getActivity(), "正在新建档案，请稍等", new UserInfoParser()) {
+        ApiHttpClient.getInstance().createResident(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
             @Override
-            public void onResultSuccess(List<UserInfo> result) {
+            public void onResultSuccess(String result) {
                 getActivity().finish();
             }
         });

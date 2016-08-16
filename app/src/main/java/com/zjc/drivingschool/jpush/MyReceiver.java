@@ -97,11 +97,11 @@ public class MyReceiver extends BroadcastReceiver {
         if (!TextUtils.isEmpty(EXTRA)) {
             try {
                 Gson gson = new Gson();
-                JPushNotification jpushNotification = gson.fromJson(EXTRA, new JPushNotificationParser().getObjectTypeToken());
+                JPushNotification jpushNotification = gson.fromJson(EXTRA, new JPushNotificationParser().getResultMessageType());
                 jpushNotification.setAlert(ALERT);
 //                如果是通知事件，则存到数据库
                 if (action == NOTICE) {
-                    if (TextUtils.isEmpty(jpushNotification.getExtras())) {
+                    if (TextUtils.isEmpty(jpushNotification.getAlert())) {
                         return;
                     }
                     //发送广播

@@ -107,10 +107,10 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
     }
 
     private void getMyAccount() {
-        ApiHttpClient.getInstance().getMyAccount(SharePreferencesUtil.getInstance().readUser().getId(), new ResultResponseHandler<Account>(getActivity(), getEmptyLayout(), new AccountParser()) {
+        ApiHttpClient.getInstance().getMyAccount(SharePreferencesUtil.getInstance().readUser().getId(), new ResultResponseHandler(getActivity(), getEmptyLayout(), new AccountParser()) {
 
             @Override
-            public void onResultSuccess(List<Account> result) {
+            public void onResultSuccess(String result) {
 //                tvAccount.setText(result.get(0).getTotal() + "");
             }
         });

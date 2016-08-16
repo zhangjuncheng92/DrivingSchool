@@ -64,7 +64,7 @@ public class JPushUtil {
 
             } else if (SharePreferencesUtil.getInstance().isLogin()) {
                 //如果认证中
-                JPushInterface.setAliasAndTags(MApp.getInstance().getApplicationContext(), SharePreferencesUtil.getInstance().readUser().getId() + "", new HashSet<String>(), null);
+                JPushInterface.setAliasAndTags(MApp.getInstance().getApplicationContext(), SharePreferencesUtil.getInstance().readUser().getAddress() + "", new HashSet<String>(), null);
             } else {
                 //如果未登录，未认证
                 JPushInterface.setAliasAndTags(MApp.getInstance().getApplicationContext(), "", new HashSet<String>(), null);
