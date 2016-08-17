@@ -15,6 +15,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.cloud.CloudListener;
+import com.baidu.mapapi.cloud.CloudManager;
+import com.baidu.mapapi.cloud.CloudSearchResult;
+import com.baidu.mapapi.cloud.DetailSearchResult;
+import com.baidu.mapapi.cloud.NearbySearchInfo;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -34,13 +39,11 @@ import com.baidu.mapapi.utils.route.RouteParaOption;
 import com.mobo.mobolibrary.ui.base.ZBaseFragment;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.api.ApiHttpClient;
-import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.model.Division;
 import com.zjc.drivingschool.db.model.LatLngLocal;
+import com.zjc.drivingschool.db.model.School;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
-import com.zjc.drivingschool.db.parser.DivisionParser;
+import com.zjc.drivingschool.db.parser.SchoolParser;
 import com.zjc.drivingschool.eventbus.MarkerOnClickEvent;
 import com.zjc.drivingschool.ui.main.adapter.DivisionMarkerAdapter;
 
@@ -56,7 +59,7 @@ import de.greenrobot.event.EventBus;
  * @Date 2015.10.20
  * @description 看病抓药-医疗资源地图显示界面
  */
-public class MainMapFragment extends ZBaseFragment implements View.OnClickListener, OnGetGeoCoderResultListener, BaiduMap.OnMapTouchListener, BaiduMap.OnMapStatusChangeListener {
+public class MainMapFragment extends ZBaseFragment implements View.OnClickListener, OnGetGeoCoderResultListener, BaiduMap.OnMapTouchListener, BaiduMap.OnMapStatusChangeListener, CloudListener {
     private MapView mMapView;
     private BaiduMap mBaiDuMap;
 
@@ -67,19 +70,24 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
     /**
      * 区域医疗资源适配器
      */
-    private DivisionMarkerAdapter divisionAdapter;
-    private List<Division> divisions;
+    private DivisionMarkerAdapter schoolAdapter;
 
 
     private ImageView imgLocation;
 
     // 搜索模块，也可去掉地图模块独立使用
     GeoCoder mSearch = null;
-    private int DISTANCE = 1500;
     /**
      * 地图初始缩放等级
      */
     public static float MAP_ZOOM = 16;
+    /**
+     * 静态常量
+     */
+    public static String AK = "a49QpA1I2HVWCXL3ULMLvPxlU9Chpt98";
+    private static String KEY = "武汉";
+    public static int TABLE_ID = 148148;
+    private static int RADIUS = 10000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,9 +96,6 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey("searchHospitalModel")) {
                 searchHospitalModel = (SearchHospitalModel) savedInstanceState.getSerializable("searchHospitalModel");
-            }
-            if (savedInstanceState.containsKey("divisionAdapter")) {
-                divisions = (List<Division>) savedInstanceState.getSerializable("divisionAdapter");
             }
         }
     }
@@ -113,10 +118,8 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
         initMapListener();
         hideBaiDuLogo();
 
-        divisionAdapter = new DivisionMarkerAdapter(getActivity(), mBaiDuMap);
-        if (divisions != null) {
-            divisionAdapter.addAll(divisions);
-        }
+        CloudManager.getInstance().init(this);
+        schoolAdapter = new DivisionMarkerAdapter(getActivity(), mBaiDuMap);
     }
 
     private void initSearchModel() {
@@ -207,7 +210,7 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
      */
     private void upDateMapByLatOfTarget(LatLng location) {
         searchHospitalModel.setLatLngLocal(new LatLngLocal(location.latitude, location.longitude));
-        divisionAdapter.addTargetMarker(location);
+        schoolAdapter.addTargetMarker(location);
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(location);
         if (mBaiDuMap != null) {
             mBaiDuMap.animateMapStatus(u);
@@ -230,9 +233,9 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
             LatLngLocal beforeLatLng = searchHospitalModel.getLatLngLocal();
 
             searchHospitalModel.setLatLngLocal(latLngLocal);
-            divisionAdapter.addTargetMarker(searchHospitalModel.getLatLngLocal().getBaiduLatLngByLocal());
+            schoolAdapter.addTargetMarker(searchHospitalModel.getLatLngLocal().getBaiduLatLngByLocal());
             //判断移动距离是否足够
-            if (DistanceUtil.getDistance(beforeLatLng.getBaiduLatLngByLocal(), latLngLocal.getBaiduLatLngByLocal()) > (DISTANCE)) {
+            if (DistanceUtil.getDistance(beforeLatLng.getBaiduLatLngByLocal(), latLngLocal.getBaiduLatLngByLocal()) > (RADIUS/2)) {
                 getMedicalResourceOfCity();
             }
         }
@@ -257,13 +260,13 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
     public void onMapStatusChangeFinish(MapStatus mapStatus) {
         /**    zoom 地图缩放级别 3~19
          当缩放等级小于MAP_ZOOM时，获取医院数据，当缩放等级大于MAP_ZOOM时，获取医疗资源分布*/
-        float zoom = mapStatus.zoom;
-        float beforeZoom = searchHospitalModel.getZoom();
-        searchHospitalModel.setZoom(zoom);
-        if (zoom > MAP_ZOOM && beforeZoom <= MAP_ZOOM) {
-        } else if (zoom <= MAP_ZOOM && beforeZoom > MAP_ZOOM) {
-            getMedicalResourceOfCity();
-        }
+//        float zoom = mapStatus.zoom;
+//        float beforeZoom = searchHospitalModel.getZoom();
+//        searchHospitalModel.setZoom(zoom);
+//        if (zoom > MAP_ZOOM && beforeZoom <= MAP_ZOOM) {
+//        } else if (zoom <= MAP_ZOOM && beforeZoom > MAP_ZOOM) {
+//            getMedicalResourceOfCity();
+//        }
     }
 
     /**
@@ -319,18 +322,36 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
         }
     }
 
+    public void onGetSearchResult(CloudSearchResult result, int error) {
+        //在此处理相应的检索结果
+        List<School> schools = new SchoolParser().parserArray(result.poiList);
+
+        if (schools.size() == 0) {
+            Util.showCustomMsg("附近暂无驾校");
+            schoolAdapter.addAll(new ArrayList<School>());
+        } else {
+            schoolAdapter.addAll(schools);
+        }
+    }
+
+    @Override
+    public void onGetDetailSearchResult(DetailSearchResult detailSearchResult, int i) {
+        //在此处理相应的检索结果
+    }
+
     /**
      * 查询整个市的医疗资源
      */
     public void getMedicalResourceOfCity() {
-        ApiHttpClient.getInstance().findHospitalPharmacy(searchHospitalModel, new ResultResponseHandler(getActivity(), "加载附近驾校") {
-                    @Override
-                    public void onResultSuccess(String result) {
-                        List<Division> divisions = new DivisionParser().parseArrayResult(result);
-                        divisionAdapter.addAll(divisions);
-                    }
-                }
-        );
+        NearbySearchInfo info = new NearbySearchInfo();
+        info.location = searchHospitalModel.getLatLngLocal().getLongitude() + "," + searchHospitalModel.getLatLngLocal().getLatitude();
+        info.ak = AK;
+        //此处info.ak为服务端ak，非Adnroid sdk端ak， 且此服务端ak和Adnroid sdk端ak 是在同一个账户。
+        info.geoTableId = TABLE_ID;
+        // info.geoTableId 是存储在于info.ak相同开发账户中。
+        info.q = KEY;
+        info.radius = RADIUS;
+        CloudManager.getInstance().nearbySearch(info);
     }
 
 
@@ -352,20 +373,20 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
      * @param event
      */
     public void onEventMainThread(MarkerOnClickEvent event) {
-        getHospitalByDivision(event.getDivision());
+        getSchoolDetail(event.getSchool());
     }
 
     /**
      * 根据点击marker的区域，刷新数据
      */
-    public void getHospitalByDivision(Division division) {
+    public void getSchoolDetail(School school) {
 
     }
 
     /**
      * 启动百度地图步行路线规划
      */
-    public void startRoutePlanWalking(Division hospital) {
+    public void startRoutePlanWalking(School hospital) {
         if (mBaiDuMap != null) {
             RouteParaOption para = new RouteParaOption()
                     .startPoint(new LatLng(mBaiDuMap.getLocationData().latitude, mBaiDuMap.getLocationData().longitude))
@@ -435,7 +456,6 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         try {
-            outState.putSerializable("divisionAdapter", (ArrayList<Division>) divisionAdapter.getAll());
             outState.putSerializable("searchHospitalModel", searchHospitalModel);
         } catch (Exception e) {
             e.printStackTrace();

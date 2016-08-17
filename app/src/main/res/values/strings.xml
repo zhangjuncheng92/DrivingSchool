@@ -11,7 +11,7 @@
     <string name="login_cancel">注销</string>
     <string name="login_confirm_pwd">确认密码</string>
     <string name="login_username_hint">请输入手机号</string>
-    <string name="login_password_hint">6-18位数字或字母</string>
+    <string name="login_password_hint">请输入密码</string>
     <string name="login_remember">记住密码</string>
     <string name="login_forget">忘记密码 ?</string>
     <string name="login_update_pwd">修改密码</string>

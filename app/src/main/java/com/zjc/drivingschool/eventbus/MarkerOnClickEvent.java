@@ -1,23 +1,23 @@
 package com.zjc.drivingschool.eventbus;
 
 
-import com.zjc.drivingschool.db.model.Division;
+import com.zjc.drivingschool.db.model.School;
 
 /**
  * Created by Administrator on 2015/7/14.
  */
 public class MarkerOnClickEvent {
-    private Division division;
+    private School school;
 
-    public MarkerOnClickEvent(Division division) {
-        this.division = division;
+    public MarkerOnClickEvent(School school) {
+        this.school = school;
     }
 
-    public Division getDivision() {
-        return division;
+    public School getSchool() {
+        return school;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public void setSchool(School school) {
+        this.school = school;
     }
 }
