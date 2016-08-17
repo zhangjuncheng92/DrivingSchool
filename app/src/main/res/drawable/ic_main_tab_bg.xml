@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
-    android:useLevel="false" >
-    <solid android:color="@color/google_red" />
+    android:useLevel="false">
     <padding
-        android:left="2dp"
-        android:top="1dp"
-        android:right="2dp"
-        android:bottom="1dp" />
-    <solid
-        android:color="@color/google_red" />
+        android:bottom="@dimen/layout_margin_lss"
+        android:left="@dimen/layout_margin_lss"
+        android:right="@dimen/layout_margin_lss"
+        android:top="@dimen/layout_margin_lss" />
+    <solid android:color="@color/comm_white" />
     <stroke
-        android:width="1dp"
-        android:color="@android:color/white" />
-    <size android:width="72dp"
+        android:width="@dimen/layout_margin_ls"
+        android:color="@color/colorPrimary" />
+    <size
+        android:width="72dp"
         android:height="72dp" />
 </shape>

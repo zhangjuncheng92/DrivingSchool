@@ -20,10 +20,6 @@ import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
-import com.zjc.drivingschool.db.model.UserInfo;
-import com.zjc.drivingschool.db.parser.UserInfoParser;
-
-import java.util.List;
 
 /**
  * @author Z
@@ -132,7 +128,7 @@ public class ApplyFragment extends ZBaseToolBarFragment {
         }
 
 
-        ApiHttpClient.getInstance().createResident(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
+        ApiHttpClient.getInstance().learnApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
             @Override
             public void onResultSuccess(String result) {
                 getActivity().finish();

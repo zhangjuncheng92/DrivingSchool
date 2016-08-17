@@ -139,6 +139,7 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
     }
 
     private void hideBaiDuLogo() {
+        mMapView.showZoomControls(false);
         View child = mMapView.getChildAt(1);
         if (child != null && (child instanceof ImageView || child instanceof ZoomControls)) {
             child.setVisibility(View.GONE);

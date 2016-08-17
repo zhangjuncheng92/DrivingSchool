@@ -79,7 +79,11 @@
             android:name=".ui.apply.ApplyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
-
+        <!--预约学车-->
+        <activity
+            android:name=".ui.learn.LearnActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--百度地图-->
         <meta-data

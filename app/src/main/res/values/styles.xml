@@ -5,8 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/comm_blue</item>
-        <item name="actionMenuTextColor">@color/comm_blue</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="actionMenuTextColor">@color/comm_white</item>
         <item name="android:textColor">@color/comm_black</item>
         <item name="alertDialogProTheme">@style/Theme.AlertDialogPro.Material.Light</item>
     </style>

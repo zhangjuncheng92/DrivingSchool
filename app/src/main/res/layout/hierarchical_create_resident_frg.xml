@@ -80,7 +80,6 @@
             android:layout_marginLeft="@dimen/layout_margin_ml" />
 
         <RelativeLayout
-            android:id="@+id/friends_relay_age"
             style="@style/comm_layout_two">
 
             <TextView
