@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_main_tab_bg"
                 android:scaleType="center"
-                android:src="@drawable/ic_menu_send" />
+                android:src="@drawable/icon_reservation" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_main_tab_bg"
                 android:scaleType="center"
-                android:src="@drawable/ic_menu_send" />
+                android:src="@drawable/icon_signup" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_main_tab_bg"
                 android:scaleType="center"
-                android:src="@drawable/ic_menu_send" />
+                android:src="@drawable/icon_examination" />
         </LinearLayout>
     </LinearLayout>
 

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
         }
-        toolbar.setNavigationIcon(R.drawable.tab_icon_user_normal);
+        toolbar.setNavigationIcon(R.drawable.icon_usercenter);
     }
 
     @Override

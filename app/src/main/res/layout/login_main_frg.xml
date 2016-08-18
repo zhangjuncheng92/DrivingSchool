@@ -5,60 +5,35 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/layout_margin_xh"
+        android:layout_marginTop="@dimen/layout_margin_h"
         android:orientation="vertical">
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/setting_about_good"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_launcher" />
-        </RelativeLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/login_main_frg_edt_phone"
             style="@style/comm_layout_four"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="-1dp"
-            android:layout_marginTop="@dimen/layout_margin_l"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/layout_margin_m"
+            android:drawableLeft="@drawable/icon_mobilephone"
+            android:drawablePadding="@dimen/layout_padding_ml"
+            android:hint="@string/login_username_hint"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/login_main_frg_edt_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/icon_login_phone"
-                android:drawablePadding="@dimen/layout_padding_ml"
-                android:hint="@string/login_username_hint"
-                android:inputType="phone"
-                android:maxLength="11"
-                android:singleLine="true" />
-
-            <View
-                style="@style/line_horStyle"
-                android:layout_marginBottom="@dimen/layout_margin_l"
-                android:layout_marginTop="@dimen/layout_margin_l" />
-
-            <EditText
-                android:id="@+id/login_main_frg_edt_pawd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/icon_pawd"
-                android:drawablePadding="@dimen/layout_padding_ml"
-                android:hint="@string/login_password_hint"
-                android:imeOptions="actionGo"
-                android:inputType="textPassword"
-                android:singleLine="true" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/login_main_frg_edt_pawd"
+            style="@style/comm_layout_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_margin_m"
+            android:layout_marginRight="@dimen/layout_margin_m"
+            android:drawableLeft="@drawable/icon_password"
+            android:drawablePadding="@dimen/layout_padding_ml"
+            android:hint="@string/login_password_hint"
+            android:imeOptions="actionGo"
+            android:inputType="textPassword"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/login_main_frg_tv_commit"

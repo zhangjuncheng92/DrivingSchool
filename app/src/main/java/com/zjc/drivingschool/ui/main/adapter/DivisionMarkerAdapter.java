@@ -14,11 +14,10 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.db.model.Division;
+import com.zjc.drivingschool.db.model.School;
 import com.zjc.drivingschool.eventbus.MarkerOnClickEvent;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -30,15 +29,11 @@ import de.greenrobot.event.EventBus;
  * @description 地区marker适配器
  */
 public class DivisionMarkerAdapter implements Serializable {
-    private List<Division> list = new ArrayList<>();
-    private Context mContext;
     private BaiduMap baiduMap;
-    private Marker mCurrentMarker;
     private LayoutInflater inflater;
 
     private View divisionView;
     private TextView tvName;
-    private TextView tvNum;
     public Marker targetMarker;
     //中心点的marker
     BitmapDescriptor markerPoint = BitmapDescriptorFactory
@@ -48,10 +43,9 @@ public class DivisionMarkerAdapter implements Serializable {
 
     public DivisionMarkerAdapter(Context context, BaiduMap baiduMap) {
         super();
-        this.mContext = context;
         this.baiduMap = baiduMap;
         inflater = LayoutInflater.from(context);
-        initBaiduMapLinstener();
+        initBaiDuMapListener();
         markerHospital = BitmapDescriptorFactory.fromView(initDivisionMarkerView());
     }
 
@@ -63,17 +57,16 @@ public class DivisionMarkerAdapter implements Serializable {
     private View initDivisionMarkerView() {
         divisionView = inflater.inflate(R.layout.healing_map_marker_division, null);
         tvName = (TextView) divisionView.findViewById(R.id.healing_marker_division_name);
-        tvNum = (TextView) divisionView.findViewById(R.id.healing_marker_division_num);
         return divisionView;
     }
 
-    private void initBaiduMapLinstener() {
+    private void initBaiDuMapListener() {
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
 
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (marker.getExtraInfo() != null) {
-                    Division o = (Division) marker.getExtraInfo().getSerializable("division");
+                    School o = (School) marker.getExtraInfo().getSerializable("school");
                     if (o != null) {
                         //发送点击事件
                         if (EventBus.getDefault().hasSubscriberForEvent(MarkerOnClickEvent.class)) {
@@ -87,46 +80,38 @@ public class DivisionMarkerAdapter implements Serializable {
         });
     }
 
-    public void addAll(List<Division> list) {
+    public void addAll(List<School> schools) {
         // 当传递过来的数据为空时，直接返回
-        if (list == null) {
+        if (schools == null) {
             return;
         }
         baiduMap.clear();
-        this.list.clear();
-        this.list.addAll(list);
-        for (int i = 0; i < list.size(); i++) {
-            addDivisionMarker(list.get(i));
+        if (targetMarker != null) {
+            addTargetMarker(targetMarker.getPosition());
+        }
+        for (int i = 0; i < schools.size(); i++) {
+            addDivisionMarker(schools.get(i));
         }
     }
 
-    public List<Division> getAll() {
-        return this.list;
-    }
-
-    public void addDivisionMarker(Division division) {
-        if (division.getLatLngLocal().getLatitude() == null || division.getLatLngLocal().getLongitude() == null) {
-            return;
-        }
-
+    public void addDivisionMarker(School school) {
         // 定义Maker坐标点
-        LatLng lng = division.getLatLngLocal().getBaiduLatLngByLocal();
+        LatLng lng = new LatLng(school.getLatitude(), school.getLongitude());
         //设置marker数据
-        tvName.setText(division.getName());
-        tvNum.setText(division.getNum() + "");
+        tvName.setText(school.getTitle());
         markerHospital = BitmapDescriptorFactory.fromView(divisionView);
 
         // 构建MarkerOption，用于在地图上添加Marker
         OverlayOptions option = new MarkerOptions().position(lng).icon(markerHospital);
         // 在地图上添加Marker，并显示
-        addMarkerToBadiduMap((Marker) (baiduMap.addOverlay(option)), division);
+        addMarkerToBaiDuMap((Marker) (baiduMap.addOverlay(option)), school);
         //回收BitmapDescriptor
         markerHospital.recycle();
     }
 
-    private void addMarkerToBadiduMap(Marker marker, Division division) {
+    private void addMarkerToBaiDuMap(Marker marker, School school) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("division", division);
+        bundle.putSerializable("school", school);
         marker.setExtraInfo(bundle);
     }
 
@@ -140,15 +125,5 @@ public class DivisionMarkerAdapter implements Serializable {
         // 在地图上添加Marker，并显示
         targetMarker = (Marker) baiduMap.addOverlay(option);
         targetMarker.setToTop();
-    }
-
-    public Marker getDivisionMarker() {
-        return mCurrentMarker;
-    }
-
-    public void onDestroy() {
-        markerHospital = null;
-        mCurrentMarker = null;
-        divisionView = null;
     }
 }
