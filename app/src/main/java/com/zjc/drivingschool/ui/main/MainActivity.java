@@ -18,9 +18,10 @@ import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
+import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
+import com.zjc.drivingschool.ui.learn.LearnActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
-
-import java.util.List;
+import com.zjc.drivingschool.ui.order.OrderManagerActivity;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -118,9 +119,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, AccountManagerActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_collect) {
-
+            Intent intent = new Intent(MainActivity.this, CollectManagerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.main_action_history) {
-
+            Intent intent = new Intent(MainActivity.this, OrderManagerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.main_action_notice) {
 
         } else if (id == R.id.main_action_more) {
@@ -139,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (id == R.id.main_two) {
             //预约学车
-
+            Intent intent = new Intent(MainActivity.this, LearnActivity.class);
+            startActivity(intent);
         } else if (id == R.id.main_three) {
             //预约考试
 

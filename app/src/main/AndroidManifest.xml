@@ -85,6 +85,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--我的订单-->
+        <activity android:name=".ui.order.OrderManagerActivity" />
+
+        <!--我的关注-->
+        <activity android:name=".ui.collect.CollectManagerActivity" />
+
         <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
