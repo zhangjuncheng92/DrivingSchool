@@ -1,1 +1,1 @@
-include ':app', ':mobolibrary'
+include ':app', ':mobolibrary', ':paySdk'

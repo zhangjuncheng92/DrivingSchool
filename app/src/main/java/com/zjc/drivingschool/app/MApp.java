@@ -18,6 +18,7 @@ import com.zjc.drivingschool.utils.Constants;
 
 import java.io.File;
 
+import cn.beecloud.BeeCloud;
 import cn.jpush.android.api.JPushInterface;
 
 public class MApp extends BaseApplication {
@@ -35,12 +36,18 @@ public class MApp extends BaseApplication {
         createFile();
         initFresco();
         initUniversalImage();
+        initPay();
         JPushUtil.initJPush();
         SDKInitializer.initialize(this);
 
         if (SharePreferencesUtil.getInstance().readCity().getLatLngLocal() == null) {
             SharePreferencesUtil.getInstance().saveCity(new City("1", "武汉市", new LatLngLocal(30.543622, 114.433890)));
         }
+    }
+
+    private void initPay() {
+        BeeCloud.setSandbox(true);
+        BeeCloud.setAppIdAndSecret("c5d1cba1-5e3f-4ba0-941d-9b0a371fe719", "4bfdd244-574d-4bf3-b034-0c751ed34fee");
     }
 
     private void initUniversalImage() {
