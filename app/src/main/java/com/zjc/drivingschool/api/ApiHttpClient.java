@@ -1,6 +1,5 @@
 package com.zjc.drivingschool.api;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -9,10 +8,7 @@ import com.mobo.mobolibrary.util.UtilPhoto;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
-import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.utils.Constants;
-
-import org.apache.http.entity.StringEntity;
 
 import java.io.File;
 
@@ -236,26 +232,41 @@ public class ApiHttpClient {
     /**
      * 1.1.13 学员创建学车订单
      * 开始位置经度	longitude	number	必填
-     项目类型ID	subjectid	string	必填
-     项目类型名称	subjectname	string	必填
-     是否VIP	isvip	boolean	必填
-     开始位置纬度	latitude	number	必填
-     车型名称	carsname	string	必填
-     是否代人下单	isreplace	boolean	必填
-     下单用户ID	uid	string	必填
-     联系人姓名	contactsname	string	isreplace为true时必传
-     联系人电话	contactsphone	string	isreplace为true时必传
-     数量 单位：小时	number	number	必填
-     开始时间 格式：yyyy-MM-dd hh:mm:ss	starttime	string	必填
-     车型ID	carsid	string	必填
-     下单用户名	loginname	string	必填
-     下单用户昵称	nickname	string	必填
-     优惠券ID	vid	string	非必传，格式:多个ID用','分割
+     * 项目类型ID	subjectid	string	必填
+     * 项目类型名称	subjectname	string	必填
+     * 是否VIP	isvip	boolean	必填
+     * 开始位置纬度	latitude	number	必填
+     * 车型名称	carsname	string	必填
+     * 是否代人下单	isreplace	boolean	必填
+     * 下单用户ID	uid	string	必填
+     * 联系人姓名	contactsname	string	isreplace为true时必传
+     * 联系人电话	contactsphone	string	isreplace为true时必传
+     * 数量 单位：小时	number	number	必填
+     * 开始时间 格式：yyyy-MM-dd hh:mm:ss	starttime	string	必填
+     * 车型ID	carsid	string	必填
+     * 下单用户名	loginname	string	必填
+     * 下单用户昵称	nickname	string	必填
+     * 优惠券ID	vid	string	非必传，格式:多个ID用','分割
      * /app/student/order/create
      */
     public void learnApply(OrderItem orderItem, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         RequestParams params = new RequestParams();
 
         HttpUtilsAsync.post(Constants.BASE_URL + "order/create", params, asyncHttpResponseHandler);
+    }
+
+
+    /**********驾校主页**********/
+    /**
+     * 6.2接口：detail
+     * 用途：地图驾校详情
+     * 参数：uid;// 用户ID  sid;// 驾校ID
+     * 调用示例：/app/student/school/detail
+     */
+    public void getSchoolInfo(String uid, String sid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", uid);
+        postRequest.addProperty("sid", sid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/school/detail", postRequest, asyncHttpResponseHandler);
     }
 }

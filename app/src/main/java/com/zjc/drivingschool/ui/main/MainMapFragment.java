@@ -46,6 +46,8 @@ import com.zjc.drivingschool.db.model.SearchHospitalModel;
 import com.zjc.drivingschool.db.parser.SchoolParser;
 import com.zjc.drivingschool.eventbus.MarkerOnClickEvent;
 import com.zjc.drivingschool.ui.main.adapter.DivisionMarkerAdapter;
+import com.zjc.drivingschool.ui.school.SchoolActivity;
+import com.zjc.drivingschool.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -235,7 +237,7 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
             searchHospitalModel.setLatLngLocal(latLngLocal);
             schoolAdapter.addTargetMarker(searchHospitalModel.getLatLngLocal().getBaiduLatLngByLocal());
             //判断移动距离是否足够
-            if (DistanceUtil.getDistance(beforeLatLng.getBaiduLatLngByLocal(), latLngLocal.getBaiduLatLngByLocal()) > (RADIUS/2)) {
+            if (DistanceUtil.getDistance(beforeLatLng.getBaiduLatLngByLocal(), latLngLocal.getBaiduLatLngByLocal()) > (RADIUS / 2)) {
                 getMedicalResourceOfCity();
             }
         }
@@ -377,10 +379,12 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
     }
 
     /**
-     * 根据点击marker的区域，刷新数据
+     * 跳转到驾校主页
      */
     public void getSchoolDetail(School school) {
-
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, school);
+        startActivity(SchoolActivity.class, bundle);
     }
 
     /**
