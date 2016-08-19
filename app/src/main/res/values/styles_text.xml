@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="comm_title">
+    <style name="comm_title_black">
         <item name="android:textColor">@color/comm_black</item>
         <item name="android:textSize">@dimen/text_size_title</item>
     </style>

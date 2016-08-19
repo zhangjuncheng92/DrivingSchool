@@ -118,9 +118,9 @@
             android:id="@+id/account_frg_recharge"
             style="@style/comm_select_style"
             android:layout_marginBottom="@dimen/layout_margin_hm"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="@dimen/layout_margin_xxh"
+            android:layout_marginLeft="@dimen/layout_margin_m"
+            android:layout_marginRight="@dimen/layout_margin_m"
+            android:layout_marginTop="@dimen/layout_margin_h"
             android:text="@string/account_recharge" />
 
         <Button

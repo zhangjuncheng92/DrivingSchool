@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/comm_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/account_recharge_frg_tv_ali"
+        style="@style/comm_title_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_ali"
+        android:drawablePadding="@dimen/layout_padding_l"
+        android:gravity="center_vertical"
+        android:padding="@dimen/layout_padding_l"
+        android:text="@string/account_ali" />
+
+    <View
+        style="@style/line_horStyle"
+        android:layout_marginLeft="@dimen/layout_margin_l" />
+
+    <TextView
+        android:id="@+id/account_recharge_frg_tv_wechat"
+        style="@style/comm_title_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_wechat"
+        android:drawablePadding="@dimen/layout_padding_l"
+        android:gravity="center_vertical"
+        android:padding="@dimen/layout_padding_l"
+        android:text="@string/account_wechat" />
+
+    <View style="@style/line_horStyle" />
+</LinearLayout>

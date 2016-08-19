@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/personal_main_frg_tv_name"
-                style="@style/comm_title"
+                style="@style/comm_title_black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true" />
