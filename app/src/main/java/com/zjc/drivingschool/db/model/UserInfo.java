@@ -3,7 +3,7 @@ package com.zjc.drivingschool.db.model;
 import java.io.Serializable;
 
 
-public class UserInfo extends BaseInfo{
+public class UserInfo implements Serializable {
 
 
     /**

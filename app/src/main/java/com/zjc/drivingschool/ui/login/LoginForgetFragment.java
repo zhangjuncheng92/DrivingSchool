@@ -144,7 +144,7 @@ public class LoginForgetFragment extends ZBaseToolBarFragment implements View.On
             return;
         } else {
             UserCode userCode = (UserCode) tvCode.getTag();
-            if (!phone.equals(userCode.getPhone()) || !code.equals(userCode.getCode())) {
+            if (!phone.equals(userCode.getPhone()) || !code.equals(userCode.getValcode())) {
                 Util.showCustomMsg("验证码不正确，请重新获取验证码");
                 return;
             }

@@ -54,7 +54,7 @@
     <!--个人中心-->
     <!--我的钱包-->
     <string name="title_account">我的钱包</string>
-    <string name="account_surplus">账户余额</string>
+    <string name="account_surplus">账户余额（元）</string>
     <string name="account_cost_record">消费记录</string>
     <string name="account_recharge_title">账户充值</string>
     <string name="account_recharge_record">充值记录</string>

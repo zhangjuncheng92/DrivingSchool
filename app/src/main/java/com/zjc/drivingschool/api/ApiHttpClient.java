@@ -220,13 +220,13 @@ public class ApiHttpClient {
     /**
      * 6.2接口：getMyAccount
      * 用途：获取我的账户信息
-     * 参数：userId(登录用户主键)
-     * 调用示例：http://localhost:8080/medical/services/account/getMyAccount?userId=40
+     * 参数：uid(登录用户主键)
+     * 调用示例：/app/student/account/balance
      */
-    public void getMyAccount(int userId, AsyncHttpResponseHandler asyncHttpResponseHandler) {
-        RequestParams params = new RequestParams();
-        params.put("userId", userId);
-        HttpUtilsAsync.post(Constants.BASE_URL + "account/getMyAccount", params, asyncHttpResponseHandler);
+    public void getMyAccount(String userId, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/account/balance", postRequest, asyncHttpResponseHandler);
     }
 
     /**

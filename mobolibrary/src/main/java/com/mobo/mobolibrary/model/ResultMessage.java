@@ -9,25 +9,7 @@ import java.util.List;
  * @author sharoncn
  */
 public class ResultMessage<T> {
-    private boolean flag;
-    private List<T> result = null;// 其他信息
-    private Errorinfo errorinfo;
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
-    public Errorinfo getErrorinfo() {
-        return errorinfo;
-    }
-
-    public void setErrorinfo(Errorinfo errorinfo) {
-        this.errorinfo = errorinfo;
-    }
+    private List<T> result = null;
 
     public List<T> getResult() {
         return result;

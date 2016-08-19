@@ -1,6 +1,8 @@
 package com.zjc.drivingschool.db.model;
 
-public class UserCode extends BaseInfo{
+import java.io.Serializable;
+
+public class UserCode implements Serializable{
 
 	/**
 	 * phone : 13296677400

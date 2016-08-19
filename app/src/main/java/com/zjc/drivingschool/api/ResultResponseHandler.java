@@ -61,7 +61,7 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
         this.jsonParser = jsonParser;
     }
 
-    public ResultResponseHandler(Context mContext, EmptyLayout emptyLayout, JsonParser jsonParser) {
+    public ResultResponseHandler(Context mContext, EmptyLayout emptyLayout) {
         this.mContext = mContext;
         this.emptyLayout = emptyLayout;
         this.jsonParser = jsonParser;

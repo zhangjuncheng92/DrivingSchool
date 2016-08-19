@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +23,14 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.parser.AccountParser;
+import com.zjc.drivingschool.db.model.AccountBalance;
+import com.zjc.drivingschool.db.parser.AccountBalanceParser;
 import com.zjc.drivingschool.eventbus.pay.PayAliAccountResultEvent;
 import com.zjc.drivingschool.eventbus.pay.PayWXAccountResultEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.beecloud.BCPay;
@@ -44,6 +49,14 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
     private TextView tvAccount;
     private Button tvRecharge;
     private Button tvRechargeHistory;
+
+    private RadioButton rb100;//数字代表充值的金额
+    private RadioButton rb200;
+    private RadioButton rb500;
+    private RadioButton rb1000;
+    private RadioButton rb2000;
+    private RadioButton rb5000;
+    private List<RadioButton> radioButtonList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,18 +99,57 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
         initEmptyLayout(rootView);
         initView();
         setListener();
-//        getMyAccount();
+        getAccount();
     }
 
     private void initView() {
-        tvAccount = (TextView) rootView.findViewById(R.id.account_paytype_frg_rest);
+        tvAccount = (TextView) rootView.findViewById(R.id.account_manager_frg_tv_total);
         tvRecharge = (Button) rootView.findViewById(R.id.account_frg_recharge);
         tvRechargeHistory = (Button) rootView.findViewById(R.id.account_frg_withdraw);
+
+        rb100 = (RadioButton) rootView.findViewById(R.id.account_manager_frg_100);
+        rb200 = (RadioButton) rootView.findViewById(R.id.account_manager_frg_200);
+        rb500 = (RadioButton) rootView.findViewById(R.id.account_manager_frg_500);
+        rb1000 = (RadioButton) rootView.findViewById(R.id.account_manager_frg_1000);
+        rb2000 = (RadioButton) rootView.findViewById(R.id.account_manager_frg_2000);
+        rb5000 = (RadioButton) rootView.findViewById(R.id.account_manager_frg_5000);
+
+        radioButtonList.add(rb100);
+        radioButtonList.add(rb200);
+        radioButtonList.add(rb500);
+        radioButtonList.add(rb1000);
+        radioButtonList.add(rb2000);
+        radioButtonList.add(rb5000);
     }
 
     private void setListener() {
         tvRecharge.setOnClickListener(this);
         tvRechargeHistory.setOnClickListener(this);
+
+        /**保证只能点击一个*/
+        for (int i = 0; i < radioButtonList.size(); i++) {
+            final int finalI = i;
+            radioButtonList.get(i).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                    if (radioButtonList.get(finalI).isChecked()) {
+                        toggle(compoundButton.getId());
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 保证只能点击一个
+     */
+    private void toggle(int viewId) {
+        for (int i = 0; i < radioButtonList.size(); i++) {
+            if (radioButtonList.get(i).getId() != viewId) {
+                radioButtonList.get(i).setChecked(false);
+            }
+        }
     }
 
     @Override
@@ -113,6 +165,22 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
 //            AccountWithDrawFragment fragment = AccountWithDrawFragment.newInstance(Double.valueOf(tvAccount.getText().toString()));
 //            replaceFrg(fragment, null);
         }
+    }
+
+    private void getAccount() {
+        ApiHttpClient.getInstance().getMyAccount(SharePreferencesUtil.getInstance().readUser().getUid(), new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+
+            @Override
+            public void onResultSuccess(String result) {
+                AccountBalance balance = new AccountBalanceParser().parseResultMessage(result);
+                tvAccount.setText(balance.getBalance() + "");
+            }
+        });
+    }
+
+    @Override
+    public void sendRequestData() {
+        getAccount();
     }
 
     private void toWXPay() {
@@ -133,36 +201,6 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
         } else {
             Util.showCustomMsg("您尚未安装微信或者安装的微信版本不支持");
         }
-    }
-
-    private void getMyAccount() {
-        ApiHttpClient.getInstance().getMyAccount(SharePreferencesUtil.getInstance().readUser().getId(), new ResultResponseHandler(getActivity(), getEmptyLayout(), new AccountParser()) {
-
-            @Override
-            public void onResultSuccess(String result) {
-//                tvAccount.setText(result.get(0).getTotal() + "");
-            }
-        });
-    }
-
-    @Override
-    public void sendRequestData() {
-        getMyAccount();
-    }
-
-    public void onEventMainThread(PayAliAccountResultEvent event) {
-
-    }
-
-    public void onEventMainThread(PayWXAccountResultEvent event) {
-        //接收微信支付成功消息，刷新界面
-        getMyAccount();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private String toastMsg;
@@ -254,4 +292,19 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
             return true;
         }
     });
+
+    public void onEventMainThread(PayAliAccountResultEvent event) {
+
+    }
+
+    public void onEventMainThread(PayWXAccountResultEvent event) {
+        //接收微信支付成功消息，刷新界面
+        getAccount();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

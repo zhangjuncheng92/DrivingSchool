@@ -55,4 +55,16 @@
         <item name="android:paddingRight">@dimen/layout_margin_m</item>
         <item name="android:paddingTop">@dimen/layout_padding_ml</item>
     </style>
+
+    <style name="account_select_layout">
+        <item name="android:background">@drawable/account_select_gary</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/account_select_text</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:button">@drawable/comm_select_grey</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/layout_padding_ml</item>
+    </style>
 </resources>
