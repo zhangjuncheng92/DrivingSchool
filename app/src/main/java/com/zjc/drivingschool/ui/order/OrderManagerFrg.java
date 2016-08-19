@@ -12,7 +12,15 @@ import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.api.ApiHttpClient;
+import com.zjc.drivingschool.api.ResultResponseHandler;
+import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.OrderListResponse;
+import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.ui.order.adapter.OrderManagerAdapter;
+import com.zjc.drivingschool.utils.ConstantsParams;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/17.
@@ -36,6 +44,7 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
         initEmptyLayout(rootView);
         initView();
         initAdapter();
+        findOrders();
     }
 
     private void initView() {
@@ -60,6 +69,31 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    private void findOrders() {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+
+            @Override
+            public void onResultSuccess(String result) {
+                OrderListResponse orderListResponse = new OrderListResponseParser().parseResultMessage(result);
+                initAdapter();
+                mAdapter.addAll(orderListResponse.getOrderitems());
+                isLoadFinish(orderListResponse.getOrderitems().size());
+            }
+        });
+    }
+
+    /**
+     * 加载完成
+     */
+    public boolean isLoadFinish(int size) {
+        if (size < ConstantsParams.PAGE_SIZE) {
+            mAdapter.stopMore();
+            mAdapter.setNoMore(R.layout.view_nomore);
+            return true;
+        }
+        return false;
     }
 
     @Override

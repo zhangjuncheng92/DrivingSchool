@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.model.UserInfo;
 
 /**
@@ -23,7 +24,7 @@ public class OrderManagerAdapter extends ZBaseRecyclerViewAdapter {
         return new OrderManagerFrgViewHolder(parent);
     }
 
-    class OrderManagerFrgViewHolder extends BaseViewHolder<UserInfo> {
+    class OrderManagerFrgViewHolder extends BaseViewHolder<OrderItem> {
         private TextView mTvName;
         private TextView mTvStatus;
         private TextView mTvNumber;
@@ -45,7 +46,7 @@ public class OrderManagerAdapter extends ZBaseRecyclerViewAdapter {
         }
 
         @Override
-        public void setData(UserInfo service) {
+        public void setData(OrderItem service) {
             if (service == null) {
                 return;
             }

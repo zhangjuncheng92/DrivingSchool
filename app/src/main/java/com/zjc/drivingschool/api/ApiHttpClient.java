@@ -9,6 +9,7 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
 import com.zjc.drivingschool.utils.Constants;
+import com.zjc.drivingschool.utils.ConstantsParams;
 
 import java.io.File;
 
@@ -253,6 +254,20 @@ public class ApiHttpClient {
         RequestParams params = new RequestParams();
 
         HttpUtilsAsync.post(Constants.BASE_URL + "order/create", params, asyncHttpResponseHandler);
+    }
+
+
+    /**
+     * 1.1.14 学员学车订单列表
+     * 参数：pagesize  uid offset   state  orderid creatdate
+     * 调用示例：/app/student/order/list
+     */
+    public void findOrders(String userId, int start, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("offset", start);
+        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/list", postRequest, asyncHttpResponseHandler);
     }
 
 

@@ -17,7 +17,7 @@ import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.model.BaseInfo;
+import com.zjc.drivingschool.db.model.AppResponse;
 import com.zjc.drivingschool.db.parser.BaseObjectParser;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.utils.Constants;
@@ -135,7 +135,7 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
                 onSwipeFail();
             } else if (requestCode == Constants.REQUEST_CODE_EMPTY) {
                 //如果是遮罩布局请求
-                BaseInfo resultMessage = new BaseObjectParser().parseResultMessage(s);
+                AppResponse resultMessage = new BaseObjectParser().parseResultMessage(s);
                 if (resultMessage.getCode().equals("200")) {
                     //如果empty不为空，并且获取的数据为0，则显示无数据界面。
 //                        if (resultMessage.getResult() != null && resultMessage.getResult().size() == 0) {
@@ -151,7 +151,7 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
                 }
             } else if (requestCode == Constants.REQUEST_CODE_DIALOG) {
                 //如果是dialog请求
-                BaseInfo resultMessage = new BaseObjectParser().parseResultMessage(s);
+                AppResponse resultMessage = new BaseObjectParser().parseResultMessage(s);
                 if (resultMessage.getCode().equals("200")) {
                     onSuccess(s);
                     Util.showCustomMsgLong(resultMessage.getMessage());
@@ -166,19 +166,19 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
     }
 
     @NonNull
-    private BaseInfo getNotNetErrorInfo() {
-        BaseInfo baseInfo = new BaseInfo();
-        baseInfo.setCode("404");
-        baseInfo.setMessage(mContext.getResources().getString(R.string.error_view_network_error_click_to_refresh));
-        return baseInfo;
+    private AppResponse getNotNetErrorInfo() {
+        AppResponse appResponse = new AppResponse();
+        appResponse.setCode("404");
+        appResponse.setMessage(mContext.getResources().getString(R.string.error_view_network_error_click_to_refresh));
+        return appResponse;
     }
 
     @NonNull
-    private BaseInfo getFailErrorInfo() {
-        BaseInfo baseInfo = new BaseInfo();
-        baseInfo.setCode("404");
-        baseInfo.setMessage(mContext.getResources().getString(R.string.error_view_click_to_refresh));
-        return baseInfo;
+    private AppResponse getFailErrorInfo() {
+        AppResponse appResponse = new AppResponse();
+        appResponse.setCode("404");
+        appResponse.setMessage(mContext.getResources().getString(R.string.error_view_click_to_refresh));
+        return appResponse;
     }
 
     @Override
@@ -212,7 +212,7 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
     public void onNotDataSuccess(String result) {
     }
 
-    public void onResultFailure(BaseInfo errorInfo) {
+    public void onResultFailure(AppResponse errorInfo) {
         try {
             if (errorInfo != null) {
                 if (TextUtils.equals(errorInfo.getMessage(), "认证信息有误，请重新登录")) {

@@ -18,12 +18,8 @@ import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.model.BaseInfo;
 import com.zjc.drivingschool.db.model.UserInfo;
-import com.zjc.drivingschool.db.parser.BaseObjectParser;
 import com.zjc.drivingschool.db.parser.UserInfoParser;
-
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
