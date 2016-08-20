@@ -14,16 +14,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.jpush.JPushUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
 import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
 import com.zjc.drivingschool.ui.learn.LearnActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.ui.order.OrderManagerActivity;
-
-import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar toolbar;
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initToolBar();
         initNavigation();
         initView();
-//        initMap();
+        initMap();
     }
 
     private void initToolBar() {
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logout() {
-        JPushInterface.setAlias(MApp.getInstance().getApplicationContext(), "", null);
+        JPushUtil.setAliasAndTags();
         SharePreferencesUtil.getInstance().setLogin(false);
         SharePreferencesUtil.getInstance().removePwd();
         verifyIsLogin();

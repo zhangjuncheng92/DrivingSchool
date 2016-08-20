@@ -20,6 +20,7 @@ import com.zjc.drivingschool.app.MApp;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.db.parser.UserInfoParser;
+import com.zjc.drivingschool.jpush.JPushUtil;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -119,16 +120,10 @@ public class LoginMainFragment extends ZBaseToolBarFragment implements View.OnCl
                 SharePreferencesUtil.getInstance().savePwd(edtPawd.getEditableText().toString());
                 SharePreferencesUtil.getInstance().saveUser(userInfo);
                 SharePreferencesUtil.getInstance().setLogin(true);
-                setAlias();
+                JPushUtil.setAliasAndTags();
                 getActivity().finish();
             }
         });
-    }
-
-    public void setAlias() {
-        //调用JPush API设置Alias
-        JPushInterface.setAlias(MApp.getInstance().getApplicationContext(), SharePreferencesUtil.getInstance().readPhone(), null);
-
     }
 
     @Override

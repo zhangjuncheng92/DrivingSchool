@@ -22,6 +22,7 @@ import com.zjc.drivingschool.db.model.UserCode;
 import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.db.parser.UserCodeParser;
 import com.zjc.drivingschool.db.parser.UserInfoParser;
+import com.zjc.drivingschool.jpush.JPushUtil;
 import com.zjc.drivingschool.utils.ConstantsParams;
 import com.zjc.drivingschool.utils.MessageCountTimer;
 
@@ -179,20 +180,10 @@ public class LoginRegisterFragment extends ZBaseToolBarFragment implements View.
                 SharePreferencesUtil.getInstance().savePwd(edtCode.getEditableText().toString());
                 SharePreferencesUtil.getInstance().saveUser(userInfo);
                 SharePreferencesUtil.getInstance().setLogin(true);
-                setAlias();
+                JPushUtil.setAliasAndTags();
                 getActivity().finish();
             }
         });
-    }
-
-    public void setAlias() {
-        //调用JPush API设置Alias
-        if (JPushInterface.isPushStopped(getActivity())) {
-            JPushInterface.resumePush(getActivity());
-        }
-        if (!TextUtils.isEmpty(SharePreferencesUtil.getInstance().readPhone())) {
-            JPushInterface.setAlias(getActivity(), SharePreferencesUtil.getInstance().readPhone(), null);
-        }
     }
 
     @Override
