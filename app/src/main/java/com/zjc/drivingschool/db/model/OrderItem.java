@@ -22,7 +22,7 @@ public class OrderItem
 	
 	private String state;// 订单状态 1.预订成功 2.已支付 3.申请退订 4.已退订 5.消费中 6.已消费 7.待评价 8.已完成 9.已取消
 	
-	private BigDecimal total;// 总价
+	private double total;// 总价
 	
 	private String ordertime;// 下单时间
 
@@ -66,12 +66,12 @@ public class OrderItem
 		this.state = state;
 	}
 
-	public BigDecimal getTotal()
+	public double getTotal()
 	{
 		return total;
 	}
 
-	public void setTotal(BigDecimal total)
+	public void setTotal(double total)
 	{
 		this.total = total;
 	}

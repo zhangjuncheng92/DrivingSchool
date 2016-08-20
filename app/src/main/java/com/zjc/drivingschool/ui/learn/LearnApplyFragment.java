@@ -184,7 +184,8 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
                 birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.tv_locale://练车地点
-
+                LearnAddressFragment fragment = new LearnAddressFragment();
+                replaceFrg(fragment, null);
                 break;
             case R.id.tv_timeLength:
                 //隐藏虚拟键盘
