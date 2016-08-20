@@ -1,25 +1,18 @@
 package com.zjc.drivingschool.ui.apply;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.alertdialogpro.AlertDialogPro;
-import com.bigkoo.pickerview.TimePopupWindow;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.api.ApiHttpClient;
-import com.zjc.drivingschool.api.ResultResponseHandler;
 
 /**
  * @author Z
@@ -32,7 +25,7 @@ public class ApplyFragment extends ZBaseToolBarFragment {
     private EditText edtPhone;
     private EditText edtAge;
     private Spinner spSex;
-    private TimePopupWindow birthOptions;
+    private TextView tv_next;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,27 +36,7 @@ public class ApplyFragment extends ZBaseToolBarFragment {
     @Override
     protected void setTitle() {
         setTitle(mToolbar, R.string.title_apply);
-        mToolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_hierarchical_create, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            int id = item.getItemId();
-            if (id == R.id.menu_action_create) {
-                //新建患者
-                showSureInfoDialog();
-            }
-            return true;
-        }
-    };
-
 
     @Override
     protected int inflateContentView() {
@@ -80,8 +53,15 @@ public class ApplyFragment extends ZBaseToolBarFragment {
         edtName = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_name);
         edtPhone = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_phone);
         spSex = (Spinner) rootView.findViewById(R.id.hierarchical_create_resident_frg_sp_sex);
-
+        tv_next = (TextView) rootView.findViewById(R.id.tv_next);
         edtAge = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_age);
+        tv_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //提交信息
+                createResident();
+            }
+        });
     }
 
     private void initSpSex() {
@@ -91,48 +71,23 @@ public class ApplyFragment extends ZBaseToolBarFragment {
         spSex.setAdapter(adapter);
     }
 
-
-    private void showSureInfoDialog() {
-        AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
-        builder.setTitle("温馨提示");
-        builder.setMessage("您确认所填患者信息？");
-        builder.setNegativeButton("确认",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        createResident();
-                    }
-                });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                return;
-            }
-        });
-        builder.show();
-    }
-
     private void createResident() {
-        //必填
         String name = edtName.getEditableText().toString().trim();
         String phone = edtPhone.getEditableText().toString().trim();
         int sex = spSex.getSelectedItemPosition();
+        String age = edtAge.getEditableText().toString().trim();
 
-        if (TextUtils.isEmpty(name)) {
-            Util.showCustomMsg(getContext().getResources().getString(R.string.hierarchical_resident_create_hint_name));
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone) || sex < 0 || TextUtils.isEmpty(age)) {
+            Util.showCustomMsg("请填写完整信息");
             return;
         }
 
-        if (TextUtils.isEmpty(phone)) {
-            Util.showCustomMsg(getContext().getResources().getString(R.string.hierarchical_resident_create_hint_phone));
-            return;
-        }
-
-
-        ApiHttpClient.getInstance().learnApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
-            @Override
-            public void onResultSuccess(String result) {
-                getActivity().finish();
-            }
-        });
+// TODO: 2016/8/20 提交预约报名信息
+//        ApiHttpClient.getInstance().learnApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
+//            @Override
+//            public void onResultSuccess(String result) {
+//                getActivity().finish();
+//            }
+//        });
     }
 }

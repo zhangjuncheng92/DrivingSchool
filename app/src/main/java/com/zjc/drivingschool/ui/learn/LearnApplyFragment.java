@@ -1,35 +1,29 @@
 package com.zjc.drivingschool.ui.learn;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
-import com.alertdialogpro.AlertDialogPro;
+import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
-import com.mobo.mobolibrary.util.UtilDate;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
-import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
-import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.eventbus.pay.PayAliAccountResultEvent;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import de.greenrobot.event.EventBus;
@@ -41,29 +35,30 @@ import de.greenrobot.event.EventBus;
  * @description 学车申请
  */
 public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnClickListener {
-    private EditText edtName;
-    private EditText edtIdCard;
-    private EditText edtPhone;
-    private EditText edtMedical;
-    private EditText edtAge;
-    private EditText edtPlace;
-    private TextView tvAddress;
-    private EditText etPatient;
+    ToggleButton jpushButton;
+    private TextView tv_time;
+    private TextView tv_locale;
+    private TextView tv_timeLength;
+    private TextView tv_subject;
+    private TextView tv_style;
+    private TextView tv_telephone;
+    private TextView tv_next;
+    private TextView tv_money;
+    private int index;
 
+    private OptionsPopupWindow timeLengthOptions;
+    private ArrayList<String> optionsItems = new ArrayList<>();
 
-    private Spinner spSex;
-    private TextView tvCommunity;
-    private TextView tvBirthday;
+    private OptionsPopupWindow tvSubjectOptions;
+    private ArrayList<String> optionsItemsSubject = new ArrayList<>();//培训科目集合
 
-    private RelativeLayout mRelayCommunity;
-    private RelativeLayout mRelayBirthday;
+    private OptionsPopupWindow tvStyleOptions;
+    private ArrayList<String> optionsItemsStyle = new ArrayList<>();
 
     private OrderItem orderItem;
 
     private TimePopupWindow birthOptions;
 
-    private static int ID_CARD_NUM = 18;
-    private static int ID_CARD_NUM_OLD = 15;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,27 +70,55 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
     @Override
     protected void setTitle() {
         setTitle(mToolbar, R.string.title_learn);
-        mToolbar.setOnMenuItemClickListener(onMenuItemClickListener);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_hierarchical_create, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private Toolbar.OnMenuItemClickListener onMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            int id = item.getItemId();
-            if (id == R.id.menu_action_create) {
-                //新建患者
-                showSureInfoDialog();
+    private void initSubjectOptions() {
+        tvSubjectOptions = new OptionsPopupWindow(getActivity());
+        //假数据 需要从后台获取数据
+        optionsItemsSubject.add("科目二培训");
+        optionsItemsSubject.add("市内陪练");
+        optionsItemsSubject.add("科目三培训");
+        tvSubjectOptions.setPicker(optionsItemsSubject, null, null, true);
+        tvSubjectOptions.setSelectOptions(0);
+        tvSubjectOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                String tx = optionsItemsSubject.get(options1);
+                tv_subject.setText(tx);
             }
-            return true;
-        }
-    };
+        });
+    }
 
+    private void initStyleOptions() {
+        tvStyleOptions = new OptionsPopupWindow(getActivity());
+        optionsItemsStyle.add("VIP训练");
+        optionsItemsStyle.add("普通训练");
+        tvStyleOptions.setPicker(optionsItemsStyle, null, null, true);
+        tvStyleOptions.setSelectOptions(0);
+        tvStyleOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                String tx = optionsItemsStyle.get(options1);
+                tv_style.setText(tx);
+            }
+        });
+    }
+
+    private void initTimeLengthOptions() {
+        timeLengthOptions = new OptionsPopupWindow(getActivity());
+        optionsItems.add("1小时");
+        optionsItems.add("2小时");
+        optionsItems.add("3小时");
+        timeLengthOptions.setPicker(optionsItems, null, null, true);
+        timeLengthOptions.setSelectOptions(0);
+        timeLengthOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                String tx = optionsItems.get(options1);
+                tv_timeLength.setText(tx);
+            }
+        });
+    }
 
     @Override
     protected int inflateContentView() {
@@ -105,126 +128,135 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
     @Override
     protected void layoutInit(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView();
-        initSpSex();
         initBirthOptions();
+        initTimeLengthOptions();
+        initStyleOptions();
+        initSubjectOptions();
         orderItem = new OrderItem();
     }
 
     private void initView() {
-        edtName = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_name);
-        edtPhone = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_phone);
-        spSex = (Spinner) rootView.findViewById(R.id.hierarchical_create_resident_frg_sp_sex);
+        jpushButton = (ToggleButton) rootView.findViewById(R.id.personal_center_set_frg_jpush_button2);
+        tv_time = (TextView) rootView.findViewById(R.id.tv_time);
+        tv_locale = (TextView) rootView.findViewById(R.id.tv_locale);
+        tv_timeLength = (TextView) rootView.findViewById(R.id.tv_timeLength);
+        tv_subject = (TextView) rootView.findViewById(R.id.tv_subject);
+        tv_style = (TextView) rootView.findViewById(R.id.tv_style);
+        tv_telephone = (TextView) rootView.findViewById(R.id.tv_telephone);
+        tv_next = (TextView) rootView.findViewById(R.id.tv_next);
+        tv_money = (TextView) rootView.findViewById(R.id.tv_money);
 
-        edtAge = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_age);
-        tvAddress = (TextView) rootView.findViewById(R.id.hierarchical_create_resident_frg_tv_address);
-        tvBirthday = (TextView) rootView.findViewById(R.id.hierarchical_create_resident_frg_tv_birthday);
-
-        mRelayBirthday = (RelativeLayout) rootView.findViewById(R.id.hierarchical_create_resident_frg_rl_birthday);
-
-        mRelayBirthday.setOnClickListener(this);
+        tv_time.setOnClickListener(this);
+        tv_locale.setOnClickListener(this);
+        tv_timeLength.setOnClickListener(this);
+        tv_subject.setOnClickListener(this);
+        tv_style.setOnClickListener(this);
+        tv_telephone.setOnClickListener(this);
+        tv_next.setOnClickListener(this);
+        jpushButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked == true) {
+                    setIndex(1);
+                    jpushButton.setChecked(true);
+                    jpushButton.setBackgroundResource(R.drawable.toggle_on);
+                    tv_telephone.setVisibility(View.VISIBLE);
+                } else {
+                    jpushButton.setChecked(false);
+                    setIndex(0);
+                    jpushButton.setBackgroundResource(R.drawable.toggle_off);
+                    tv_telephone.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
-    private void initSpSex() {
-        String[] list = getResources().getStringArray(R.array.referral_sex);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.referral_spinner_item, list);
-        adapter.setDropDownViewResource(R.layout.referral_spinner_dropdown_item);
-        spSex.setAdapter(adapter);
+    @Override
+    public void onClick(View v) {
+        InputMethodManager inputmanger = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        switch (v.getId()) {
+            case R.id.tv_next:
+                createResident();
+                break;
+            case R.id.tv_time:
+                //隐藏虚拟键盘
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.tv_locale://练车地点
+
+                break;
+            case R.id.tv_timeLength:
+                //隐藏虚拟键盘
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                timeLengthOptions.showAtLocation(tv_timeLength, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.tv_subject:
+                //隐藏虚拟键盘
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                tvSubjectOptions.showAtLocation(tv_subject, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.tv_style:
+                //隐藏虚拟键盘
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                tvStyleOptions.showAtLocation(tv_style, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.tv_telephone://跳转联系人
+
+                break;
+        }
     }
+
 
     private void initBirthOptions() {
-        birthOptions = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        birthOptions = new TimePopupWindow(getActivity(), TimePopupWindow.Type.ALL);
         birthOptions.setRange(1900, 2050);
         birthOptions.setTime(new Date());
 
         birthOptions.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                if (Util.getAge(date) < 0) {
-                    Util.showCustomMsg(R.string.login_register_age_small);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+                Date da = new Date();
+                String time = sdf.format(da);
+                String timePick = sdf.format(date);
+                if (Integer.valueOf(time.substring(0, 4)).intValue() > Integer.valueOf(timePick.substring(0, 4)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
                     return;
+                } else if (Integer.valueOf(time.substring(5, 7)).intValue() > Integer.valueOf(timePick.substring(5, 7)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else if (Integer.valueOf(time.substring(8, 10)).intValue() > Integer.valueOf(timePick.substring(8, 10)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else if (Integer.valueOf(time.substring(11, 13)).intValue() > Integer.valueOf(timePick.substring(11, 13)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else if (Integer.valueOf(time.substring(14, 16)).intValue() > Integer.valueOf(timePick.substring(14, 16)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else {
+                    tv_time.setText(timePick);
                 }
-                tvBirthday.setText(UtilDate.formatDate(date) + "");
-                edtAge.setText(Util.getAge(date) + "");
             }
         });
     }
 
-
-    @Override
-    public void onClick(View v) {
-        UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
-        int i = v.getId();
-        if (i == R.id.hierarchical_create_resident_frg_rl_birthday) {
-            birthOptions.showAtLocation(mRelayCommunity, Gravity.BOTTOM, 0, 0);
-        }
-    }
-
-    private void showSureInfoDialog() {
-        AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
-        builder.setTitle("温馨提示");
-        builder.setMessage("您确认所填患者信息？");
-        builder.setNegativeButton("确认",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        createResident();
-                    }
-                });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                return;
-            }
-        });
-        builder.show();
-    }
 
     private void createResident() {
         //必填
-        String name = edtName.getEditableText().toString().trim();
-        String idCard = edtIdCard.getEditableText().toString().trim();
-        String phone = edtPhone.getEditableText().toString().trim();
-        int sex = spSex.getSelectedItemPosition();
-        String medical = edtMedical.getEditableText().toString().trim();//医保卡
-        String patient = etPatient.getEditableText().toString().trim();//就诊卡号
-        String birthday = tvBirthday.getText().toString().trim();
-        String age = edtAge.getEditableText().toString().trim();
-        String place = edtPlace.getEditableText().toString().trim();
-        String address = tvAddress.getEditableText().toString().trim();
+        String tvTime = tv_time.getText().toString().trim();//预约时间
+        String tvLocale = tv_locale.getText().toString().trim();//练车地点
+        String tvTimeLength = tv_timeLength.getText().toString().trim();//练车时长
+        String tvSubject = tv_subject.getText().toString().trim();//培训科目
+        String tvStyle = tv_style.getText().toString().trim();//服务类型
+        String tvTelephone = tv_telephone.getText().toString().trim();//联系方式
+        String tvMoney = tv_money.getText().toString().trim();//价格
 
-        if (TextUtils.isEmpty(name)) {
-            Util.showCustomMsg(getContext().getResources().getString(R.string.hierarchical_resident_create_hint_name));
+        if (TextUtils.isEmpty(tvTime) || TextUtils.isEmpty(tvLocale) || TextUtils.isEmpty(tvTimeLength) || TextUtils.isEmpty(tvSubject) || TextUtils.isEmpty(tvStyle)) {
+            Util.showCustomMsg("请输入完整信息");
             return;
         }
-
-        if (TextUtils.isEmpty(phone)) {
-            Util.showCustomMsg(getContext().getResources().getString(R.string.hierarchical_resident_create_hint_phone));
-            return;
-        }
-
-//        * 开始位置经度	longitude	number	必填
-//        项目类型ID	subjectid	string	必填
-//        项目类型名称	subjectname	string	必填
-//        是否VIP	isvip	boolean	必填
-//        开始位置纬度	latitude	number	必填
-//        车型名称	carsname	string	必填
-//        是否代人下单	isreplace	boolean	必填
-//        下单用户ID	uid	string	必填
-//        联系人姓名	contactsname	string	isreplace为true时必传
-//        联系人电话	contactsphone	string	isreplace为true时必传
-//        数量 单位：小时	number	number	必填
-//        开始时间 格式：yyyy-MM-dd hh:mm:ss	starttime	string	必填
-//        车型ID	carsid	string	必填
-//        下单用户名	loginname	string	必填
-//        下单用户昵称	nickname	string	必填
-//        优惠券ID	vid	string	非必传，格式:多个ID用','分割
-
-//        orderItem.set(name);
-//        orderItem.setSex(sex);
-//        orderItem.setIdcard(idCard);
-//        orderItem.setPhone(phone);
-//        orderItem.setMedicalNumber(medical);
-//        orderItem.setBirthday(birthday);
-//        orderItem.setJzkh(patient);
 
         ApiHttpClient.getInstance().learnApply(orderItem, new ResultResponseHandler(getActivity(), "正在提交，请稍等") {
             @Override
@@ -242,4 +274,13 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
 }

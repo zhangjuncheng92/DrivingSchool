@@ -27,7 +27,8 @@
                 android:layout_toRightOf="@+id/tv_name"
                 android:background="@color/transparent"
                 android:gravity="right"
-                android:hint="@string/hierarchical_resident_create_hint_name"
+                android:hint="学员姓名"
+                android:maxLength="7"
                 android:singleLine="true" />
         </RelativeLayout>
 
@@ -79,8 +80,7 @@
             style="@style/line_horStyle"
             android:layout_marginLeft="@dimen/layout_margin_ml" />
 
-        <RelativeLayout
-            style="@style/comm_layout_two">
+        <RelativeLayout style="@style/comm_layout_two">
 
             <TextView
                 android:id="@+id/tv_age"
@@ -100,6 +100,7 @@
                 android:background="@color/transparent"
                 android:gravity="right"
                 android:inputType="numberDecimal"
+                android:maxLength="3"
                 android:singleLine="true" />
 
             <TextView
@@ -135,11 +136,28 @@
                 android:layout_toRightOf="@+id/tv_phone"
                 android:background="@color/transparent"
                 android:gravity="right"
-                android:hint="@string/hierarchical_resident_create_hint_phone"
+                android:hint="联系电话"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:singleLine="true" />
         </RelativeLayout>
 
         <View style="@style/line_horStyle" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:text="提交"
+                android:textColor="@color/comm_blue" />
+        </RelativeLayout>
+
     </LinearLayout>
 </ScrollView>
