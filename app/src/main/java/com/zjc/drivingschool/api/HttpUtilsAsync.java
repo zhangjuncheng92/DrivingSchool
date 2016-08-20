@@ -1,6 +1,5 @@
 package com.zjc.drivingschool.api;
 
-import android.content.ContentValues;
 import android.content.Context;
 
 import com.google.gson.JsonObject;
@@ -12,7 +11,6 @@ import com.loopj.android.http.SyncHttpClient;
 import com.mobo.mobolibrary.logs.BasicUtils;
 import com.mobo.mobolibrary.logs.Logs;
 import com.zjc.drivingschool.app.MApp;
-import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.cookie.Cookie;
@@ -42,7 +40,7 @@ public class HttpUtilsAsync {
     private static AsyncHttpClient client;
     private static int timeout = 20 * 1000;
     private static int retry = 1;
-    private static String CONTENT_TYPE= "application/json";
+    private static String CONTENT_TYPE = "application/json";
 
     static {
         client = new AsyncHttpClient();
@@ -111,7 +109,7 @@ public class HttpUtilsAsync {
     public static void post(String url, JsonObject params, AsyncHttpResponseHandler responseHandler) {
         client.setMaxRetriesAndTimeout(retry, timeout);
         try {
-            StringEntity stringEntity = new StringEntity(params.toString());
+            StringEntity stringEntity = new StringEntity(params.toString(), "UTF-8");
             client.post(MApp.getInstance().getApplicationContext(), url, stringEntity, CONTENT_TYPE, responseHandler);
             Logs.i("HttpUtilsAsync", url.toString() + "?" + params.toString());
         } catch (UnsupportedEncodingException e) {

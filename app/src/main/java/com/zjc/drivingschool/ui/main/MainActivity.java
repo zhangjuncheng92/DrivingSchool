@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initToolBar();
         initNavigation();
         initView();
-        initMap();
+//        initMap();
     }
 
     private void initToolBar() {

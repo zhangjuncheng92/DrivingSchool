@@ -56,15 +56,13 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
     private JsonParser jsonParser;
     private boolean isCheckNetWork = true; // 是否检查网络，默认检查
 
-    public ResultResponseHandler(Context mContext, JsonParser jsonParser) {
+    public ResultResponseHandler(Context mContext) {
         this.mContext = mContext;
-        this.jsonParser = jsonParser;
     }
 
     public ResultResponseHandler(Context mContext, EmptyLayout emptyLayout) {
         this.mContext = mContext;
         this.emptyLayout = emptyLayout;
-        this.jsonParser = jsonParser;
         requestCode = Constants.REQUEST_CODE_EMPTY;
     }
 
@@ -155,6 +153,14 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
                 if (resultMessage.getCode().equals("200")) {
                     onSuccess(s);
                     Util.showCustomMsgLong(resultMessage.getMessage());
+                } else {
+                    onResultFailure(resultMessage);
+                }
+            } else {
+                //如果都不是
+                AppResponse resultMessage = new BaseObjectParser().parseResultMessage(s);
+                if (resultMessage.getCode().equals("200")) {
+                    onSuccess(s);
                 } else {
                     onResultFailure(resultMessage);
                 }
