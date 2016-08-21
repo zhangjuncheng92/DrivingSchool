@@ -60,7 +60,6 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
         initView();
         initAdapter();
         getNotice(getEmptyLayout());
-
     }
 
     private void initView() {
@@ -90,7 +89,6 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
     @Override
     protected void setTitle() {
         setTitle(mToolbar, "消息");
-        mToolbar.setNavigationIcon(null);
     }
 
     @Override
@@ -118,18 +116,6 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
         });
     }
 
-    /**
-     * 加载完成
-     */
-    public boolean isLoadFinish(int size) {
-        if (size < ConstantsParams.PAGE_SIZE) {
-            mAdapter.stopMore();
-            mAdapter.setNoMore(R.layout.view_nomore);
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
@@ -142,6 +128,18 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
                 isLoadFinish(orderListResponse.getMsgitems().size());
             }
         });
+    }
+
+    /**
+     * 加载完成
+     */
+    public boolean isLoadFinish(int size) {
+        if (size < ConstantsParams.PAGE_SIZE) {
+            mAdapter.stopMore();
+            mAdapter.setNoMore(R.layout.view_nomore);
+            return true;
+        }
+        return false;
     }
 
     @Override

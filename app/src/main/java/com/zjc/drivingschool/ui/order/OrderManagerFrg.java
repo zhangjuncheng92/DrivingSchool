@@ -15,8 +15,9 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.response.OrderListResponse;
+import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
+import com.zjc.drivingschool.db.response.OrderListResponse;
 import com.zjc.drivingschool.ui.order.adapter.OrderManagerAdapter;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
@@ -66,7 +67,24 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
 
     @Override
     public void onItemClick(View view, int position) {
+        //跳转到预约详情界面
+        OrderItem orderItem = (OrderItem) mAdapter.getItem(position);
+        OrderDetailFragment fragment = OrderDetailFragment.newInstance((orderItem.getOrid()));
+        replaceFrg(fragment, null);
+    }
 
+    @Override
+    public void onRefresh() {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+
+            @Override
+            public void onResultSuccess(String result) {
+                OrderListResponse orderListResponse = new OrderListResponseParser().parseResultMessage(result);
+                mAdapter.clear();
+                mAdapter.addAll(orderListResponse.getOrderitems());
+                isLoadFinish(orderListResponse.getOrderitems().size());
+            }
+        });
     }
 
     private void findOrders() {
@@ -75,7 +93,20 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
             @Override
             public void onResultSuccess(String result) {
                 OrderListResponse orderListResponse = new OrderListResponseParser().parseResultMessage(result);
-                initAdapter();
+                mAdapter.addAll(orderListResponse.getOrderitems());
+                isLoadFinish(orderListResponse.getOrderitems().size());
+            }
+        });
+    }
+
+    @Override
+    public void onLoadMore() {
+        int start = mAdapter.getCount();
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+
+            @Override
+            public void onResultSuccess(String result) {
+                OrderListResponse orderListResponse = new OrderListResponseParser().parseResultMessage(result);
                 mAdapter.addAll(orderListResponse.getOrderitems());
                 isLoadFinish(orderListResponse.getOrderitems().size());
             }
@@ -92,15 +123,5 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    @Override
-    public void onRefresh() {
-
     }
 }

@@ -231,6 +231,7 @@ public class ApiHttpClient {
     }
 
     /**
+     * ###########   预约学车   ############
      * 1.1.12 获取学员可预约产品
      * 参数：pagesize  uid offset   state  orderid creatdate
      * 调用示例：/app/student/product
@@ -297,9 +298,21 @@ public class ApiHttpClient {
         HttpUtilsAsync.post(Constants.BASE_URL + "student/order/list", postRequest, asyncHttpResponseHandler);
     }
 
-
-    /**********驾校主页**********/
     /**
+     * 1.1.15 学员学车订单详情
+     * 参数：orid  uid
+     * 调用示例：/app/student/order/detail
+     */
+    public void getOrderDetailById(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/detail", postRequest, asyncHttpResponseHandler);
+    }
+
+
+    /**
+     * ###########驾校主页############
      * 6.2接口：detail
      * 用途：地图驾校详情
      * 参数：uid;// 用户ID  sid;// 驾校ID
