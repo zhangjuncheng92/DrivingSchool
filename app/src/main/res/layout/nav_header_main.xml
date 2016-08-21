@@ -19,6 +19,7 @@
             android:layout_centerVertical="true"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImageScaleType="fitCenter"
+            fresco:roundAsCircle="true"
             fresco:roundedCornerRadius="@dimen/layout_margin_lss"
             fresco:roundingBorderColor="@color/comm_circle_gary"
             fresco:roundingBorderWidth="1dp" />
@@ -36,6 +37,7 @@
                 style="@style/comm_title_black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:singleLine="true" />
 
             <TextView

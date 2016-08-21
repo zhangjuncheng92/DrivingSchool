@@ -12,9 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.mobo.mobolibrary.util.image.ImageLoader;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.jpush.JPushUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
@@ -22,6 +26,7 @@ import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
 import com.zjc.drivingschool.ui.learn.LearnActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.ui.order.OrderManagerActivity;
+import com.zjc.drivingschool.utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar toolbar;
@@ -51,7 +56,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initNavigation() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+
+        if (SharePreferencesUtil.getInstance().isLogin()) {
+            UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
+            SimpleDraweeView sdIcon = (SimpleDraweeView) headerView.findViewById(R.id.personal_main_frg_sd_icon);
+            TextView tvName = (TextView) headerView.findViewById(R.id.personal_main_frg_tv_name);
+            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_URL + userInfo.getPhotourl());
+            tvName.setText(userInfo.getNickname() + "");
+        }
     }
 
     private void initView() {
