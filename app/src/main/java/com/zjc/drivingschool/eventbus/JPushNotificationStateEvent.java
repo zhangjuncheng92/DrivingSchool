@@ -2,18 +2,19 @@ package com.zjc.drivingschool.eventbus;
 
 
 import com.zjc.drivingschool.db.model.JPushNotification;
+import com.zjc.drivingschool.db.model.MessageItem;
 
 /**
  * Created by Administrator on 2015/7/14.
  */
 public class JPushNotificationStateEvent {
-    JPushNotification jPushNotification;
+    MessageItem messageItem;
 
-    public JPushNotificationStateEvent(JPushNotification jPushNotification) {
-        this.jPushNotification = jPushNotification;
+    public JPushNotificationStateEvent(MessageItem messageItem) {
+        this.messageItem = messageItem;
     }
 
-    public JPushNotification getJPushNotification() {
-        return jPushNotification;
+    public MessageItem getMessageItem() {
+        return messageItem;
     }
 }

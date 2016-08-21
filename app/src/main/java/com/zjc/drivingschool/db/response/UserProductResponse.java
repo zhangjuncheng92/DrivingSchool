@@ -1,4 +1,9 @@
-package com.zjc.drivingschool.db.model;
+package com.zjc.drivingschool.db.response;
+
+import com.zjc.drivingschool.db.model.AppResponse;
+import com.zjc.drivingschool.db.model.ProductCars;
+import com.zjc.drivingschool.db.model.ProductPrice;
+import com.zjc.drivingschool.db.model.ProductSubject;
 
 import java.util.List;
 

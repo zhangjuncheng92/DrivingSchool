@@ -2,8 +2,7 @@ package com.zjc.drivingschool.db.parser;
 
 import com.google.gson.reflect.TypeToken;
 import com.mobo.mobolibrary.parser.JsonParser;
-import com.zjc.drivingschool.db.model.Account;
-import com.zjc.drivingschool.db.model.OrderListResponse;
+import com.zjc.drivingschool.db.response.OrderListResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

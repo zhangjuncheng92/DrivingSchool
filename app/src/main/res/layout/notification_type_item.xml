@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/comm_layout_three"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/comm_white_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/notification_type_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/notification_item_isread" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/layout_margin_h"
+        android:layout_toLeftOf="@+id/notification_type_item_lin_time"
+        android:layout_toRightOf="@+id/notification_type_item_icon"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/notification_type_item_tv_title"
+            style="@style/comm_title_orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/notification_type_item_tv_content"
+            style="@style/comm_body_gary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin_l" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notification_type_item_lin_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/notification_type_item_tv_time"
+            style="@style/comm_body_gary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/layout_padding_ls"
+            android:drawableRight="@drawable/icon_arrow_right"
+            android:gravity="center" />
+    </LinearLayout>
+</RelativeLayout>

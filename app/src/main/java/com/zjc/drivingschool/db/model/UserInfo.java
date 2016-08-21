@@ -21,7 +21,6 @@ public class UserInfo implements Serializable {
      * uid : 42164b4381024eb1b6d6b9c0836aaa59
      */
 
-    private int id;
     private String address;
     private String birthday;
     private String email;
@@ -34,14 +33,6 @@ public class UserInfo implements Serializable {
     private String qq;
     private String stuid;
     private String uid;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getAddress() {
         return address;

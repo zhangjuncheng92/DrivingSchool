@@ -97,6 +97,9 @@
         <!--我的关注-->
         <activity android:name=".ui.collect.CollectManagerActivity" />
 
+        <!--我的消息-->
+        <activity android:name=".ui.notification.NotificationActivity" />
+
         <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

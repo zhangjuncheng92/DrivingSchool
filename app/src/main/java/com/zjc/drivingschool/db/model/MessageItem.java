@@ -12,7 +12,7 @@ public class MessageItem
 	
 	private String title;// 消息标题
 	
-	private Boolean isread;// 是否已读，1.已读  0.未读
+	private boolean isread;// 是否已读，1.已读  0.未读
 	
 	private String creatdate;// 发送时间
 
@@ -36,12 +36,12 @@ public class MessageItem
 		this.title = title;
 	}
 
-	public Boolean getIsread()
+	public boolean getIsread()
 	{
 		return isread;
 	}
 
-	public void setIsread(Boolean isread)
+	public void setIsread(boolean isread)
 	{
 		this.isread = isread;
 	}

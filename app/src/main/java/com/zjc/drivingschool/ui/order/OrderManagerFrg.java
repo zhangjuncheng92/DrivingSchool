@@ -15,12 +15,10 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.model.OrderListResponse;
+import com.zjc.drivingschool.db.response.OrderListResponse;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.ui.order.adapter.OrderManagerAdapter;
 import com.zjc.drivingschool.utils.ConstantsParams;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/17.

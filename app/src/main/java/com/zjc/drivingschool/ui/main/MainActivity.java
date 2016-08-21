@@ -25,6 +25,7 @@ import com.zjc.drivingschool.ui.apply.ApplyActivity;
 import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
 import com.zjc.drivingschool.ui.learn.LearnActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
+import com.zjc.drivingschool.ui.notification.NotificationActivity;
 import com.zjc.drivingschool.ui.order.OrderManagerActivity;
 import com.zjc.drivingschool.utils.Constants;
 
@@ -58,11 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
 
+        navigationView.setNavigationItemSelectedListener(this);
+
+        /**个人信息的设置*/
         if (SharePreferencesUtil.getInstance().isLogin()) {
             UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
             SimpleDraweeView sdIcon = (SimpleDraweeView) headerView.findViewById(R.id.personal_main_frg_sd_icon);
             TextView tvName = (TextView) headerView.findViewById(R.id.personal_main_frg_tv_name);
-            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_URL + userInfo.getPhotourl());
+            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getPhotourl());
             tvName.setText(userInfo.getNickname() + "");
         }
     }
@@ -136,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, OrderManagerActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_notice) {
-
+            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+            startActivity(intent);
         } else if (id == R.id.main_action_more) {
             logout();
         }
