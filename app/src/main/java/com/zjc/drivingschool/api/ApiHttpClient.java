@@ -339,4 +339,18 @@ public class ApiHttpClient {
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/message/list", postRequest, asyncHttpResponseHandler);
     }
+
+    /**
+     * ###########  收藏模块  ############
+     * 1.1.30 收藏教练列表
+     * 参数   偏移量	offset	number	必填/用户ID	uid	string	必填/分页大小	pagesize	number	必填
+     * 调用示例：/app/student/teacher/collect/list
+     */
+    public void getCollects(String userId, int start, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("offset", start);
+        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/teacher/collect/list", postRequest, asyncHttpResponseHandler);
+    }
 }

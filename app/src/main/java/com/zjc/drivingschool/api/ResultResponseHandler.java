@@ -72,10 +72,9 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
         requestCode = Constants.REQUEST_CODE_DIALOG;
     }
 
-    public ResultResponseHandler(Context mContext, EasyRecyclerView recyclerView, JsonParser jsonParser) {
+    public ResultResponseHandler(Context mContext, EasyRecyclerView recyclerView) {
         this.mContext = mContext;
         this.recyclerView = recyclerView;
-        this.jsonParser = jsonParser;
         requestCode = Constants.REQUEST_CODE_SWIPE_REFRESH;
     }
 

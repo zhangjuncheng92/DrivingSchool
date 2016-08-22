@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    style="@style/comm_layout_three"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="20dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/personal_center_img_person"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             fresco:actualImageScaleType="focusCrop"
-            fresco:placeholderImage="@drawable/ic_main_tab_bg"
             fresco:placeholderImageScaleType="fitCenter"
             fresco:roundAsCircle="true" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp">
+            android:layout_marginLeft="@dimen/layout_margin_ml">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,16 +34,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/collect_name"
+                        style="@style/comm_title_black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="教练"
-                        android:textSize="25dp" />
+                        android:text="教练" />
 
                     <RatingBar
                         android:id="@+id/assess_detail_list_rb_score"
@@ -75,9 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:text="砂进口和书法家哈就开始发贺卡就恢复和我还欺负你欺负就"
-                        android:textColor="@color/gray"
-                        android:textSize="20dp" />
+                        android:text="砂进口和书法家哈就开始发贺卡就恢复和我还欺负你欺负就" />
 
                 </LinearLayout>
 

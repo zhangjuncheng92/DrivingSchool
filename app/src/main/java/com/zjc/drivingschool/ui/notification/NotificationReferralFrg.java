@@ -93,7 +93,7 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
 
     @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), mRecyclerView, new JPushNotificationParser()) {
+        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), mRecyclerView) {
 
             @Override
             public void onResultSuccess(String result) {

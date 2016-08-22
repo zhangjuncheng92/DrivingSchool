@@ -10,7 +10,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.util.image.ImageLoader;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.db.model.UserInfo;
+import com.zjc.drivingschool.db.model.TeacherCollectItem;
 import com.zjc.drivingschool.utils.Constants;
 
 /**
@@ -27,9 +27,9 @@ public class CollectManagerAdapter extends ZBaseRecyclerViewAdapter {
         return new CollectManagerFrgViewHolder(parent);
     }
 
-    class CollectManagerFrgViewHolder extends BaseViewHolder<UserInfo> {
-        private TextView mTvName;
-        private TextView mTvContent;
+    class CollectManagerFrgViewHolder extends BaseViewHolder<TeacherCollectItem> {
+        private TextView tvName;
+        private TextView tvContent;
         private RatingBar rbScore;
         private SimpleDraweeView mImage;
 
@@ -37,32 +37,18 @@ public class CollectManagerAdapter extends ZBaseRecyclerViewAdapter {
             super(parent, R.layout.collect_manager_adapter);
             rbScore = $(R.id.assess_detail_list_rb_score);
             mImage = $(R.id.personal_center_img_person);
-            mTvName = $(R.id.collect_name);
-            mTvContent = $(R.id.collect_content);
-
-
+            tvName = $(R.id.collect_name);
+            tvContent = $(R.id.collect_content);
         }
 
         @Override
-        public void setData(UserInfo service) {
-            if (service == null) {
-                return;
-            }
-//            ImageLoader.getInstance().displayImage(mImage, Constants.BASE_URL_DOWNLOAD + userInfo.getLogo());
-            //// TODO: 2016/8/18
+        public void setData(TeacherCollectItem service) {
+            ImageLoader.getInstance().displayImage(mImage, Constants.BASE_IP + service.getPhoto());
             //设置评分条是否只能看，不能改
             rbScore.setIsIndicator(true);
-            rbScore.setOnRatingBarChangeListener(null);
-//            rbScore.setRating(Float.parseFloat(String.valueOf(shoppingHealthOrganList.getScore())));
-//            rbScore.setTag(shoppingHealthOrganList);
-            rbScore.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                    ShoppingHealthOrganList details = (ShoppingHealthOrganList) ratingBar.getTag();
-//                    details.setScore(Double.parseDouble(String.valueOf(rating)));
-                }
-            });
-
+            rbScore.setRating(Float.parseFloat(String.valueOf(service.getStars())));
+            tvContent.setText(service.getSchoolname());
+            tvName.setText(service.getTeachername());
         }
     }
 }
