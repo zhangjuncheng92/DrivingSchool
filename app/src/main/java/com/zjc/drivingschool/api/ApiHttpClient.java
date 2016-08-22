@@ -231,6 +231,75 @@ public class ApiHttpClient {
     }
 
     /**
+     *  * ###########   预约学车   ############
+     * 1.1.22 学员报名订单创建
+     * 开始位置经度	longitude	number	必填
+     * * 开始位置纬度	latitude	number	必填
+     * 项目类型ID	subjectid	string	必填
+     * 项目类型名称	subjectname	string	必填
+     * 是否VIP	isvip	boolean	必填
+     * 车型名称	carsname	string	必填
+     * 是否代人下单	isreplace	boolean	必填
+     * 下单用户ID	uid	string	必填
+     * 联系人姓名	contactsname	string	isreplace为true时必传
+     * 联系人电话	contactsphone	string	isreplace为true时必传
+     * 数量 单位：小时	number	number	必填
+     * 开始时间 格式：yyyy-MM-dd hh:mm:ss	starttime	string	必填
+     * 车型ID	carsid	string	必填
+     * 下单用户名	loginname	string	必填
+     * 下单用户昵称	nickname	string	必填
+     * 优惠券ID	vid	string	非必传，格式:多个ID用','分割
+     * /app/student/order/create
+     */
+    public void startApply(OrderCreateRequest orderCreateRequest, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", orderCreateRequest.getUid());
+        postRequest.addProperty("longitude", orderCreateRequest.getLongitude());
+        postRequest.addProperty("latitude", orderCreateRequest.getLatitude());
+        postRequest.addProperty("subjectid", orderCreateRequest.getSubjectid());
+        postRequest.addProperty("subjectname", orderCreateRequest.getSubjectname());
+        postRequest.addProperty("carsname", orderCreateRequest.getCarsname());
+        postRequest.addProperty("carsid", orderCreateRequest.getCarsid());
+
+        postRequest.addProperty("isvip", orderCreateRequest.getIsvip());
+        postRequest.addProperty("isreplace", orderCreateRequest.getIsreplace());
+        postRequest.addProperty("contactsname", orderCreateRequest.getContactsname());
+        postRequest.addProperty("contactsphone", orderCreateRequest.getContactsphone());
+
+        postRequest.addProperty("number", orderCreateRequest.getNumber());
+        postRequest.addProperty("starttime", orderCreateRequest.getStarttime());
+        postRequest.addProperty("loginname", orderCreateRequest.getLoginname());
+        postRequest.addProperty("nickname", orderCreateRequest.getNickname());
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/create", postRequest, asyncHttpResponseHandler);
+    }
+
+    /**
+     * 1.1.21 学员报名订单列表
+     * 参数：pagesize  uid offset   state  orderid creatdate
+     * 调用示例：/app/student/order/list
+     */
+    public void startOrders(String userId, int start, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("offset", start);
+        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/signuporder/list", postRequest, asyncHttpResponseHandler);
+    }
+
+    /**
+     * 1.1.23 学员报名订单详情
+     * 参数：orid  uid
+     * 调用示例：/app/student/order/detail
+     */
+    public void getApplyDetail(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/signuporder/detail", postRequest, asyncHttpResponseHandler);
+    }
+
+
+    /**
      * ###########   预约学车   ############
      * 1.1.12 获取学员可预约产品
      * 参数：pagesize  uid offset   state  orderid creatdate

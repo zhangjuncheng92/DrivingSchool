@@ -1,20 +1,15 @@
-package com.zjc.drivingschool.ui.learn;
+package com.zjc.drivingschool.ui.study;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.ui.apply.ApplyFragment;
-
 
 /**
- * @author Z
- * @Filename LearnActivity.java
- * @Date 2015.09.14
- * @description 登录activity
+ * Created by Administrator on 2016/8/17.
  */
-public class LearnActivity extends ZBaseActivity {
+public class StudyListActivity extends ZBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +19,9 @@ public class LearnActivity extends ZBaseActivity {
 
     @Override
     protected void initBaseView() {
+        super.initBaseView();
+        StudyListFragment fragment = new StudyListFragment();
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        ApplyFragment fragment = new ApplyFragment();
         trans.addToBackStack(null);
         trans.add(R.id.root, fragment).commit();
     }

@@ -14,14 +14,9 @@ import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
-import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.School;
-import com.zjc.drivingschool.db.model.UserInfo;
-import com.zjc.drivingschool.db.parser.UserInfoParser;
-import com.zjc.drivingschool.ui.order.adapter.OrderManagerAdapter;
+import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
 import com.zjc.drivingschool.utils.Constants;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * @author Z
@@ -32,7 +27,7 @@ import de.greenrobot.event.EventBus;
 public class SchoolFragment extends ZBaseToolBarFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener {
     private School school;
     private EasyRecyclerView mRecyclerView;
-    private OrderManagerAdapter mAdapter;
+    private StudyOrderAdapter mAdapter;
 
     /**
      * 传入需要的参数，设置给arguments
@@ -88,7 +83,7 @@ public class SchoolFragment extends ZBaseToolBarFragment implements ZBaseRecycle
     }
 
     private void initAdapter() {
-        mAdapter = new OrderManagerAdapter(getActivity());
+        mAdapter = new StudyOrderAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
         mRecyclerView.setAdapter(mAdapter);
     }

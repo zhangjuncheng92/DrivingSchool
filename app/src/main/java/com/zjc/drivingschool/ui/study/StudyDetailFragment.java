@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.ui.order;
+package com.zjc.drivingschool.ui.study;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -22,11 +22,11 @@ import com.zjc.drivingschool.utils.Constants;
 
 /**
  * @author Z
- * @Filename OrderDetailFragment.java
+ * @Filename StudyDetailFragment.java
  * @Date 2015.10.28
  * @description 预约详情界面
  */
-public class OrderDetailFragment extends ZBaseToolBarFragment {
+public class StudyDetailFragment extends ZBaseToolBarFragment {
     private String orderid;
     private OrderDetailResponse orderDetail;
     private Button btnCommit;
@@ -54,10 +54,10 @@ public class OrderDetailFragment extends ZBaseToolBarFragment {
     /**
      * 传入需要的参数，设置给arguments
      */
-    public static OrderDetailFragment newInstance(String bean) {
+    public static StudyDetailFragment newInstance(String bean) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.ARGUMENT, bean);
-        OrderDetailFragment fragment = new OrderDetailFragment();
+        StudyDetailFragment fragment = new StudyDetailFragment();
         fragment.setArguments(bundle);
         return fragment;
     }

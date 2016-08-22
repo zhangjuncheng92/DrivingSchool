@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.ui.order.adapter;
+package com.zjc.drivingschool.ui.study.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -13,8 +13,8 @@ import com.zjc.drivingschool.db.model.OrderItem;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class OrderManagerAdapter extends ZBaseRecyclerViewAdapter {
-    public OrderManagerAdapter(Context context) {
+public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
+    public StudyOrderAdapter(Context context) {
         super(context);
     }
 

@@ -23,10 +23,11 @@ import com.zjc.drivingschool.jpush.JPushUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
 import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
-import com.zjc.drivingschool.ui.learn.LearnActivity;
+import com.zjc.drivingschool.ui.study.StudyOrderActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.ui.notification.NotificationActivity;
-import com.zjc.drivingschool.ui.order.OrderManagerActivity;
+import com.zjc.drivingschool.ui.study.StudyListActivity;
+import com.zjc.drivingschool.ui.apply.ApplyListActivity;
 import com.zjc.drivingschool.utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -136,10 +137,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.main_action_collect) {
             Intent intent = new Intent(MainActivity.this, CollectManagerActivity.class);
             startActivity(intent);
-        } else if (id == R.id.main_action_history) {
-            Intent intent = new Intent(MainActivity.this, OrderManagerActivity.class);
+        } else if (id == R.id.main_action_study_history) {
+            Intent intent = new Intent(MainActivity.this, StudyListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.main_action_notice) {
+        }  else if (id == R.id.main_action_apply_history) {
+            Intent intent = new Intent(MainActivity.this, ApplyListActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.main_action_notice) {
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_more) {
@@ -154,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = v.getId();
         if (id == R.id.main_one) {
             //报名学车
-            Intent intent = new Intent(MainActivity.this, LearnActivity.class);
+            Intent intent = new Intent(MainActivity.this, StudyOrderActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_two) {
             //预约学车

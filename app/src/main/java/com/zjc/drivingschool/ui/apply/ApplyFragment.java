@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.api.ApiHttpClient;
+import com.zjc.drivingschool.api.ResultResponseHandler;
 
 /**
  * @author Z
@@ -25,7 +27,7 @@ public class ApplyFragment extends ZBaseToolBarFragment {
     private EditText edtPhone;
     private EditText edtAge;
     private Spinner spSex;
-    private TextView tv_next;
+    private TextView tvNext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,9 @@ public class ApplyFragment extends ZBaseToolBarFragment {
         edtName = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_name);
         edtPhone = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_phone);
         spSex = (Spinner) rootView.findViewById(R.id.hierarchical_create_resident_frg_sp_sex);
-        tv_next = (TextView) rootView.findViewById(R.id.tv_next);
+        tvNext = (TextView) rootView.findViewById(R.id.tv_next);
         edtAge = (EditText) rootView.findViewById(R.id.hierarchical_create_resident_frg_edt_age);
-        tv_next.setOnClickListener(new View.OnClickListener() {
+        tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //提交信息
@@ -82,12 +84,11 @@ public class ApplyFragment extends ZBaseToolBarFragment {
             return;
         }
 
-// TODO: 2016/8/20 提交预约报名信息
-//        ApiHttpClient.getInstance().learnApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
-//            @Override
-//            public void onResultSuccess(String result) {
-//                getActivity().finish();
-//            }
-//        });
+        ApiHttpClient.getInstance().startApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
+            @Override
+            public void onResultSuccess(String result) {
+                getActivity().finish();
+            }
+        });
     }
 }

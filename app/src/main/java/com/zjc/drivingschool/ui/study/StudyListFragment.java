@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.ui.order;
+package com.zjc.drivingschool.ui.study;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,19 +18,19 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
-import com.zjc.drivingschool.ui.order.adapter.OrderManagerAdapter;
+import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
     private EasyRecyclerView mRecyclerView;
-    private OrderManagerAdapter mAdapter;
+    private StudyOrderAdapter mAdapter;
 
     @Override
     protected void setTitle() {
-        setTitle(mToolbar, "我的订单");
+        setTitle(mToolbar, R.string.title_study_history);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
     }
 
     private void initAdapter() {
-        mAdapter = new OrderManagerAdapter(getActivity());
+        mAdapter = new StudyOrderAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
         mAdapter.setMore(R.layout.view_more, this);
         mAdapter.setNoMore(R.layout.view_nomore);
@@ -69,7 +69,7 @@ public class OrderManagerFrg extends ZBaseToolBarFragment implements SwipeRefres
     public void onItemClick(View view, int position) {
         //跳转到预约详情界面
         OrderItem orderItem = (OrderItem) mAdapter.getItem(position);
-        OrderDetailFragment fragment = OrderDetailFragment.newInstance((orderItem.getOrid()));
+        StudyDetailFragment fragment = StudyDetailFragment.newInstance((orderItem.getOrid()));
         replaceFrg(fragment, null);
     }
 

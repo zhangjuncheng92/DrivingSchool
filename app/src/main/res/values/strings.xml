@@ -27,6 +27,7 @@
     <string name="personal_detail_sex">性别</string>
     <string name="personal_detail_name">姓名</string>
     <string name="personal_detail_age">年龄</string>
+    <string name="personal_detail_education">学历</string>
     <string name="personal_detail_phone">联系电话</string>
     <string name="personal_detail_organization">机构</string>
     <string name="personal_detail_address">机构地址</string>
@@ -44,8 +45,12 @@
     <string name="hierarchical_resident_create_hint_address">请输入患者家庭住址</string>
     <string name="login_register_age_small">年龄格式不正确，请重新选择</string>
 
+    <string name="title_apply_history">报名订单</string>
+
+
     <!--预约学车-->
-    <string name="title_learn">预约学车</string>
+    <string name="title_study">预约学车</string>
+    <string name="title_study_history">学车订单</string>
 
     <!--预约考试-->
     <string name="title_examination">预约考试</string>
@@ -73,8 +78,6 @@
     <!--我的收藏-->
     <string name="title_collect">我的收藏</string>
 
-    <!--我的订单-->
-    <string name="title_history">我的订单</string>
 
     <!--我的消息-->
     <string name="title_notice">我的消息</string>

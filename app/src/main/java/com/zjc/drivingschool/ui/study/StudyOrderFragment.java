@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.ui.learn;
+package com.zjc.drivingschool.ui.study;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -35,11 +35,11 @@ import de.greenrobot.event.EventBus;
 
 /**
  * @author Z
- * @Filename LearnApplyFragment.java
+ * @Filename StudyOrderFragment.java
  * @Date 2016.06.26
  * @description 学车申请
  */
-public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnClickListener {
+public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnClickListener {
     private UserProductResponse userProduct;
     private ToggleButton jpushButton;
     private TextView tv_time;
@@ -76,7 +76,7 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
 
     @Override
     protected void setTitle() {
-        setTitle(mToolbar, R.string.title_learn);
+        setTitle(mToolbar, R.string.title_study);
     }
 
     @Override
@@ -91,7 +91,6 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
         initTimeLengthOptions();
         initStyleOptions();
         findProducts();
-        orderDetail = new OrderCreateRequest();
     }
 
     private void initView() {
@@ -210,7 +209,7 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
                 birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.tv_locale://练车地点
-//                LearnAddressFragment fragment = new LearnAddressFragment();
+//                StudyAddressFragment fragment = new StudyAddressFragment();
 //                replaceFrg(fragment, null);
                 break;
             case R.id.tv_timeLength:
@@ -284,6 +283,8 @@ public class LearnApplyFragment extends ZBaseToolBarFragment implements View.OnC
             Util.showCustomMsg("请输入完整信息");
             return;
         }
+
+        orderDetail = new OrderCreateRequest();
 
         ProductSubject productSubject = (ProductSubject) tv_subject.getTag();//培训科目
         int timeLength = (int) tv_timeLength.getTag();//练车时长

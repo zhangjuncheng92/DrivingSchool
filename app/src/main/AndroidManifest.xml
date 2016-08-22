@@ -79,9 +79,13 @@
             android:name=".ui.apply.ApplyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.apply.ApplyListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
         <!--预约学车-->
         <activity
-            android:name=".ui.learn.LearnActivity"
+            android:name=".ui.study.StudyOrderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
 
@@ -92,7 +96,7 @@
             android:windowSoftInputMode="adjustPan" />
 
         <!--我的订单-->
-        <activity android:name=".ui.order.OrderManagerActivity" />
+        <activity android:name=".ui.study.StudyListActivity" />
 
         <!--我的关注-->
         <activity android:name=".ui.collect.CollectManagerActivity" />

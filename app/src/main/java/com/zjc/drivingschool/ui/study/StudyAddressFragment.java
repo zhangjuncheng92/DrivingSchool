@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.ui.learn;
+package com.zjc.drivingschool.ui.study;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,7 +30,7 @@ import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.ui.learn.adapter.LearnAddressAdapter;
+import com.zjc.drivingschool.ui.study.adapter.StudyAddressAdapter;
 
 import de.greenrobot.event.EventBus;
 
@@ -40,12 +40,12 @@ import de.greenrobot.event.EventBus;
  * @Date 2015-06-09
  * @description 个人中心 添加我的地址界面
  */
-public class LearnAddressFragment extends ZBaseToolBarFragment implements View.OnClickListener, BaiduMap.OnMapClickListener, OnGetPoiSearchResultListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+public class StudyAddressFragment extends ZBaseToolBarFragment implements View.OnClickListener, BaiduMap.OnMapClickListener, OnGetPoiSearchResultListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
     private MapView mMapView;
     private BaiduMap mBaiduMap;
 
     private EasyRecyclerView mRecyclerView;
-    private LearnAddressAdapter mAdapter;
+    private StudyAddressAdapter mAdapter;
 
     /**
      * 定位相关
@@ -93,7 +93,7 @@ public class LearnAddressFragment extends ZBaseToolBarFragment implements View.O
     }
 
     private void initAdapter() {
-        mAdapter = new LearnAddressAdapter(getActivity());
+        mAdapter = new StudyAddressAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
         mRecyclerView.setAdapter(mAdapter);
     }

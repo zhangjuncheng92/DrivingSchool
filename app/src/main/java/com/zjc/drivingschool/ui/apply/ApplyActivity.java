@@ -5,8 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.ui.learn.LearnApplyFragment;
-import com.zjc.drivingschool.ui.login.LoginMainFragment;
+import com.zjc.drivingschool.ui.study.StudyOrderFragment;
 
 
 /**
@@ -26,7 +25,7 @@ public class ApplyActivity extends ZBaseActivity {
     @Override
     protected void initBaseView() {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        LearnApplyFragment fragment = new LearnApplyFragment();
+        StudyOrderFragment fragment = new StudyOrderFragment();
         trans.addToBackStack(null);
         trans.add(R.id.root, fragment).commit();
     }

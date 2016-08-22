@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.ui.learn.adapter;
+package com.zjc.drivingschool.ui.study.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -12,8 +12,8 @@ import com.zjc.drivingschool.R;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class LearnAddressAdapter extends ZBaseRecyclerViewAdapter {
-    public LearnAddressAdapter(Context context) {
+public class StudyAddressAdapter extends ZBaseRecyclerViewAdapter {
+    public StudyAddressAdapter(Context context) {
         super(context);
     }
 

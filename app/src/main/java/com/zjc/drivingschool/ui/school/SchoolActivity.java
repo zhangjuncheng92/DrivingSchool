@@ -11,7 +11,7 @@ import com.zjc.drivingschool.utils.Constants;
 
 /**
  * @author Z
- * @Filename LearnActivity.java
+ * @Filename StudyOrderActivity.java
  * @Date 2015.09.14
  * @description 登录activity
  */

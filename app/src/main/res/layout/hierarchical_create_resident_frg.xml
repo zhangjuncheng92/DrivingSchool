@@ -36,6 +36,34 @@
             style="@style/line_horStyle"
             android:layout_marginLeft="@dimen/layout_margin_ml" />
 
+        <RelativeLayout style="@style/comm_layout_two">
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/personal_detail_title"
+                android:drawableLeft="@drawable/icon_login_phone"
+                android:text="@string/personal_detail_phone" />
+
+            <com.zjc.drivingschool.widget.ContainsEmojiEditText
+                android:id="@+id/hierarchical_create_resident_frg_edt_phone"
+                style="@style/referral_info_status_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/layout_margin_l"
+                android:layout_toRightOf="@+id/tv_phone"
+                android:background="@color/transparent"
+                android:gravity="right"
+                android:hint="联系电话"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_ml" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,52 +140,50 @@
                 android:text="岁" />
         </RelativeLayout>
 
-
         <View
             style="@style/line_horStyle"
             android:layout_marginLeft="@dimen/layout_margin_ml" />
 
-
         <RelativeLayout style="@style/comm_layout_two">
 
             <TextView
-                android:id="@+id/tv_phone"
+                android:id="@+id/tv_education"
                 style="@style/personal_detail_title"
-                android:drawableLeft="@drawable/icon_login_phone"
-                android:text="@string/personal_detail_phone" />
+                android:drawableLeft="@drawable/icon_age"
+                android:text="@string/personal_detail_education" />
 
             <com.zjc.drivingschool.widget.ContainsEmojiEditText
-                android:id="@+id/hierarchical_create_resident_frg_edt_phone"
+                android:id="@+id/hierarchical_create_resident_frg_edt_education"
                 style="@style/referral_info_status_txt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/layout_margin_l"
-                android:layout_toRightOf="@+id/tv_phone"
                 android:background="@color/transparent"
                 android:gravity="right"
-                android:hint="联系电话"
-                android:inputType="phone"
-                android:maxLength="11"
+                android:inputType="numberDecimal"
+                android:maxLength="3"
                 android:singleLine="true" />
         </RelativeLayout>
 
         <View style="@style/line_horStyle" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="提交"
+            android:textColor="@color/comm_blue" />
 
-            <TextView
-                android:id="@+id/tv_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="10dp"
-                android:text="提交"
-                android:textColor="@color/comm_blue" />
-        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="查看体验流程"
+            android:textColor="@color/comm_blue" />
 
     </LinearLayout>
 </ScrollView>
