@@ -115,13 +115,6 @@
         <item name="android:drawablePadding">@dimen/layout_padding_l</item>
     </style>
 
-    <style name="personal_detail_title"> <!-- 普通标题风格2 -->
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:drawablePadding">@dimen/layout_padding_l</item>
-    </style>
-
     <style name="regist_hospital_list_label">
         <item name="android:textColor">@color/registration_hospital_open</item>
         <item name="android:textSize">@dimen/text_size_ten</item>
@@ -142,6 +135,13 @@
         <item name="android:background">@drawable/comm_select_orange</item>
     </style>
 
+    <style name="personal_detail_title"> <!-- 普通标题风格2 -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@dimen/layout_padding_l</item>
+    </style>
+
     <!-- 我的账户-->
     <style name="comm_select_style2">
         <item name="android:textColor">@color/comm_black</item>
@@ -151,6 +151,23 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:background">@drawable/comm_select_grey</item>
+    </style>
+
+    <!-- 个人中心-->
+    <style name="personal_title_text">
+        <item name="android:padding">@dimen/layout_padding_l</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@dimen/layout_padding_l</item>
+    </style>
+
+    <style name="personal_info_text" parent="comm_subtitle_black">
+        <item name="android:gravity">right</item>
+        <item name="android:padding">@dimen/layout_padding_l</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="referral_info_status_txt" parent="comm_subtitle_black">

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/comm_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_icon" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/personal_main_frg_sd_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/layout_margin_ls"
+                fresco:actualImageScaleType="focusCrop"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:roundAsCircle="true"
+                fresco:roundedCornerRadius="@dimen/layout_margin_lss"
+                fresco:roundingBorderColor="@color/comm_circle_gary"
+                fresco:roundingBorderWidth="1dp" />
+        </RelativeLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_name" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_name"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_sex" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_sex"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/hierarchical_resident_create_birthday" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_birthday"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_phone" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_phone"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_email" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_email"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_QQ" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_QQ"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_address" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_address"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="@string/personal_detail_id_card" />
+
+            <EditText
+                android:id="@+id/personal_frg_tv_id_card"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <View style="@style/line_horStyle" />
+    </LinearLayout>
+</ScrollView>

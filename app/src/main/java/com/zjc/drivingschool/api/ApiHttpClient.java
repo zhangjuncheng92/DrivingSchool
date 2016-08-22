@@ -128,6 +128,28 @@ public class ApiHttpClient {
     }
 
     /**
+     * 1.7.2上传个人头像
+     * 调用示例：http://localhost:8080/hms/appservices/user/upLoadUserImg
+     */
+    public void upLoadUserImg(String id, String img, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        RequestParams params = new RequestParams();
+        params.setForceMultipartEntityContentType(true);
+        params.setHttpEntityIsRepeatable(true);
+        params.put("uid", id);
+        try {
+            File file;
+            //生成输入文件路径，进行压缩
+            String filename = Constants.DIR_CACHE + Util.getPhotoFileName("1");
+            UtilPhoto.getSmallFileByFile(img, filename);
+            file = new File(filename);
+            params.put("uploadimg", file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        HttpUtilsAsync.postInfinite(Constants.BASE_URL + "student/subphoto", params, asyncHttpResponseHandler);
+    }
+
+    /**
      * 1.9接口：updateUserBaseInfo
      * 用途：修改用户基本资料
      * 参数：id(用户主键)email()age()gender(1.男 2.女)logoFile(头像文件)

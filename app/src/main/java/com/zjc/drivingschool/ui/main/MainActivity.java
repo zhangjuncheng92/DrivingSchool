@@ -22,12 +22,13 @@ import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.jpush.JPushUtil;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
+import com.zjc.drivingschool.ui.apply.ApplyListActivity;
 import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
-import com.zjc.drivingschool.ui.study.StudyOrderActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.ui.notification.NotificationActivity;
+import com.zjc.drivingschool.ui.personal.PersonalActivity;
 import com.zjc.drivingschool.ui.study.StudyListActivity;
-import com.zjc.drivingschool.ui.apply.ApplyListActivity;
+import com.zjc.drivingschool.ui.study.StudyOrderActivity;
 import com.zjc.drivingschool.utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         /**个人信息的设置*/
         if (SharePreferencesUtil.getInstance().isLogin()) {
+            headerView.setOnClickListener(new HeaderViewOnClick());
+
+
             UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
             SimpleDraweeView sdIcon = (SimpleDraweeView) headerView.findViewById(R.id.personal_main_frg_sd_icon);
             TextView tvName = (TextView) headerView.findViewById(R.id.personal_main_frg_tv_name);
@@ -140,10 +144,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.main_action_study_history) {
             Intent intent = new Intent(MainActivity.this, StudyListActivity.class);
             startActivity(intent);
-        }  else if (id == R.id.main_action_apply_history) {
+        } else if (id == R.id.main_action_apply_history) {
             Intent intent = new Intent(MainActivity.this, ApplyListActivity.class);
             startActivity(intent);
-        }else if (id == R.id.main_action_notice) {
+        } else if (id == R.id.main_action_notice) {
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_more) {
@@ -151,6 +155,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    class HeaderViewOnClick implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, PersonalActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

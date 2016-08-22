@@ -69,6 +69,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".ui.personal.PersonalActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
         <!--我的账户-->
         <activity
             android:name=".ui.account.AccountManagerActivity"
@@ -117,8 +121,6 @@
             </intent-filter>
         </service>
         <!--百度地图 end-->
-
-
 
 
         <!-- for test mode start -->
