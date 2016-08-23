@@ -18,8 +18,12 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
+import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
+import com.zjc.drivingschool.eventbus.StudyOrderUnSubjectEvent;
 import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
 import com.zjc.drivingschool.utils.ConstantsParams;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/8/17.
@@ -27,6 +31,12 @@ import com.zjc.drivingschool.utils.ConstantsParams;
 public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
     private EasyRecyclerView mRecyclerView;
     private StudyOrderAdapter mAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected void setTitle() {
@@ -52,7 +62,7 @@ public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefr
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity())
                 .colorResId(R.color.comm_divider)
-                .sizeResId(R.dimen.comm_divider_line)
+                .sizeResId(R.dimen.comm_divider_one)
                 .build());
         mRecyclerView.setRefreshListener(this);
     }
@@ -102,7 +112,7 @@ public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefr
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
-        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, new ResultResponseHandler(getActivity()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -123,5 +133,45 @@ public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefr
             return true;
         }
         return false;
+    }
+
+    /**
+     * 退订通知，更改状态
+     *
+     * @param event
+     */
+    public void onEventMainThread(StudyOrderUnSubjectEvent event) {
+        int count = mAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            OrderItem item = (OrderItem) mAdapter.getItem(i);
+            if (item.getOrid() == event.getOrid()) {
+                item.setState(ConstantsParams.STUDY_ORDER_THREE);
+                mAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    /**
+     * 更新预约单取消状态
+     *
+     * @param event
+     */
+    public void onEventMainThread(StudyOrderCancelEvent event) {
+        int count = mAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            OrderItem item = (OrderItem) mAdapter.getItem(i);
+            if (item.getOrid() == event.getOrid()) {
+                item.setState(ConstantsParams.STUDY_ORDER_NINE);
+                mAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

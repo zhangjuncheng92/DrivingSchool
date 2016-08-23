@@ -400,7 +400,29 @@ public class ApiHttpClient {
         postRequest.addProperty("orid", orid);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/order/detail", postRequest, asyncHttpResponseHandler);
     }
+    /**
+     * 1.1.26 学员取消学车订单
+     * 参数：orid  uid
+     * 调用示例：/app/student/order/cancel
+     */
+    public void cancelStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/cancel", postRequest, asyncHttpResponseHandler);
+    }
 
+    /**
+     * 1.1.27 学员申请订单退订
+     * 参数：orid  uid
+     * 调用示例：/app/student/order/refund
+     */
+    public void unSubjectStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/refund", postRequest, asyncHttpResponseHandler);
+    }
 
     /**
      * ###########驾校主页############

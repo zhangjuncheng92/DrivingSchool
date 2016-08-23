@@ -18,6 +18,7 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.parser.OrderDetailResponseParser;
 import com.zjc.drivingschool.db.response.OrderDetailResponse;
 import com.zjc.drivingschool.utils.Constants;
+import com.zjc.drivingschool.utils.ConstantsParams;
 
 
 /**
@@ -130,7 +131,7 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
     }
 
     private void setInfo() {
-        setStatus();
+        tvStatus.setText(ConstantsParams.getStatus(orderDetail.getState()));
 
         setTextView(tvCart, orderDetail.getCarsname());
         setTextView(tvSubject, orderDetail.getSubjectname());
@@ -148,43 +149,6 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
         setTextView(tvOrderTime, orderDetail.getOrdertime());
     }
 
-    private void setStatus() {
-//        if (appointmentRegistration.getBussinessStatus() == ConstantsParams.APPOINTMENT_REGISTRATION_APPLICATION) {
-//            //预约成功
-//            tvStatus.setText(ConstantsParams.PAYMENT_STATUS_WAIT_PAY_TEXT);
-//            tvStatus.setTextColor(getResources().getColor(R.color.comm_red));
-//            txtStatus.setTextColor(getResources().getColor(R.color.comm_red));
-//            iconStatus.setImageResource(R.drawable.icon_registration_wait);
-//        } else if (appointmentRegistration.getBussinessStatus() == ConstantsParams.APPOINTMENT_REGISTRATION_SUCCESS) {
-//            //支付成功
-//            tvStatus.setText(ConstantsParams.APPOINTMENT_REGISTRATION_PAID_TEXT);
-//            iconStatus.setImageResource(R.drawable.icon_registration_success);
-//        } else if (appointmentRegistration.getBussinessStatus() == ConstantsParams.APPOINTMENT_REGISTRATION_ALREADYTAKE) {
-//            //取号成功
-//            tvStatus.setText(ConstantsParams.APPOINTMENT_REGISTRATION_ALREADYTAKE_TEXT);
-//            tvStatus.setTextColor(getResources().getColor(R.color.comm_black));
-//            txtStatus.setTextColor(getResources().getColor(R.color.comm_black));
-//            iconStatus.setImageResource(R.drawable.icon_registration_success);
-//            if (appointmentRegistration.getCommentStatus() == ConstantsParams.COMMENT_STATUS_SUCCESS) {
-//                tvStatus.setText(ConstantsParams.COMMENT_STATUS_SUCCESS_TEXT);
-//            }
-////            else {
-////                tvStatus.setText(ConstantsParams.COMMENT_STATUS_TODO_TEXT);
-////            }
-//        } else if (appointmentRegistration.getBussinessStatus() == ConstantsParams.APPOINTMENT_REGISTRATION_CANCEL) {
-//            //取消预约单
-//            tvStatus.setText(ConstantsParams.APPOINTMENT_REGISTRATION_CANCEL_TEXT);
-//            tvStatus.setTextColor(getResources().getColor(R.color.comm_gary));
-//            txtStatus.setTextColor(getResources().getColor(R.color.comm_gary));
-//            iconStatus.setImageResource(R.drawable.icon_registration_cancel);
-//        } else if (appointmentRegistration.getBussinessStatus() == ConstantsParams.APPOINTMENT_REGISTRATION_TIMEOUT) {
-//            //预约单失效
-//            tvStatus.setTextColor(getResources().getColor(R.color.comm_gary));
-//            txtStatus.setTextColor(getResources().getColor(R.color.comm_gary));
-//            iconStatus.setImageResource(R.drawable.icon_registration_cancel);
-//            tvStatus.setText(ConstantsParams.APPOINTMENT_REGISTRATION_TIMEOUT_TEXT);
-//        }
-    }
 
     private void showCancelDialog() {
         AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());

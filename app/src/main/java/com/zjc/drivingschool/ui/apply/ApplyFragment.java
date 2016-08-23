@@ -84,6 +84,8 @@ public class ApplyFragment extends ZBaseToolBarFragment {
             return;
         }
 
+
+
         ApiHttpClient.getInstance().startApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
             @Override
             public void onResultSuccess(String result) {

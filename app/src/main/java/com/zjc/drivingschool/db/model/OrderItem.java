@@ -4,26 +4,26 @@ import java.math.BigDecimal;
 
 /**
  * 订单列表Item
- * 
+ *
  * @author LJ
  * @date 2016年7月21日
  */
 public class OrderItem
-{	
+{
 	private String orid;// 订单id
 
 	private String orderid;// 订单编号
-	
+
 	private String title;// 订单标题
-	
+
 	private String uid;// 预约人ID
-	
+
 	private String uname;// 预约人
-	
+
 	private String state;// 订单状态 1.预订成功 2.已支付 3.申请退订 4.已退订 5.消费中 6.已消费 7.待评价 8.已完成 9.已取消
-	
+
 	private double total;// 总价
-	
+
 	private String ordertime;// 下单时间
 
 	public String getOrid()
@@ -105,5 +105,5 @@ public class OrderItem
 	{
 		this.uid = uid;
 	}
-	
+
 }
