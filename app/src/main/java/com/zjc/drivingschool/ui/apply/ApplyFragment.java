@@ -15,6 +15,8 @@ import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
+import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.request.SignupOrderRequest;
 
 /**
  * @author Z
@@ -85,8 +87,22 @@ public class ApplyFragment extends ZBaseToolBarFragment {
         }
 
 
+//        优惠券ID	vid	string	（非必传，格式:多个ID用','分割）
+        SignupOrderRequest signupOrder = new SignupOrderRequest();
+        signupOrder.setLatitude(SharePreferencesUtil.getInstance().readCity().getLatLngLocal().getLatitude());
+        signupOrder.setLongitude(SharePreferencesUtil.getInstance().readCity().getLatLngLocal().getLongitude());
+        signupOrder.setUid(SharePreferencesUtil.getInstance().readUser().getUid());
+        signupOrder.setUname(name);
+        signupOrder.setUphone(phone);
 
-        ApiHttpClient.getInstance().startApply(null, new ResultResponseHandler(getActivity(), "正在新建档案，请稍等") {
+        signupOrder.setEducation("幼儿园");//需要动态获取
+        signupOrder.setGender(true);//需要动态获取
+        signupOrder.setBirthday("2016-05-04");//需要动态获取
+        signupOrder.setIsreplace(false);//需要动态获取
+        signupOrder.setContactsphone(phone);
+        signupOrder.setContactsname(name);
+
+        ApiHttpClient.getInstance().startApply(signupOrder, new ResultResponseHandler(getActivity(), "正在报名，请稍等") {
             @Override
             public void onResultSuccess(String result) {
                 getActivity().finish();

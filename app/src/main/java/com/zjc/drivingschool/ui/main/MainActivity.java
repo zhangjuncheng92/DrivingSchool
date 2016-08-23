@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_more) {
+        }else if (id == R.id.main_action_logout) {
             logout();
         }
         drawer.closeDrawer(GravityCompat.START);
