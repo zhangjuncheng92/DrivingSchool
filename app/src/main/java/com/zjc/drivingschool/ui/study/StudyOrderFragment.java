@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
@@ -21,10 +22,10 @@ import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.ProductSubject;
-import com.zjc.drivingschool.db.response.UserProductResponse;
 import com.zjc.drivingschool.db.parser.UserProductResponseParser;
 import com.zjc.drivingschool.db.request.OrderCreateRequest;
-import com.zjc.drivingschool.eventbus.pay.PayAliAccountResultEvent;
+import com.zjc.drivingschool.db.response.UserProductResponse;
+import com.zjc.drivingschool.eventbus.StudyAddressChooseEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -209,8 +210,8 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.tv_locale://练车地点
-//                StudyAddressFragment fragment = new StudyAddressFragment();
-//                replaceFrg(fragment, null);
+                StudyAddressFragment fragment = new StudyAddressFragment();
+                replaceFrg(fragment, null);
                 break;
             case R.id.tv_timeLength:
                 //隐藏虚拟键盘
@@ -279,6 +280,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         String tvTelephone = tv_telephone.getText().toString().trim();//联系方式
         String tvMoney = tv_money.getText().toString().trim();//价格
 
+
         if (TextUtils.isEmpty(tvTime) || TextUtils.isEmpty(tvLocale) || TextUtils.isEmpty(tvTimeLength) || TextUtils.isEmpty(tvSubject) || TextUtils.isEmpty(tvStyle)) {
             Util.showCustomMsg("请输入完整信息");
             return;
@@ -289,15 +291,16 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         ProductSubject productSubject = (ProductSubject) tv_subject.getTag();//培训科目
         int timeLength = (int) tv_timeLength.getTag();//练车时长
 
+        PoiInfo poiInfo = (PoiInfo) tv_locale.getTag();
+
 //        * 联系人姓名	contactsname	string	isreplace为true时必传
 //        * 联系人电话	contactsphone	string	isreplace为true时必传
 //        * 优惠券ID	vid	string	非必传，格式:多个ID用','分割
-        orderDetail.setLatitude(SharePreferencesUtil.getInstance().readCity().getLatLngLocal().getLatitude());
-        orderDetail.setLongitude(SharePreferencesUtil.getInstance().readCity().getLatLngLocal().getLongitude());
+        orderDetail.setLatitude(poiInfo.location.latitude);
+        orderDetail.setLongitude(poiInfo.location.longitude);
         orderDetail.setSubjectid(productSubject.getSid());
         orderDetail.setSubjectname(productSubject.getSubjectname());
         orderDetail.setIsvip((boolean) tv_style.getTag());
-        orderDetail.setIsreplace(false);
         orderDetail.setCarsname(userProduct.getCars().get(0).getCarsname());
         orderDetail.setCarsid(userProduct.getCars().get(0).getCid());
         orderDetail.setUid(SharePreferencesUtil.getInstance().readUser().getUid());
@@ -305,6 +308,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         orderDetail.setStarttime(tv_time.getText().toString());
         orderDetail.setLoginname(SharePreferencesUtil.getInstance().readUser().getLoginname());
         orderDetail.setNickname(SharePreferencesUtil.getInstance().readUser().getNickname());
+        orderDetail.setIsreplace(false);//需要动态获取
 
         ApiHttpClient.getInstance().learnApply(orderDetail, new ResultResponseHandler(getActivity(), "正在提交，请稍等") {
             @Override
@@ -314,7 +318,10 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         });
     }
 
-    public void onEventMainThread(PayAliAccountResultEvent event) {
+    public void onEventMainThread(StudyAddressChooseEvent event) {
+        PoiInfo poiInfo = event.getPoiInfo();
+        tv_locale.setText(poiInfo.name);
+        tv_locale.setTag(poiInfo);
     }
 
     @Override

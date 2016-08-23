@@ -37,8 +37,7 @@
                 android:drawableRight="@drawable/icon_arrow_right"
                 android:gravity="center_vertical"
                 android:hint="练车地点"
-                android:padding="@dimen/layout_padding_l"
-                android:text="武汉" />
+                android:padding="@dimen/layout_padding_l"/>
 
             <View
                 style="@style/line_horStyle"

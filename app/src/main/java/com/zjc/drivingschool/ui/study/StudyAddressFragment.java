@@ -18,6 +18,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
@@ -30,6 +31,7 @@ import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.eventbus.StudyAddressChooseEvent;
 import com.zjc.drivingschool.ui.study.adapter.StudyAddressAdapter;
 
 import de.greenrobot.event.EventBus;
@@ -163,7 +165,9 @@ public class StudyAddressFragment extends ZBaseToolBarFragment implements View.O
 
     @Override
     public void onItemClick(View view, int position) {
-
+        PoiInfo poiInfo = (PoiInfo) mAdapter.getItem(position);
+        EventBus.getDefault().post(new StudyAddressChooseEvent(poiInfo));
+        getFragmentManager().popBackStack();
     }
 
     /**
@@ -221,7 +225,13 @@ public class StudyAddressFragment extends ZBaseToolBarFragment implements View.O
      */
     public void seachPoiByLatLng(LatLng latLng) {
         currentLatlng = latLng;
-        mPoiSearch.searchNearby((new PoiNearbySearchOption()).location(latLng).keyword("小区").radius(1000));
+        PoiNearbySearchOption searchOption = new PoiNearbySearchOption();
+        searchOption.location(latLng);
+        searchOption.keyword("小区");
+        searchOption.pageCapacity(50);
+        searchOption.pageNum(0);
+        searchOption.radius(2000);
+        mPoiSearch.searchNearby(searchOption);
     }
 
 
