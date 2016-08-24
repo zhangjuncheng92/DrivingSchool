@@ -1,13 +1,24 @@
 package com.zjc.drivingschool.ui.personal;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.bigkoo.pickerview.OptionsPopupWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
+import com.mobo.mobolibrary.util.Util;
 import com.mobo.mobolibrary.util.image.ImageLoader;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
@@ -21,6 +32,10 @@ import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 import com.zjc.drivingschool.widget.MultiPhotoDialogFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -33,23 +48,63 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
     private EditText tvName;
     private EditText tvEmail;
     private EditText tvQQ;
-    private EditText tvSex;
-    private EditText tvBirthday;
+    private TextView tvSex;
+    private TextView tvBirthday;
     private EditText tvAddress;
     private EditText tvPhone;
     private EditText tvIdCard;
     private SimpleDraweeView sdIcon;
 
+    private TimePopupWindow birthOptions;
+
+    private OptionsPopupWindow SexOptions;
+    private ArrayList<String> optionsItems = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void setTitle() {
         setTitle(mToolbar, R.string.personal_detail_title);
+        mToolbar.setOnMenuItemClickListener(OnMenuItemClick);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_personal_center, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private Toolbar.OnMenuItemClickListener OnMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int i = item.getItemId();
+            if (i == R.id.action_explain) {
+                String birth = tvBirthday.getText().toString().trim();
+                String sex = tvSex.getText().toString().trim();
+                String name = tvName.getText().toString().trim();
+                String email = tvEmail.getText().toString().trim();
+                String qq = tvQQ.getText().toString().trim();
+                String address = tvAddress.getText().toString().trim();
+                String phone = tvPhone.getText().toString().trim();
+                String idCard = tvIdCard.getText().toString().trim();
+                // TODO: 2016/8/24 需要验证字段是否正确
+                ApiHttpClient.getInstance().updateUserBaseInfo(SharePreferencesUtil.getInstance().readUser().getUid(),birth , sex ,name, email, qq, address, phone, idCard,
+                        SharePreferencesUtil.getInstance().readUser().getPhotourl(), new ResultResponseHandler(getActivity(), "正在保存") {
+                    @Override
+                    public void onResultSuccess(String result) {
+                        UserInfo userInfo = new UserInfoParser().parseResultMessage(result);
+                        SharePreferencesUtil.getInstance().saveUser(userInfo);
+                    }
+                });
+            }
+            return true;
+        }
+    };
 
     @Override
     protected int inflateContentView() {
@@ -59,19 +114,25 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
     @Override
     protected void layoutInit(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView();
+        initBirthOptions();
+        initSexOptions();
         setPersonInfo(SharePreferencesUtil.getInstance().readUser());
     }
+
 
     private void initView() {
         tvName = (EditText) rootView.findViewById(R.id.personal_frg_tv_name);
         tvEmail = (EditText) rootView.findViewById(R.id.personal_frg_tv_email);
         tvQQ = (EditText) rootView.findViewById(R.id.personal_frg_tv_QQ);
-        tvSex = (EditText) rootView.findViewById(R.id.personal_frg_tv_sex);
-        tvBirthday = (EditText) rootView.findViewById(R.id.personal_frg_tv_birthday);
+        tvSex = (TextView) rootView.findViewById(R.id.personal_frg_tv_sex);
+        tvBirthday = (TextView) rootView.findViewById(R.id.personal_frg_tv_birthday);
         tvAddress = (EditText) rootView.findViewById(R.id.personal_frg_tv_address);
         tvPhone = (EditText) rootView.findViewById(R.id.personal_frg_tv_phone);
         tvIdCard = (EditText) rootView.findViewById(R.id.personal_frg_tv_id_card);
         sdIcon = (SimpleDraweeView) rootView.findViewById(R.id.personal_main_frg_sd_icon);
+
+        tvBirthday.setOnClickListener(this);
+        tvSex.setOnClickListener(this);
     }
 
     private void setPersonInfo(UserInfo userInfo) {
@@ -92,15 +153,72 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
         sdIcon.setOnClickListener(this);
     }
 
+    private void initBirthOptions() {
+        birthOptions = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        birthOptions.setRange(1900, 2050);
+        birthOptions.setTime(new Date());
+
+        birthOptions.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date da = new Date();
+                String time = sdf.format(da);
+                String timePick = sdf.format(date);
+                if (Integer.valueOf(time.substring(0, 4)).intValue() < Integer.valueOf(timePick.substring(0, 4)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else if (Integer.valueOf(time.substring(5, 7)).intValue() < Integer.valueOf(timePick.substring(5, 7)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else if (Integer.valueOf(time.substring(8, 10)).intValue() < Integer.valueOf(timePick.substring(8, 10)).intValue()) {
+                    Util.showCustomMsg("日期选择不正确，请重新选择");
+                    return;
+                } else {
+                    tvBirthday.setText(timePick);
+                }
+            }
+        });
+    }
+
+
+    private void initSexOptions() {
+        SexOptions = new OptionsPopupWindow(getActivity());
+        optionsItems.add("男");
+        optionsItems.add("女");
+        SexOptions.setPicker(optionsItems, null, null, true);
+//        SexOptions.setSelectOptions(0);
+        SexOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                String tx = optionsItems.get(options1);
+                tvSex.setText(tx);
+                tvSex.setTag(options1 + 1);
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
+        InputMethodManager inputmanger = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         int i = v.getId();
         if (i == R.id.personal_main_frg_sd_icon) {
             MultiPhotoDialogFragment dialogFragment1 = new MultiPhotoDialogFragment();
             dialogFragment1.setMax(1);
             dialogFragment1.setAction(ConstantsParams.PHOTO_TYPE_USER);
             dialogFragment1.show(getFragmentManager(), null);
+        }
+        switch (i) {
+            case R.id.personal_frg_tv_birthday:
+                //隐藏虚拟键盘
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                birthOptions.showAtLocation(tvBirthday, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.personal_frg_tv_sex:
+                //隐藏虚拟键盘
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                SexOptions.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
+                break;
         }
     }
 

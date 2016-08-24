@@ -15,6 +15,7 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.TeacherCollectItem;
 import com.zjc.drivingschool.db.parser.TeacherCollectListParser;
 import com.zjc.drivingschool.db.response.TeacherCollectListResponse;
 import com.zjc.drivingschool.ui.collect.adapter.CollectManagerAdapter;
@@ -67,6 +68,9 @@ public class CollectManagerFragment extends ZBaseToolBarFragment implements Swip
     @Override
     public void onItemClick(View view, int position) {
         //跳转到详情
+        TeacherCollectItem teacherCollectItem = (TeacherCollectItem) mAdapter.getItem(position);
+        CollectDetailFragment collectDetailFragment = CollectDetailFragment.newInstance(teacherCollectItem);
+        replaceFrg(collectDetailFragment, null);
     }
 
     @Override

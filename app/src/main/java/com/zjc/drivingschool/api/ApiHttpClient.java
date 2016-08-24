@@ -155,15 +155,19 @@ public class ApiHttpClient {
      * 参数：id(用户主键)email()age()gender(1.男 2.女)logoFile(头像文件)
      * 调用示例：http://localhost:8080/medical/services/userinfo/updateUserBaseInfo?id=1&email=&age=&gender=&logoFile=
      */
-    public void updateUserBaseInfo(int id, String logoFile, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void updateUserBaseInfo(String id, String birth,String sex ,String name,String email,String qq ,String address,String phone,String idCard ,String logoFile, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         RequestParams params = new RequestParams();
         params.setForceMultipartEntityContentType(true);
         params.setHttpEntityIsRepeatable(true);
         params.put("id", id);
-//        params.put("email", email);
-//        params.put("age", age);
-//        params.put("gender", gender);
-//        params.put("logoFile", logoFile);
+        params.put("birth", birth);
+        params.put("sex", sex);
+        params.put("name", name);
+        params.put("email", email);
+        params.put("qq", qq);
+        params.put("phone", phone);
+        params.put("address", address);
+        params.put("idCard", idCard);
 
         try {
             File file;
@@ -253,7 +257,7 @@ public class ApiHttpClient {
     }
 
     /**
-     *  * ###########   预约学车   ############
+     * * ###########   预约学车   ############
      * 1.1.22 学员报名订单创建
      * 开始位置经度	longitude	number	必填
      * * 开始位置纬度	latitude	number	必填

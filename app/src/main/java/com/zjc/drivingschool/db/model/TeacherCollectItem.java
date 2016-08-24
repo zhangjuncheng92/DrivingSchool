@@ -1,13 +1,14 @@
 package com.zjc.drivingschool.db.model;
 
+import java.io.Serializable;
+
 /**
  * 收藏教练Item
  * 
  * @author LJ
  * @date 2016年7月21日
  */
-public class TeacherCollectItem
-{	
+public class TeacherCollectItem implements Serializable {
 	private String tcid;// 教练收藏id
 	
 	private String tid;// 教练id

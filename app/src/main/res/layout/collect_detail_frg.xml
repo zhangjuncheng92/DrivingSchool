@@ -19,7 +19,7 @@
                 style="@style/personal_title_text"
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_icon" />
+                android:text="照片" />
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/personal_main_frg_sd_icon"
@@ -48,12 +48,11 @@
             <TextView
                 style="@style/personal_title_text"
                 android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_name" />
+                android:text="教练名称" />
 
-            <EditText
-                android:id="@+id/personal_frg_tv_name"
-                style="@style/personal_info_text"
-                android:maxLength="10" />
+            <TextView
+                android:id="@+id/collect_detail_name"
+                style="@style/personal_info_text" />
 
         </LinearLayout>
 
@@ -73,7 +72,7 @@
                 android:text="@string/personal_detail_sex" />
 
             <TextView
-                android:id="@+id/personal_frg_tv_sex"
+                android:id="@+id/collect_detail_sex"
                 style="@style/personal_info_text" />
 
         </LinearLayout>
@@ -91,10 +90,10 @@
             <TextView
                 style="@style/personal_title_text"
                 android:drawableLeft="@drawable/icon_name"
-                android:text="@string/hierarchical_resident_create_birthday" />
+                android:text="执教年龄" />
 
             <TextView
-                android:id="@+id/personal_frg_tv_birthday"
+                android:id="@+id/collect_detail_age"
                 style="@style/personal_info_text" />
 
         </LinearLayout>
@@ -111,13 +110,58 @@
             <TextView
                 style="@style/personal_title_text"
                 android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_phone" />
+                android:text="所属驾校" />
 
-            <EditText
-                android:id="@+id/personal_frg_tv_phone"
-                style="@style/personal_info_text"
-                android:inputType="number"
-                android:maxLength="11" />
+            <TextView
+                android:id="@+id/collect_detail_schoolname"
+                style="@style/personal_info_text" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="星级" />
+
+            <RatingBar
+                android:layout_centerVertical="true"
+                android:id="@+id/assess_detail_list_rb_score"
+                style="@style/rating_bar_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="20dp"
+                android:numStars="5"
+                android:rating="5"
+                android:stepSize="0.1" />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_l" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_title_text"
+                android:drawableLeft="@drawable/icon_name"
+                android:text="联系电话" />
+
+            <TextView
+                android:id="@+id/collect_detail_telephone"
+                style="@style/personal_info_text" />
 
         </LinearLayout>
 
@@ -133,78 +177,11 @@
             <TextView
                 style="@style/personal_title_text"
                 android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_email" />
-
-            <EditText
-                android:id="@+id/personal_frg_tv_email"
-                style="@style/personal_info_text"
-                android:inputType="textEmailAddress" />
-
-        </LinearLayout>
-
-        <View
-            style="@style/line_horStyle"
-            android:layout_marginLeft="@dimen/layout_margin_l" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:text="描述" />
 
             <TextView
-                style="@style/personal_title_text"
-                android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_QQ" />
-
-            <EditText
-                android:id="@+id/personal_frg_tv_QQ"
-                style="@style/personal_info_text"
-                android:inputType="number"
-                android:maxLength="13" />
-
-        </LinearLayout>
-
-        <View
-            style="@style/line_horStyle"
-            android:layout_marginLeft="@dimen/layout_margin_l" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/personal_title_text"
-                android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_address" />
-
-            <EditText
-                android:id="@+id/personal_frg_tv_address"
-                style="@style/personal_info_text"
-                android:singleLine="true" />
-
-        </LinearLayout>
-
-        <View
-            style="@style/line_horStyle"
-            android:layout_marginLeft="@dimen/layout_margin_l" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/personal_title_text"
-                android:drawableLeft="@drawable/icon_name"
-                android:text="@string/personal_detail_id_card" />
-
-            <EditText
-                android:id="@+id/personal_frg_tv_id_card"
-                style="@style/personal_info_text"
-                android:digits="0123456789xyzXYZ"
-                android:inputType="number"
-                android:maxLength="18" />
+                android:id="@+id/collect_detail_des"
+                style="@style/personal_info_text" />
 
         </LinearLayout>
 
