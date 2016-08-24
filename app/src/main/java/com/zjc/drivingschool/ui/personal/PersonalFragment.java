@@ -3,6 +3,7 @@ package com.zjc.drivingschool.ui.personal;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -92,12 +93,27 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
                 String address = tvAddress.getText().toString().trim();
                 String phone = tvPhone.getText().toString().trim();
                 String idCard = tvIdCard.getText().toString().trim();
-                // TODO: 2016/8/24 需要验证字段是否正确
-                ApiHttpClient.getInstance().updateUserBaseInfo(SharePreferencesUtil.getInstance().readUser().getUid(),birth , sex ,name, email, qq, address, phone, idCard,
-                        SharePreferencesUtil.getInstance().readUser().getPhotourl(), new ResultResponseHandler(getActivity(), "正在保存") {
+
+                if (TextUtils.isEmpty(birth) || TextUtils.isEmpty(sex) || TextUtils.isEmpty(name) || TextUtils.isEmpty(email)
+                        || TextUtils.isEmpty(qq) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(idCard)) {
+                    Util.showCustomMsg("请输入完整信息");
+                    return true;
+                }
+
+                final UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
+                userInfo.setUid(SharePreferencesUtil.getInstance().readUser().getUid());
+                userInfo.setNickname(name);
+                userInfo.setGender((Boolean) tvSex.getTag());
+                userInfo.setBirthday(birth);
+                userInfo.setPhone(phone);
+                userInfo.setEmail(email);
+                userInfo.setQq(qq);
+                userInfo.setAddress(address);
+                userInfo.setIdentityno(idCard);
+
+                ApiHttpClient.getInstance().updateUserBaseInfo(userInfo, new ResultResponseHandler(getActivity(), "正在保存") {
                     @Override
                     public void onResultSuccess(String result) {
-                        UserInfo userInfo = new UserInfoParser().parseResultMessage(result);
                         SharePreferencesUtil.getInstance().saveUser(userInfo);
                     }
                 });
@@ -118,7 +134,6 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
         initSexOptions();
         setPersonInfo(SharePreferencesUtil.getInstance().readUser());
     }
-
 
     private void initView() {
         tvName = (EditText) rootView.findViewById(R.id.personal_frg_tv_name);
@@ -184,8 +199,8 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
 
     private void initSexOptions() {
         SexOptions = new OptionsPopupWindow(getActivity());
-        optionsItems.add("男");
-        optionsItems.add("女");
+        optionsItems.add(getResources().getString(R.string.personal_sex_men));
+        optionsItems.add(getResources().getString(R.string.personal_sex_women));
         SexOptions.setPicker(optionsItems, null, null, true);
 //        SexOptions.setSelectOptions(0);
         SexOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
@@ -193,7 +208,11 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
             public void onOptionsSelect(int options1, int option2, int options3) {
                 String tx = optionsItems.get(options1);
                 tvSex.setText(tx);
-                tvSex.setTag(options1 + 1);
+                if (options1 == 0) {
+                    tvSex.setTag(true);
+                } else {
+                    tvSex.setTag(false);
+                }
             }
         });
     }

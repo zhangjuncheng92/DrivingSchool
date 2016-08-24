@@ -22,10 +22,10 @@
 
     <!--极光-->
     <permission
-        android:name="com.mobo.hierarchicalmedical.permission.JPUSH_MESSAGE"
+        android:name="com.zjc.drivingschool.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.mobo.hierarchicalmedical.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.zjc.drivingschool.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />

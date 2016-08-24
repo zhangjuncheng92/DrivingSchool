@@ -7,6 +7,7 @@ import com.mobo.mobolibrary.util.Util;
 import com.mobo.mobolibrary.util.UtilPhoto;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
+import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.db.request.OrderCreateRequest;
 import com.zjc.drivingschool.db.request.SignupOrderRequest;
 import com.zjc.drivingschool.utils.Constants;
@@ -153,35 +154,29 @@ public class ApiHttpClient {
     /**
      * 1.9接口：updateUserBaseInfo
      * 用途：修改用户基本资料
-     * 参数：id(用户主键)email()age()gender(1.男 2.女)logoFile(头像文件)
+     * 参数：
+     * 地址	address	string	必填
+     * 生日 --格式：yyyy-MM-dd	birthday	string	必填
+     * QQ号码	qq	string	必填
+     * 邮箱	email	string	必填
+     * 身份证号码	identityno	string	必填
+     * 用户昵称	nickname	string	必填
+     * 用户ID	uid	string	必填
+     * 性别 true:男 false:女
      * 调用示例：http://localhost:8080/medical/services/userinfo/updateUserBaseInfo?id=1&email=&age=&gender=&logoFile=
      */
-    public void updateUserBaseInfo(String id, String birth,String sex ,String name,String email,String qq ,String address,String phone,String idCard ,String logoFile, AsyncHttpResponseHandler asyncHttpResponseHandler) {
-        RequestParams params = new RequestParams();
-        params.setForceMultipartEntityContentType(true);
-        params.setHttpEntityIsRepeatable(true);
-        params.put("id", id);
-        params.put("birth", birth);
-        params.put("sex", sex);
-        params.put("name", name);
-        params.put("email", email);
-        params.put("qq", qq);
-        params.put("phone", phone);
-        params.put("address", address);
-        params.put("idCard", idCard);
-
-        try {
-            File file;
-            //生成输入文件路径，进行压缩
-            String filename = Constants.DIR_CACHE + Util.getPhotoFileName();
-            UtilPhoto.getSmallFileByFile(logoFile, filename);
-            file = new File(filename);
-
-            params.put("logoFile", file);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        HttpUtilsAsync.post(Constants.BASE_URL + "userinfo/updateUserBaseInfo", params, asyncHttpResponseHandler);
+    public void updateUserBaseInfo(UserInfo userInfo, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userInfo.getUid());
+        postRequest.addProperty("birthday", userInfo.getBirthday());
+        postRequest.addProperty("gender", userInfo.isGender());
+        postRequest.addProperty("nickname", userInfo.getNickname());
+        postRequest.addProperty("email", userInfo.getEmail());
+        postRequest.addProperty("qq", userInfo.getQq());
+        postRequest.addProperty("phone", userInfo.getPhone());
+        postRequest.addProperty("address", userInfo.getAddress());
+        postRequest.addProperty("identityno", userInfo.getIdentityno());
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/subinfo", postRequest, asyncHttpResponseHandler);
     }
 
     /**
@@ -260,18 +255,18 @@ public class ApiHttpClient {
     /**
      * * ###########   预约学车   ############
      * 1.1.22 学员报名订单创建
-     学车人电话	contactsphone	string	（非必传，代人下单时必填）
-     开始位置纬度	latitude	number
-     用户ID	uid	string
-     用户姓名	uname	string
-     学历	education	string
-     用户电话	uphone	string
-     学车人性别	gender	boolean
-     优惠券ID	vid	string	（非必传，格式:多个ID用','分割）
-     学车人姓名	contactsname	string	（非必传，代人下单时必填）
-     学车人出生年月	birthday	string	yyyy-MM-dd
-     开始位置经度	longitude	number
-     是否代人下单	isreplace	boolean
+     * 学车人电话	contactsphone	string	（非必传，代人下单时必填）
+     * 开始位置纬度	latitude	number
+     * 用户ID	uid	string
+     * 用户姓名	uname	string
+     * 学历	education	string
+     * 用户电话	uphone	string
+     * 学车人性别	gender	boolean
+     * 优惠券ID	vid	string	（非必传，格式:多个ID用','分割）
+     * 学车人姓名	contactsname	string	（非必传，代人下单时必填）
+     * 学车人出生年月	birthday	string	yyyy-MM-dd
+     * 开始位置经度	longitude	number
+     * 是否代人下单	isreplace	boolean
      * /app/student/order/create
      */
     public void startApply(SignupOrderRequest signupOrder, AsyncHttpResponseHandler asyncHttpResponseHandler) {
@@ -397,6 +392,7 @@ public class ApiHttpClient {
         postRequest.addProperty("orid", orid);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/order/detail", postRequest, asyncHttpResponseHandler);
     }
+
     /**
      * 1.1.26 学员取消学车订单
      * 参数：orid  uid
