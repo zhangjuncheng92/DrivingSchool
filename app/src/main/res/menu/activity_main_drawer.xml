@@ -31,7 +31,7 @@
     <item android:title="@string/login_cancel">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/main_action_logout"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/login_cancel" />
         </menu>

@@ -204,7 +204,7 @@ public class SharePreferencesUtil {
 
 
     public City readCity() {
-        City city = new City();
+        City city =null;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplication());
         String string2obj = sp.getString("city", "");
         if (!TextUtils.isEmpty(string2obj)) {

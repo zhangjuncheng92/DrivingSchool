@@ -8,6 +8,7 @@ import com.mobo.mobolibrary.util.UtilPhoto;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.SearchHospitalModel;
 import com.zjc.drivingschool.db.request.OrderCreateRequest;
+import com.zjc.drivingschool.db.request.SignupOrderRequest;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
@@ -259,44 +260,36 @@ public class ApiHttpClient {
     /**
      * * ###########   预约学车   ############
      * 1.1.22 学员报名订单创建
-     * 开始位置经度	longitude	number	必填
-     * * 开始位置纬度	latitude	number	必填
-     * 项目类型ID	subjectid	string	必填
-     * 项目类型名称	subjectname	string	必填
-     * 是否VIP	isvip	boolean	必填
-     * 车型名称	carsname	string	必填
-     * 是否代人下单	isreplace	boolean	必填
-     * 下单用户ID	uid	string	必填
-     * 联系人姓名	contactsname	string	isreplace为true时必传
-     * 联系人电话	contactsphone	string	isreplace为true时必传
-     * 数量 单位：小时	number	number	必填
-     * 开始时间 格式：yyyy-MM-dd hh:mm:ss	starttime	string	必填
-     * 车型ID	carsid	string	必填
-     * 下单用户名	loginname	string	必填
-     * 下单用户昵称	nickname	string	必填
-     * 优惠券ID	vid	string	非必传，格式:多个ID用','分割
+     学车人电话	contactsphone	string	（非必传，代人下单时必填）
+     开始位置纬度	latitude	number
+     用户ID	uid	string
+     用户姓名	uname	string
+     学历	education	string
+     用户电话	uphone	string
+     学车人性别	gender	boolean
+     优惠券ID	vid	string	（非必传，格式:多个ID用','分割）
+     学车人姓名	contactsname	string	（非必传，代人下单时必填）
+     学车人出生年月	birthday	string	yyyy-MM-dd
+     开始位置经度	longitude	number
+     是否代人下单	isreplace	boolean
      * /app/student/order/create
      */
-    public void startApply(OrderCreateRequest orderCreateRequest, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void startApply(SignupOrderRequest signupOrder, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
-        postRequest.addProperty("uid", orderCreateRequest.getUid());
-        postRequest.addProperty("longitude", orderCreateRequest.getLongitude());
-        postRequest.addProperty("latitude", orderCreateRequest.getLatitude());
-        postRequest.addProperty("subjectid", orderCreateRequest.getSubjectid());
-        postRequest.addProperty("subjectname", orderCreateRequest.getSubjectname());
-        postRequest.addProperty("carsname", orderCreateRequest.getCarsname());
-        postRequest.addProperty("carsid", orderCreateRequest.getCarsid());
+        postRequest.addProperty("uid", signupOrder.getUid());
+        postRequest.addProperty("longitude", signupOrder.getLongitude());
+        postRequest.addProperty("latitude", signupOrder.getLatitude());
 
-        postRequest.addProperty("isvip", orderCreateRequest.getIsvip());
-        postRequest.addProperty("isreplace", orderCreateRequest.getIsreplace());
-        postRequest.addProperty("contactsname", orderCreateRequest.getContactsname());
-        postRequest.addProperty("contactsphone", orderCreateRequest.getContactsphone());
+        postRequest.addProperty("uname", signupOrder.getUname());
+        postRequest.addProperty("uphone", signupOrder.getUphone());
+        postRequest.addProperty("gender", signupOrder.getGender());
+        postRequest.addProperty("birthday", signupOrder.getBirthday());
+        postRequest.addProperty("education", signupOrder.getEducation());
 
-        postRequest.addProperty("number", orderCreateRequest.getNumber());
-        postRequest.addProperty("starttime", orderCreateRequest.getStarttime());
-        postRequest.addProperty("loginname", orderCreateRequest.getLoginname());
-        postRequest.addProperty("nickname", orderCreateRequest.getNickname());
-        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/create", postRequest, asyncHttpResponseHandler);
+        postRequest.addProperty("isreplace", signupOrder.getIsreplace());
+        postRequest.addProperty("contactsname", signupOrder.getContactsname());
+        postRequest.addProperty("contactsphone", signupOrder.getContactsphone());
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/signup", postRequest, asyncHttpResponseHandler);
     }
 
     /**
@@ -404,7 +397,29 @@ public class ApiHttpClient {
         postRequest.addProperty("orid", orid);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/order/detail", postRequest, asyncHttpResponseHandler);
     }
+    /**
+     * 1.1.26 学员取消学车订单
+     * 参数：orid  uid
+     * 调用示例：/app/student/order/cancel
+     */
+    public void cancelStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/cancel", postRequest, asyncHttpResponseHandler);
+    }
 
+    /**
+     * 1.1.27 学员申请订单退订
+     * 参数：orid  uid
+     * 调用示例：/app/student/order/refund
+     */
+    public void unSubjectStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/order/refund", postRequest, asyncHttpResponseHandler);
+    }
 
     /**
      * ###########驾校主页############

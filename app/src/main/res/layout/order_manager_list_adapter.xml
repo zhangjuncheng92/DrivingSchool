@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -110,37 +110,38 @@
                 android:id="@+id/order_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/comm_orange"
-                android:padding="10dp"
+                android:background="@drawable/comm_select_orange"
+                android:padding="@dimen/layout_margin_l"
                 android:text="在线支付"
                 android:textColor="@color/white" />
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/order_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
+                android:background="@drawable/comm_select_orange"
+                android:padding="@dimen/layout_margin_l"
+                android:text="取消订单"
+                android:textColor="@color/comm_white" />
 
-                <TextView
-                    android:id="@+id/order_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/comm_frame_gary_bg"
-                    android:padding="10dp"
-                    android:text="取消订单"
-                    android:textColor="@color/gray" />
+            <TextView
+                android:id="@+id/order_unsubject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_select_orange"
+                android:padding="@dimen/layout_margin_l"
+                android:text="退订"
+                android:textColor="@color/comm_white" />
 
-                <TextView
-                    android:id="@+id/order_discuss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/comm_frame_pink_bg"
-                    android:padding="10dp"
-                    android:text="我要评价"
-                    android:textColor="@color/registration_pink"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-
+            <TextView
+                android:id="@+id/order_discuss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_frame_pink_bg"
+                android:padding="10dp"
+                android:text="我要评价"
+                android:textColor="@color/registration_pink" />
         </LinearLayout>
     </RelativeLayout>
 
