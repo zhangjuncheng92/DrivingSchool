@@ -1,4 +1,4 @@
-package com.zjc.drivingschool.api;
+package com.zjc.drivingschool.db.model;
 
 /**
  * APP请求与相应常量

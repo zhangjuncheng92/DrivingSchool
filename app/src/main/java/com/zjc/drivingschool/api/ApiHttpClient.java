@@ -296,8 +296,8 @@ public class ApiHttpClient {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("offset", start);
-        postRequest.addProperty("status", status);
-        postRequest.addProperty("state", ConstantsParams.PAGE_SIZE);
+        postRequest.addProperty("state", status);
+        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/signuporder/list", postRequest, asyncHttpResponseHandler);
     }
 
