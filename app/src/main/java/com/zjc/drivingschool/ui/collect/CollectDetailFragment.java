@@ -1,6 +1,7 @@
 package com.zjc.drivingschool.ui.collect;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
@@ -10,16 +11,19 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.image.ImageLoader;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.api.ApiHttpClient;
+import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.model.TeacherCollectItem;
+import com.zjc.drivingschool.db.parser.TeacherCollectDetailParser;
+import com.zjc.drivingschool.db.response.TeacherCollectDetail;
 import com.zjc.drivingschool.utils.Constants;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/8/24.
  */
 public class CollectDetailFragment extends ZBaseToolBarFragment {
-    TeacherCollectItem teacherCollectItem;
+    private TeacherCollectItem teacherCollectItem;
+    private TeacherCollectDetail teacherCollectDetail;
 
     private SimpleDraweeView sdIcon;
     private RatingBar rbScore;
@@ -62,30 +66,48 @@ public class CollectDetailFragment extends ZBaseToolBarFragment {
 
     @Override
     protected void layoutInit(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initEmptyLayout(rootView);
         initView();
+        getDetailById();
     }
 
     private void initView() {
         sdIcon = (SimpleDraweeView) rootView.findViewById(R.id.personal_main_frg_sd_icon);
-        ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + teacherCollectItem.getPhoto());
+        tvAge = (TextView) rootView.findViewById(R.id.collect_detail_age);
         rbScore = (RatingBar) rootView.findViewById(R.id.assess_detail_list_rb_score);
+        tvDes = (TextView) rootView.findViewById(R.id.collect_detail_des);
+        tvTelephone = (TextView) rootView.findViewById(R.id.collect_detail_telephone);
+        tvSchoolName = (TextView) rootView.findViewById(R.id.collect_detail_schoolname);
+        tvName = (TextView) rootView.findViewById(R.id.collect_detail_name);
+        tvSex = (TextView) rootView.findViewById(R.id.collect_detail_sex);
+
+        ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + teacherCollectItem.getPhoto());
         rbScore.setIsIndicator(true);
         rbScore.setRating(Float.parseFloat(String.valueOf(teacherCollectItem.getStars())));
-        tvDes = (TextView) rootView.findViewById(R.id.collect_detail_des);
-//        tvDes.setText(teacherCollectItem.get);没有字段
-        tvTelephone = (TextView) rootView.findViewById(R.id.collect_detail_telephone);
         tvTelephone.setText(teacherCollectItem.getPhone());
-        tvSchoolName = (TextView) rootView.findViewById(R.id.collect_detail_schoolname);
         tvSchoolName.setText(teacherCollectItem.getSchoolname());
-        tvName = (TextView) rootView.findViewById(R.id.collect_detail_name);
         tvName.setText(teacherCollectItem.getTeachername());
-        tvSex = (TextView) rootView.findViewById(R.id.collect_detail_sex);
-//        if (teacherCollectItem.getGender()){
-//            tvSex.setText("男");不知道true和flase代表的是男是女
-//        }else {
-//            tvSex.setText("女");
-//        }
-        tvAge = (TextView) rootView.findViewById(R.id.collect_detail_age);
-//        tvAge.setText(teacherCollectItem.get);没有字段
+        if (teacherCollectItem.getGender()) {
+            tvSex.setText(R.string.personal_sex_men);
+        } else {
+            tvSex.setText(R.string.personal_sex_women);
+        }
+    }
+
+    private void getDetailById() {
+        ApiHttpClient.getInstance().getCollectTeacherDetail(teacherCollectItem.getTid(), new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+            @Override
+            public void onResultSuccess(String result) {
+                teacherCollectDetail = new TeacherCollectDetailParser().parseResultMessage(result);
+                setInfo();
+            }
+        });
+    }
+
+    private void setInfo() {
+        if (!TextUtils.isEmpty(teacherCollectDetail.getSynopsis())) {
+            tvDes.setText(teacherCollectDetail.getSynopsis());
+        }
+        tvAge.setText(teacherCollectDetail.getExperience() + "");
     }
 }

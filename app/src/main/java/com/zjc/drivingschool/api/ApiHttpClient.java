@@ -459,4 +459,15 @@ public class ApiHttpClient {
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/teacher/collect/list", postRequest, asyncHttpResponseHandler);
     }
+
+    /**
+     * 1.1.31 收藏教练详情
+     * 参数
+     * 调用示例：/app/student/teacher/collect/detail
+     */
+    public void getCollectTeacherDetail(String tid,AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("tid", tid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/teacher/collect/detail", postRequest, asyncHttpResponseHandler);
+    }
 }

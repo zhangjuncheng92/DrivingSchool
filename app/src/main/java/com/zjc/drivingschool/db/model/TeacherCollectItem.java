@@ -21,7 +21,7 @@ public class TeacherCollectItem implements Serializable {
 	
 	private String schoolname;// 所属驾校名称
 	
-	private Boolean gender;// 性别
+	private boolean gender;// 性别
 	
 	private String phone;// 联系电话
 
@@ -85,12 +85,12 @@ public class TeacherCollectItem implements Serializable {
 		this.schoolname = schoolname;
 	}
 
-	public Boolean getGender()
+	public boolean getGender()
 	{
 		return gender;
 	}
 
-	public void setGender(Boolean gender)
+	public void setGender(boolean gender)
 	{
 		this.gender = gender;
 	}
