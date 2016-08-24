@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
-import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
+import com.mobo.mobolibrary.ui.base.ZBaseFragment;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.zjc.drivingschool.R;
@@ -21,6 +21,7 @@ import com.zjc.drivingschool.db.response.OrderListResponse;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
 import com.zjc.drivingschool.eventbus.StudyOrderUnSubjectEvent;
 import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
+import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 import de.greenrobot.event.EventBus;
@@ -28,19 +29,30 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+public class StudyListFragment extends ZBaseFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+    private String orderStatus;
     private EasyRecyclerView mRecyclerView;
     private StudyOrderAdapter mAdapter;
+
+    /**
+     * 传入需要的参数，设置给arguments
+     */
+    public static StudyListFragment newInstance(String bean) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, bean);
+        StudyListFragment fragment = new StudyListFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void setTitle() {
-        setTitle(mToolbar, R.string.title_study_history);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            orderStatus = (String) bundle.getSerializable(Constants.ARGUMENT);
+        }
     }
 
     @Override
@@ -85,7 +97,7 @@ public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -98,7 +110,7 @@ public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefr
     }
 
     private void findOrders() {
-        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -112,7 +124,7 @@ public class StudyListFragment extends ZBaseToolBarFragment implements SwipeRefr
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
-        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, new ResultResponseHandler(getActivity()) {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, orderStatus, new ResultResponseHandler(getActivity()) {
 
             @Override
             public void onResultSuccess(String result) {

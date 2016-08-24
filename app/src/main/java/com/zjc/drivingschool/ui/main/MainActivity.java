@@ -44,9 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initToolBar();
-        initNavigation();
         initView();
-        initMap();
+//        initMap();
     }
 
     private void initToolBar() {
@@ -54,26 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         //设置标题
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
-    private void initNavigation() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
-
-        navigationView.setNavigationItemSelectedListener(this);
-
-        /**个人信息的设置*/
-        if (SharePreferencesUtil.getInstance().isLogin()) {
-            headerView.setOnClickListener(new HeaderViewOnClick());
-
-
-            UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
-            SimpleDraweeView sdIcon = (SimpleDraweeView) headerView.findViewById(R.id.personal_main_frg_sd_icon);
-            TextView tvName = (TextView) headerView.findViewById(R.id.personal_main_frg_tv_name);
-            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getPhotourl());
-            tvName.setText(userInfo.getNickname() + "");
-        }
     }
 
     private void initView() {
@@ -103,10 +82,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * 验证是否登录
      */
     private void verifyIsLogin() {
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (SharePreferencesUtil.getInstance().isLogin()) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            View headerView = navigationView.getHeaderView(0);
+
+            navigationView.setNavigationItemSelectedListener(this);
+            headerView.setOnClickListener(new HeaderViewOnClick());
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
+
+            UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
+            SimpleDraweeView sdIcon = (SimpleDraweeView) headerView.findViewById(R.id.personal_main_frg_sd_icon);
+            TextView tvName = (TextView) headerView.findViewById(R.id.personal_main_frg_tv_name);
+            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getPhotourl());
+            tvName.setText(userInfo.getNickname() + "");
         } else {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

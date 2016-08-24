@@ -115,6 +115,7 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
                     @Override
                     public void onResultSuccess(String result) {
                         SharePreferencesUtil.getInstance().saveUser(userInfo);
+                        getFragmentManager().popBackStack();
                     }
                 });
             }
@@ -154,8 +155,10 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
         tvName.setText(userInfo.getNickname());
         if (userInfo.isGender()) {
             tvSex.setText(R.string.personal_sex_men);
+            tvSex.setTag(true);
         } else {
             tvSex.setText(R.string.personal_sex_women);
+            tvSex.setTag(false);
         }
         tvBirthday.setText(userInfo.getBirthday() + "");
         tvAddress.setText(userInfo.getAddress());

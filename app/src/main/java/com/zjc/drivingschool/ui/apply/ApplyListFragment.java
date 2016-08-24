@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.mobo.mobolibrary.ui.base.ZBaseFragment;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
@@ -18,20 +19,42 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
+import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
 import com.zjc.drivingschool.ui.study.StudyDetailFragment;
+import com.zjc.drivingschool.ui.study.StudyListFragment;
 import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
+import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class ApplyListFragment extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+    private String orderStatus;
     private EasyRecyclerView mRecyclerView;
     private StudyOrderAdapter mAdapter;
 
+    /**
+     * 传入需要的参数，设置给arguments
+     */
+    public static ApplyListFragment newInstance(String bean) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, bean);
+        ApplyListFragment fragment = new ApplyListFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
-    protected void setTitle() {
-        setTitle(mToolbar, R.string.title_apply_history);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            orderStatus = (String) bundle.getSerializable(Constants.ARGUMENT);
+        }
     }
 
     @Override
@@ -76,7 +99,7 @@ public class ApplyListFragment extends ZBaseToolBarFragment implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), mRecyclerView) {
+        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus,new ResultResponseHandler(getActivity(), mRecyclerView) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -89,7 +112,7 @@ public class ApplyListFragment extends ZBaseToolBarFragment implements SwipeRefr
     }
 
     private void findOrders() {
-        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus,new ResultResponseHandler(getActivity(), getEmptyLayout()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -103,7 +126,7 @@ public class ApplyListFragment extends ZBaseToolBarFragment implements SwipeRefr
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
-        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, new ResultResponseHandler(getActivity()) {
+        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, orderStatus,new ResultResponseHandler(getActivity()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -124,5 +147,28 @@ public class ApplyListFragment extends ZBaseToolBarFragment implements SwipeRefr
             return true;
         }
         return false;
+    }
+
+    /**
+     * 更新预约单取消状态
+     *
+     * @param event
+     */
+    public void onEventMainThread(StudyOrderCancelEvent event) {
+        int count = mAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            OrderItem item = (OrderItem) mAdapter.getItem(i);
+            if (item.getOrid() == event.getOrid()) {
+                item.setState(ConstantsParams.STUDY_ORDER_NINE);
+                mAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

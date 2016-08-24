@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.alertdialogpro.AlertDialogPro;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
-import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
+import com.mobo.mobolibrary.ui.base.ZBaseFragment;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.mobo.mobolibrary.ui.widget.empty.EmptyLayout;
@@ -21,13 +21,13 @@ import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.JPushNotification;
 import com.zjc.drivingschool.db.model.MessageItem;
-import com.zjc.drivingschool.db.parser.JPushNotificationParser;
 import com.zjc.drivingschool.db.parser.MessageListResponseParser;
 import com.zjc.drivingschool.db.response.MessageListResponse;
 import com.zjc.drivingschool.eventbus.JPushNotificationStateEvent;
 import com.zjc.drivingschool.eventbus.JpushNotificationEvent;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.ui.notification.adapter.NotificationsTypeAdapter;
+import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 import de.greenrobot.event.EventBus;
@@ -38,15 +38,31 @@ import de.greenrobot.event.EventBus;
  * @Date 2016.06.13
  * @description 转诊单通知
  */
-public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnItemLongClickListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnItemLongClickListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+    private String noticeStatus;
     private NotificationsTypeAdapter mAdapter;
     private EasyRecyclerView mRecyclerView;
     private MessageItem messageItem;
+
+    /**
+     * 传入需要的参数，设置给arguments
+     */
+    public static NotificationReferralFrg newInstance(String bean) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, bean);
+        NotificationReferralFrg fragment = new NotificationReferralFrg();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            noticeStatus = (String) bundle.getSerializable(Constants.ARGUMENT);
+        }
     }
 
     @Override
@@ -87,13 +103,8 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
     }
 
     @Override
-    protected void setTitle() {
-        setTitle(mToolbar, "消息");
-    }
-
-    @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), mRecyclerView) {
+        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, noticeStatus, new ResultResponseHandler(getActivity(), mRecyclerView) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -106,7 +117,7 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
     }
 
     private void getNotice(EmptyLayout emptyLayout) {
-        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, new ResultResponseHandler(getActivity(), emptyLayout) {
+        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, noticeStatus, new ResultResponseHandler(getActivity(), emptyLayout) {
             @Override
             public void onResultSuccess(String result) {
                 MessageListResponse orderListResponse = new MessageListResponseParser().parseResultMessage(result);
@@ -119,7 +130,7 @@ public class NotificationReferralFrg extends ZBaseToolBarFragment implements ZBa
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
-        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), start, new ResultResponseHandler(getActivity()) {
+        ApiHttpClient.getInstance().getMessageByTags(SharePreferencesUtil.getInstance().readUser().getUid(), start, noticeStatus, new ResultResponseHandler(getActivity()) {
 
             @Override
             public void onResultSuccess(String result) {

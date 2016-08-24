@@ -1,61 +1,63 @@
 package com.zjc.drivingschool.ui.notification;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.db.model.JPushNotification;
-import com.zjc.drivingschool.db.model.UserInfo;
-import com.zjc.drivingschool.utils.Constants;
+import com.zjc.drivingschool.ui.study.adapter.StudyOrderPagerAdapter;
+import com.zjc.drivingschool.utils.ConstantsParams;
+
+import java.util.ArrayList;
 
 /**
  * @author Z
- * @Filename NotificationActivity.java
- * @Date 2016.05.31
- * @description 通知提醒详情界面控制器
+ * @Filename CollectActivity.java
+ * @Date 2015.11.14
+ * @description 我的收藏控制器
  */
 public class NotificationActivity extends ZBaseActivity {
+    public ArrayList<Fragment> mFragmentList = new ArrayList<>();
+
+    private ViewPager mPager;// 页卡内容
+    private TabLayout mTabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.root_act);
+        setContentView(R.layout.study_list_act);
+        initEmptyLayout();
+        initTitle();
+        InitViewPager();
+        initTab();
     }
 
-    @Override
-    protected void initBaseView() {
-        if (getIntent().getExtras() == null) {
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            NotificationReferralFrg fragment = new NotificationReferralFrg();
-            trans.addToBackStack(null);
-            trans.add(R.id.root, fragment).commit();
-        } else if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Constants.TYPE)) {
-            int type = getIntent().getExtras().getInt(Constants.TYPE);
-//            if (type == ConstantsParams.PUSH_CONTENT_TYPE_REGISTRATION ||
-//                    type == ConstantsParams.PUSH_CONTENT_TYPE_REGISTRATION_NOTICE) {
-//                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-//                NotificationRegistrationFrg fragment = new NotificationRegistrationFrg();
-//                trans.addToBackStack(null);
-//                trans.add(R.id.root, fragment).commit();
-//            } else if (type == ConstantsParams.PUSH_CONTENT_TYPE_CUSTOM) {
-//                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-//                NotificationSystemFrg fragment = new NotificationSystemFrg();
-//                trans.addToBackStack(null);
-//                trans.add(R.id.root, fragment).commit();
-//            } else if (type == ConstantsParams.PUSH_CONTENT_TYPE_USER_RECHARGE) {
-//
-//            }
-        } else if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Constants.PUSH)) {
-            //判断是预约单还是系统消息
-            Object o = getIntent().getExtras().getSerializable(Constants.PUSH);
-            if (o instanceof UserInfo) {
-//                getAppointmentRegistrationById((AppointmentRegistration) o);
-            } else if (o instanceof JPushNotification) {
-//                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-//                NotificationWebFragment fragment = NotificationWebFragment.newInstance((JPushNotification) o);
-//                trans.addToBackStack(null);
-//                trans.add(R.id.root, fragment).commit();
-            }
-        }
+    private void initTitle() {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(R.drawable.comm_back);
+        setSupportActionBar(mToolbar);
+        OnBackPressClick onBackPressClick = new OnBackPressClick();
+        mToolbar.setNavigationOnClickListener(onBackPressClick);
+        setTitle(mToolbar, R.string.title_notice);
+    }
+
+    private void InitViewPager() {
+        mPager = (ViewPager) findViewById(R.id.myconferenceVPager);
+        NotificationReferralFrg allFragment = NotificationReferralFrg.newInstance(ConstantsParams.STUDY_ORDER_ALL);
+        NotificationReferralFrg unPayFragment = NotificationReferralFrg.newInstance(ConstantsParams.STUDY_ORDER_ONE);
+        NotificationReferralFrg payFragment = NotificationReferralFrg.newInstance(ConstantsParams.STUDY_ORDER_TWO);
+
+        mFragmentList.add(allFragment);
+        mFragmentList.add(unPayFragment);
+        mFragmentList.add(payFragment);
+        mPager.setAdapter(new StudyOrderPagerAdapter(getSupportFragmentManager(), mFragmentList));
+    }
+
+    private void initTab() {
+        mTabLayout = (TabLayout) findViewById(R.id.personal_act_tab);
+        mTabLayout.setupWithViewPager(mPager);
     }
 }

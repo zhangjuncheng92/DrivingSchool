@@ -292,11 +292,12 @@ public class ApiHttpClient {
      * 参数：pagesize  uid offset   state  orderid creatdate
      * 调用示例：/app/student/order/list
      */
-    public void startOrders(String userId, int start, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void startOrders(String userId, int start, String status,AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("offset", start);
-        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
+        postRequest.addProperty("status", status);
+        postRequest.addProperty("state", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/signuporder/list", postRequest, asyncHttpResponseHandler);
     }
 
@@ -373,10 +374,11 @@ public class ApiHttpClient {
      * 参数：pagesize  uid offset   state  orderid creatdate
      * 调用示例：/app/student/order/list
      */
-    public void findOrders(String userId, int start, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void findOrders(String userId, int start, String state, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("offset", start);
+        postRequest.addProperty("state", state);
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/order/list", postRequest, asyncHttpResponseHandler);
     }
@@ -438,9 +440,10 @@ public class ApiHttpClient {
      * 参数   偏移量	offset	number	必填/用户ID	uid	string	必填/分页大小	pagesize	number	必填
      * 调用示例：message/list
      */
-    public void getMessageByTags(String userId, int start, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void getMessageByTags(String userId, int start, String state, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
+        postRequest.addProperty("state", state);
         postRequest.addProperty("offset", start);
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/message/list", postRequest, asyncHttpResponseHandler);
@@ -465,7 +468,7 @@ public class ApiHttpClient {
      * 参数
      * 调用示例：/app/student/teacher/collect/detail
      */
-    public void getCollectTeacherDetail(String tid,AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void getCollectTeacherDetail(String tid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("tid", tid);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/teacher/collect/detail", postRequest, asyncHttpResponseHandler);
