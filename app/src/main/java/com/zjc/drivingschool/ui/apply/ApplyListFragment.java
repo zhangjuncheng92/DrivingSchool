@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.mobo.mobolibrary.ui.base.ZBaseFragment;
-import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.mobo.mobolibrary.ui.divideritem.HorizontalDividerItemDecoration;
 import com.zjc.drivingschool.R;
@@ -20,8 +19,6 @@ import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
-import com.zjc.drivingschool.ui.study.StudyDetailFragment;
-import com.zjc.drivingschool.ui.study.StudyListFragment;
 import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
@@ -93,13 +90,14 @@ public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayo
     public void onItemClick(View view, int position) {
         //跳转到预约详情界面
         OrderItem orderItem = (OrderItem) mAdapter.getItem(position);
-        ApplyDetailFragment fragment = ApplyDetailFragment.newInstance((orderItem.getOrid()));
-        replaceFrg(fragment, null);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, orderItem.getOrid());
+        startActivity(ApplyActivity.class, bundle);
     }
 
     @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus,new ResultResponseHandler(getActivity(), mRecyclerView) {
+        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus, new ResultResponseHandler(getActivity(), mRecyclerView) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -112,7 +110,7 @@ public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayo
     }
 
     private void findOrders() {
-        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus,new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -126,7 +124,7 @@ public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayo
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
-        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, orderStatus,new ResultResponseHandler(getActivity()) {
+        ApiHttpClient.getInstance().startOrders(SharePreferencesUtil.getInstance().readUser().getUid(), start, orderStatus, new ResultResponseHandler(getActivity()) {
 
             @Override
             public void onResultSuccess(String result) {

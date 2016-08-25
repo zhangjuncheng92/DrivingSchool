@@ -91,8 +91,9 @@ public class StudyListFragment extends ZBaseFragment implements SwipeRefreshLayo
     public void onItemClick(View view, int position) {
         //跳转到预约详情界面
         OrderItem orderItem = (OrderItem) mAdapter.getItem(position);
-        StudyDetailFragment fragment = StudyDetailFragment.newInstance((orderItem.getOrid()));
-        replaceFrg(fragment, null);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, orderItem.getOrid());
+        startActivity(StudyOrderActivity.class, bundle);
     }
 
     @Override

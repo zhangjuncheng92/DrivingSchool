@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.ui.apply.ApplyFragment;
+import com.zjc.drivingschool.utils.Constants;
 
 
 /**
@@ -24,9 +25,17 @@ public class StudyOrderActivity extends ZBaseActivity {
 
     @Override
     protected void initBaseView() {
-        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        ApplyFragment fragment = new ApplyFragment();
-        trans.addToBackStack(null);
-        trans.add(R.id.root, fragment).commit();
+        if (getIntent().getExtras() == null) {
+            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+            StudyOrderFragment fragment = new StudyOrderFragment();
+            trans.addToBackStack(null);
+            trans.add(R.id.root, fragment).commit();
+        } else if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Constants.ARGUMENT)) {
+            String orId = (String) getIntent().getExtras().getSerializable(Constants.ARGUMENT);
+            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+            StudyDetailFragment fragment = StudyDetailFragment.newInstance((orId));
+            trans.addToBackStack(null);
+            trans.add(R.id.root, fragment).commit();
+        }
     }
 }

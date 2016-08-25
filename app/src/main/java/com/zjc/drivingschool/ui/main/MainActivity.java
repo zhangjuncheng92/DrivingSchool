@@ -164,11 +164,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = v.getId();
         if (id == R.id.main_one) {
             //报名学车
-            Intent intent = new Intent(MainActivity.this, StudyOrderActivity.class);
+            Intent intent = new Intent(MainActivity.this, ApplyActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_two) {
             //预约学车
-            Intent intent = new Intent(MainActivity.this, ApplyActivity.class);
+            Intent intent = new Intent(MainActivity.this, StudyOrderActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_three) {
             //预约考试
