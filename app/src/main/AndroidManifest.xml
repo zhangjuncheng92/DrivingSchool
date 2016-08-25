@@ -24,7 +24,8 @@
     <permission
         android:name="com.zjc.drivingschool.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
+    <!-- 读取联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="com.zjc.drivingschool.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
