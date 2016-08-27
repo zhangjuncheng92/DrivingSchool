@@ -1,7 +1,12 @@
 package com.zjc.drivingschool.ui.study;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -229,7 +234,54 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 tvStyleOptions.showAtLocation(tv_style, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.tv_telephone://跳转联系人
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_PICK);
+                intent.setData(ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 1);
+                break;
+        }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (data == null) {
+                    return;
+                }
+                Uri result = data.getData();
+                String contactId = result.getLastPathSegment();
+
+                String name = "";
+                String phone = "";
+
+                //得到名称
+                String[] projection = new String[]{Contacts.People._ID, Contacts.People.NAME, Contacts.People.NUMBER};
+                Cursor cursor = getContext().getContentResolver().query(Contacts.People.CONTENT_URI,
+                        projection, // select sentence
+                        Contacts.People._ID + " = ?", // where sentence
+                        new String[]{contactId}, // where values
+                        Contacts.People.NAME); // order by
+
+                if (cursor.moveToFirst()) {
+                    name = cursor.getString(cursor.getColumnIndex(Contacts.People.NAME));
+                }
+
+                //得到 电话
+                projection = new String[]{Contacts.Phones.PERSON_ID, Contacts.Phones.NUMBER};
+                cursor = getContext().getContentResolver().query(Contacts.Phones.CONTENT_URI,
+                        projection, // select sentence
+                        Contacts.Phones.PERSON_ID + " = ?", // where sentence
+                        new String[]{contactId}, // where values
+                        Contacts.Phones.NAME); // order by
+
+                if (cursor.moveToFirst()) {
+                    phone = cursor.getString(cursor.getColumnIndex(Contacts.Phones.NUMBER));
+                }
+
+                //显示
+                tv_telephone.setText(name + ":" + phone);
                 break;
         }
     }
