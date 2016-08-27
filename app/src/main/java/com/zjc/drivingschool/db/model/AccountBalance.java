@@ -10,13 +10,13 @@ import java.math.BigDecimal;
  * @date 2016年7月21日
  */
 public class AccountBalance implements Serializable {
-    private int balance;// 余额
+    private double balance;// 余额
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 

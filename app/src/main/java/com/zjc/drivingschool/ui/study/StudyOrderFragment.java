@@ -148,8 +148,10 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 tv_style.setText(tx);
                 if (options1 == 0) {
                     tv_style.setTag(true);
+                    tv_money.setText("300.0");
                 } else {
                     tv_style.setTag(false);
+                    tv_money.setText("100.0");
                 }
             }
         });
@@ -329,12 +331,17 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         String tvLocale = tv_locale.getText().toString().trim();//练车地点
         String tvTimeLength = tv_timeLength.getText().toString().trim();//练车时长
         String tvStyle = tv_style.getText().toString().trim();//服务类型
-        String tvTelephone = tv_telephone.getText().toString().trim();//联系方式
         String tvMoney = tv_money.getText().toString().trim();//价格
+        boolean isReplace = jpushButton.isChecked();
+        String tvTelephone = tv_telephone.getText().toString().trim();//联系方式
 
 
         if (TextUtils.isEmpty(tvTime) || TextUtils.isEmpty(tvLocale) || TextUtils.isEmpty(tvTimeLength) || TextUtils.isEmpty(tvSubject) || TextUtils.isEmpty(tvStyle)) {
             Util.showCustomMsg("请输入完整信息");
+            return;
+        }
+        if (isReplace && TextUtils.isEmpty(tvTelephone)) {
+            Util.showCustomMsg("请选择联系人");
             return;
         }
 
@@ -360,7 +367,15 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         orderDetail.setStarttime(tv_time.getText().toString());
         orderDetail.setLoginname(SharePreferencesUtil.getInstance().readUser().getLoginname());
         orderDetail.setNickname(SharePreferencesUtil.getInstance().readUser().getNickname());
-        orderDetail.setIsreplace(false);//需要动态获取
+
+        if (isReplace) {
+            orderDetail.setIsreplace(isReplace);//需要动态获取
+            String[] arr = tvTelephone.split(":");
+            orderDetail.setContactsname(arr[0]);
+            orderDetail.setContactsphone(arr[1]);
+        } else {
+            orderDetail.setIsreplace(isReplace);//需要动态获取
+        }
 
         ApiHttpClient.getInstance().learnApply(orderDetail, new ResultResponseHandler(getActivity(), "正在提交，请稍等") {
             @Override
