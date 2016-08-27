@@ -2,9 +2,9 @@ package com.zjc.drivingschool.ui.account;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.Toast;
 
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
+import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
 
 import cn.beecloud.BCPay;
@@ -23,7 +23,7 @@ public class AccountManagerActivity extends ZBaseActivity {
     private void initWXPay() {
         String initInfo = BCPay.initWechatPay(this, "wxf1aa465362b4c8f1");
         if (initInfo != null) {
-            Toast.makeText(this, "微信初始化失败：" + initInfo, Toast.LENGTH_LONG).show();
+            Util.showCustomMsg("微信初始化失败：" + initInfo);
         }
     }
 

@@ -46,8 +46,8 @@ public class MApp extends BaseApplication {
     }
 
     private void initPay() {
-        BeeCloud.setSandbox(true);
-        BeeCloud.setAppIdAndSecret("c5d1cba1-5e3f-4ba0-941d-9b0a371fe719", "4bfdd244-574d-4bf3-b034-0c751ed34fee");
+        BeeCloud.setSandbox(false);
+        BeeCloud.setAppIdAndSecret(Constants.BEECLOUD_APPID, Constants.BEECLOUD_APPSECRET);
     }
 
     private void initUniversalImage() {
