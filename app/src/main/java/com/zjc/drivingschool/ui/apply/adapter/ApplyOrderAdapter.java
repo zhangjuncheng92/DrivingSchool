@@ -9,6 +9,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.db.model.OrderItem;
+import com.zjc.drivingschool.utils.ConstantsParams;
 
 /**
  * Created by Administrator on 2016/8/17.
@@ -35,7 +36,7 @@ public class ApplyOrderAdapter extends ZBaseRecyclerViewAdapter {
         private TextView mTvMoney;
 
         public OrderManagerFrgViewHolder(ViewGroup parent) {
-            super(parent, R.layout.order_manager_list_adapter);
+            super(parent, R.layout.apply_order_item);
             mTvName = $(R.id.order_name);
             mTvStatus = $(R.id.order_status);
             mTvNumber = $(R.id.order_number);
@@ -56,22 +57,31 @@ public class ApplyOrderAdapter extends ZBaseRecyclerViewAdapter {
             mTvTime.setText(service.getOrdertime());
             mTvMoney.setText(service.getTotal() + "");
             mTvStatus.setText(service.getState());
+
+
+            mTvStatus.setText(ConstantsParams.getStatus(service.getState()));
             //	1.预订成功 2.已支付 3.申请退订 4.已退订 5.消费中 6.已消费 7.待评价 8.已完成 9.已取消
-            if (service.getState().equals(8) || service.getState().equals(7) || service.getState().equals(6)) {
+            if (service.getState().equals(ConstantsParams.STUDY_ORDER_ONE)) {
+                mTvPay.setVisibility(View.GONE);
+                mTvCancel.setVisibility(View.VISIBLE);
+                mTvDiscuss.setVisibility(View.GONE);
+            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_TWO)) {
+                mTvPay.setVisibility(View.GONE);
+                mTvCancel.setVisibility(View.GONE);
+                mTvDiscuss.setVisibility(View.GONE);
+            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_SEVEN)) {
                 mTvPay.setVisibility(View.GONE);
                 mTvCancel.setVisibility(View.GONE);
                 mTvDiscuss.setVisibility(View.VISIBLE);
-            } else if (service.getState().equals(1)) {
-                mTvPay.setVisibility(View.VISIBLE);
-                mTvCancel.setVisibility(View.VISIBLE);
-                mTvDiscuss.setVisibility(View.GONE);
             } else {
-                //// TODO: 2016/8/20
-                mTvPay.setVisibility(View.VISIBLE);
-                mTvCancel.setVisibility(View.VISIBLE);
+                mTvPay.setVisibility(View.GONE);
+                mTvCancel.setVisibility(View.GONE);
                 mTvDiscuss.setVisibility(View.GONE);
             }
 
+            mTvPay.setVisibility(View.GONE);
+            mTvCancel.setVisibility(View.GONE);
+            mTvDiscuss.setVisibility(View.GONE);
         }
     }
 }

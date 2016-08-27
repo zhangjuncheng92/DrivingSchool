@@ -98,7 +98,7 @@ public class ConstantsParams {
      * 预订成功
      */
     public static final String STUDY_ORDER_ONE = "1";
-    public static final String STUDY_ORDER_ONE_TXT = "预订成功";
+    public static final String STUDY_ORDER_ONE_TXT = "等待接单";
 
     /**
      * 已支付

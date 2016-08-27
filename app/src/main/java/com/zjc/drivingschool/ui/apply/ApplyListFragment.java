@@ -19,6 +19,7 @@ import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
+import com.zjc.drivingschool.ui.apply.adapter.ApplyOrderAdapter;
 import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
@@ -31,7 +32,7 @@ import de.greenrobot.event.EventBus;
 public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
     private String orderStatus;
     private EasyRecyclerView mRecyclerView;
-    private StudyOrderAdapter mAdapter;
+    private ApplyOrderAdapter mAdapter;
 
     /**
      * 传入需要的参数，设置给arguments
@@ -79,7 +80,7 @@ public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayo
     }
 
     private void initAdapter() {
-        mAdapter = new StudyOrderAdapter(getActivity());
+        mAdapter = new ApplyOrderAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
         mAdapter.setMore(R.layout.view_more, this);
         mAdapter.setNoMore(R.layout.view_nomore);

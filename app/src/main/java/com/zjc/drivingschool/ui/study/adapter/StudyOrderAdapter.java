@@ -43,7 +43,7 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
         private TextView mTvMoney;
 
         public OrderManagerFrgViewHolder(ViewGroup parent) {
-            super(parent, R.layout.order_manager_list_adapter);
+            super(parent, R.layout.study_order_item);
             mTvName = $(R.id.order_name);
             mTvStatus = $(R.id.order_status);
             mTvNumber = $(R.id.order_number);

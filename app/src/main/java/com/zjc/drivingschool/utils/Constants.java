@@ -67,4 +67,36 @@ public class Constants {
     public static int ACTION_FILTER = 2;
     public static int ACTION_DISMISS = 3;
     public static int ACTION_DELAY_TIME = 100;
+
+
+    /**
+     * BeeCloud-AppID
+     */
+    public static final String BEECLOUD_APPID = "4ae74b5f-bfe3-415e-b58b-49336224c4bb";
+
+    /**
+     * BeeCloud- MasterSecret
+     */
+    public static final String BEECLOUD_MASTERSECRET = "8553dcb6-d63f-4053-ae6b-307f8cdf4b6a";
+
+    /**
+     * BeeCloud- AppSecret
+     */
+    public static final String BEECLOUD_APPSECRET = "ec938ada-77a3-4f68-a5ea-7f40efedbbef";
+
+    /**
+     * BeeCloud- 订单查询(GET)
+     */
+    public static final String BEECLOUD_ORDER_QUERY = "https://apidynamic.beecloud.cn/2/rest/bills";
+
+    /**
+     * BeeCloud- 订单总数查询(GET)
+     */
+    public static final String BEECLOUD_ORDER_COUNT_QUERY = "https://apidynamic.beecloud.cn/2/rest/bills/count";
+
+    /**
+     * BeeCloud- 支付订单查询(指定ID 地址后连接"/{id}")
+     */
+    public static final String BEECLOUD_ORDER_QUERY_BYID = "https://apidynamic.beecloud.cn/2/rest/bill";
+
 }
