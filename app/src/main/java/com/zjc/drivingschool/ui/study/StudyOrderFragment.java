@@ -151,11 +151,10 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 tv_style.setText(tx);
                 if (options1 == 0) {
                     tv_style.setTag(true);
-                    tv_money.setText("300.0");
                 } else {
                     tv_style.setTag(false);
-                    tv_money.setText("100.0");
                 }
+                refreshMoney();
             }
         });
     }
@@ -173,8 +172,25 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 String tx = optionsItems.get(options1);
                 tv_timeLength.setText(tx);
                 tv_timeLength.setTag(options1 + 1);
+                refreshMoney();
             }
         });
+    }
+
+    private void refreshMoney() {
+        if (tv_timeLength.getTag() == null || tv_style.getTag() == null) {
+            return;
+        }
+
+        double money;
+        int timeLength = (int) tv_timeLength.getTag();//练车时长
+        boolean isVip = (boolean) tv_style.getTag();
+        if (isVip) {
+            money = timeLength * 300.0;
+        } else {
+            money = timeLength * 100.0;
+        }
+        tv_money.setText(money + "");
     }
 
     private void findProducts() {
