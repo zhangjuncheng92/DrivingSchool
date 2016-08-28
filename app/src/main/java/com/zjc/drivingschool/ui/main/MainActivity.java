@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_more) {
-        }else if (id == R.id.main_action_logout) {
+        } else if (id == R.id.main_action_logout) {
             logout();
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -162,6 +162,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onClick(View v) {
         int id = v.getId();
+
+        if (id == R.id.main_one || id == R.id.main_two) {
+            if (!SharePreferencesUtil.getInstance().isLogin()) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                return;
+            }
+        }
+
         if (id == R.id.main_one) {
             //报名学车
             Intent intent = new Intent(MainActivity.this, ApplyActivity.class);

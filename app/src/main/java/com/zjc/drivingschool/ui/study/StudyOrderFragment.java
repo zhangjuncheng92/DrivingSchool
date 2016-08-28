@@ -26,11 +26,14 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.AccountBalance;
 import com.zjc.drivingschool.db.model.ProductSubject;
+import com.zjc.drivingschool.db.parser.AccountBalanceParser;
 import com.zjc.drivingschool.db.parser.UserProductResponseParser;
 import com.zjc.drivingschool.db.request.OrderCreateRequest;
 import com.zjc.drivingschool.db.response.UserProductResponse;
 import com.zjc.drivingschool.eventbus.StudyAddressChooseEvent;
+import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -331,7 +334,6 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         String tvLocale = tv_locale.getText().toString().trim();//练车地点
         String tvTimeLength = tv_timeLength.getText().toString().trim();//练车时长
         String tvStyle = tv_style.getText().toString().trim();//服务类型
-        String tvMoney = tv_money.getText().toString().trim();//价格
         boolean isReplace = jpushButton.isChecked();
         String tvTelephone = tv_telephone.getText().toString().trim();//联系方式
 
@@ -377,6 +379,30 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
             orderDetail.setIsreplace(isReplace);//需要动态获取
         }
 
+        getAccount();
+    }
+
+    /**
+     * 查询账户余额
+     */
+    private void getAccount() {
+        ApiHttpClient.getInstance().getMyAccount(SharePreferencesUtil.getInstance().readUser().getUid(), new ResultResponseHandler(getActivity()) {
+
+            @Override
+            public void onResultSuccess(String result) {
+                AccountBalance accountBalance = new AccountBalanceParser().parseResultMessage(result);
+                double money = Double.parseDouble(tv_money.getText().toString().trim());//价格
+                if (accountBalance.getBalance() > money) {
+                    commitOrder();
+                } else {
+                    Util.showCustomMsg("余额不足，请充值");
+                    startActivity(AccountManagerActivity.class);
+                }
+            }
+        });
+    }
+
+    private void commitOrder() {
         ApiHttpClient.getInstance().learnApply(orderDetail, new ResultResponseHandler(getActivity(), "正在提交，请稍等") {
             @Override
             public void onResultSuccess(String result) {
