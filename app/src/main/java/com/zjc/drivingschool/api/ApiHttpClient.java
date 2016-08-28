@@ -321,7 +321,7 @@ public class ApiHttpClient {
     public void completeHospital(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
-        postRequest.addProperty("orid", orid);
+        postRequest.addProperty("oid", orid);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/completehospital", postRequest, asyncHttpResponseHandler);
     }
 

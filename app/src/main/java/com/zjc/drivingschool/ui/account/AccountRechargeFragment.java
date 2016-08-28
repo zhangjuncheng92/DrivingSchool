@@ -13,6 +13,7 @@ import com.mobo.mobolibrary.logs.Logs;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.eventbus.pay.PayAliAccountResultEvent;
 import com.zjc.drivingschool.utils.Constants;
 
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import cn.beecloud.BCPay;
 import cn.beecloud.async.BCCallback;
 import cn.beecloud.async.BCResult;
 import cn.beecloud.entity.BCPayResult;
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -33,12 +35,12 @@ import cn.beecloud.entity.BCPayResult;
 public class AccountRechargeFragment extends ZBaseToolBarFragment implements View.OnClickListener {
     private TextView tvAli;
     private TextView tvWeChat;
-    private int sum;
+    private double sum;
 
     /**
      * 传入需要的参数，设置给arguments
      */
-    public static AccountRechargeFragment newInstance(int bean) {
+    public static AccountRechargeFragment newInstance(double bean) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.ARGUMENT, bean);
         AccountRechargeFragment fragment = new AccountRechargeFragment();
@@ -51,7 +53,7 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            sum = (int) bundle.getSerializable(Constants.ARGUMENT);
+            sum = (double) bundle.getSerializable(Constants.ARGUMENT);
         }
     }
 
@@ -99,7 +101,7 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
 
         BCPay.getInstance(getActivity()).reqAliPaymentAsync(
                 "安卓支付宝支付测试",
-                sum * 100,
+                (int) (sum * 100),
                 System.currentTimeMillis() + "",
                 mapOptional,
                 bcCallback);
@@ -117,7 +119,7 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
 
             BCPay.getInstance(getActivity()).reqWXPaymentAsync(
                     "安卓微信支付测试",               //订单标题
-                    sum * 100,//订单金额(分)
+                    (int) (sum * 100),//订单金额(分)
                     System.currentTimeMillis() + "",  //订单流水号
                     mapOptional,            //扩展参数(可以null)
                     bcCallback);            //支付完成后回调入口
@@ -147,6 +149,7 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
             msg.what = 2;
             if (result.equals(BCPayResult.RESULT_SUCCESS)) {
                 toastMsg = "用户支付成功";
+                EventBus.getDefault().post(new PayAliAccountResultEvent());
             } else if (result.equals(BCPayResult.RESULT_CANCEL))
                 toastMsg = "用户取消支付";
             else if (result.equals(BCPayResult.RESULT_FAIL)) {

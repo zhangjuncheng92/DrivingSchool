@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.ui.study.adapter.StudyOrderPagerAdapter;
+import com.zjc.drivingschool.ui.notification.adapter.NotificationPagerAdapter;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class NotificationActivity extends ZBaseActivity {
         mFragmentList.add(allFragment);
         mFragmentList.add(unPayFragment);
         mFragmentList.add(payFragment);
-        mPager.setAdapter(new StudyOrderPagerAdapter(getSupportFragmentManager(), mFragmentList));
+        mPager.setAdapter(new NotificationPagerAdapter(getSupportFragmentManager(), mFragmentList));
     }
 
     private void initTab() {

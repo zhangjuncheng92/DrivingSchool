@@ -10,6 +10,7 @@ import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
+import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
@@ -96,7 +97,7 @@ public class ApplyOrderAdapter extends ZBaseRecyclerViewAdapter {
         }
 
         private void order(final OrderItem item) {
-            ApiHttpClient.getInstance().completeHospital(item.getUid(), item.getOrid(), new ResultResponseHandler(getContext(), "正在提交") {
+            ApiHttpClient.getInstance().completeHospital(SharePreferencesUtil.getInstance().readUser().getUid(), item.getOrid(), new ResultResponseHandler(getContext(), "正在提交") {
 
                 @Override
                 public void onResultSuccess(String result) {

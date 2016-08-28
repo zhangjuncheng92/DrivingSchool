@@ -23,7 +23,6 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.AccountBalance;
 import com.zjc.drivingschool.db.parser.AccountBalanceParser;
 import com.zjc.drivingschool.eventbus.pay.PayAliAccountResultEvent;
-import com.zjc.drivingschool.eventbus.pay.PayWXAccountResultEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,15 +144,15 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
         }
     }
 
-    private int getSum() {
-        int sum = 0;
+    private double getSum() {
+        double sum = 0;
         for (int i = 0; i < radioButtonList.size(); i++) {
             if (radioButtonList.get(i).isChecked()) {
-                sum = Integer.parseInt(radioButtonList.get(i).getText().toString());
+                sum = Double.parseDouble(radioButtonList.get(i).getText().toString());
             }
         }
         if (!TextUtils.isEmpty(edtFee.getEditableText().toString())) {
-            sum = sum + Integer.parseInt(edtFee.getEditableText().toString());
+            sum = sum + Double.parseDouble(edtFee.getEditableText().toString());
         }
         return sum;
     }
@@ -163,7 +162,7 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
         int i = view.getId();
         if (i == R.id.account_frg_recharge) {
             //支付类型选择界面
-            int sum = getSum();
+            double sum = getSum();
             AccountRechargeFragment fragment = AccountRechargeFragment.newInstance(sum);
             replaceFrg(fragment, null);
         } else if (i == R.id.account_frg_withdraw) {
@@ -188,11 +187,6 @@ public class AccountManagerFrg extends ZBaseToolBarFragment implements View.OnCl
 
 
     public void onEventMainThread(PayAliAccountResultEvent event) {
-        getAccount();
-    }
-
-    public void onEventMainThread(PayWXAccountResultEvent event) {
-        //接收微信支付成功消息，刷新界面
         getAccount();
     }
 

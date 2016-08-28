@@ -10,6 +10,7 @@ import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
+import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
 import com.zjc.drivingschool.eventbus.StudyOrderUnSubjectEvent;
@@ -107,7 +108,7 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
     }
 
     private void cancelStudyOrder(String uid, final String orid) {
-        ApiHttpClient.getInstance().cancelStudyOrder(uid, orid, new ResultResponseHandler(getContext(), "正在取消订单") {
+        ApiHttpClient.getInstance().cancelStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), orid, new ResultResponseHandler(getContext(), "正在取消订单") {
 
             @Override
             public void onResultSuccess(String result) {
@@ -130,7 +131,7 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
     }
 
     private void unSubjectStudyOrder(String uid, final String orid) {
-        ApiHttpClient.getInstance().unSubjectStudyOrder(uid, orid, new ResultResponseHandler(getContext(), "正在退订订单") {
+        ApiHttpClient.getInstance().unSubjectStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), orid, new ResultResponseHandler(getContext(), "正在退订订单") {
 
             @Override
             public void onResultSuccess(String result) {
