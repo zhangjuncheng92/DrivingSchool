@@ -313,6 +313,18 @@ public class ApiHttpClient {
         HttpUtilsAsync.post(Constants.BASE_URL + "student/signuporder/detail", postRequest, asyncHttpResponseHandler);
     }
 
+    /**
+     * 1.1.27 学员完成预约体检
+     * 参数：orid  uid
+     * 调用示例：/app/student/completehospital
+     */
+    public void completeHospital(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("orid", orid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/completehospital", postRequest, asyncHttpResponseHandler);
+    }
+
 
     /**
      * ###########   预约学车   ############

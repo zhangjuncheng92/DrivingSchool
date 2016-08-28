@@ -129,10 +129,10 @@
                 android:id="@+id/order_discuss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/comm_frame_pink_bg"
-                android:padding="10dp"
-                android:text="我要评价"
-                android:textColor="@color/registration_pink" />
+                android:background="@drawable/comm_select_orange"
+                android:padding="@dimen/layout_margin_l"
+                android:text="预约体检"
+                android:textColor="@color/comm_white" />
         </LinearLayout>
     </RelativeLayout>
 
