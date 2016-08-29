@@ -13,6 +13,8 @@ import com.mobo.mobolibrary.logs.Logs;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
 import com.zjc.drivingschool.R;
+import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.UserInfo;
 import com.zjc.drivingschool.eventbus.pay.PayAliAccountResultEvent;
 import com.zjc.drivingschool.utils.Constants;
 
@@ -94,10 +96,11 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
     }
 
     private void toALIPay() {
-        Map<String, String> mapOptional = new HashMap<String, String>();
-        mapOptional.put("客户端", "安卓");
-        mapOptional.put("consumptioncode", "consumptionCode");
-        mapOptional.put("money", "2");
+        UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
+        Map<String, String> mapOptional = new HashMap< >();
+        mapOptional.put("uid", userInfo.getUid());
+        mapOptional.put("loginname", userInfo.getLoginname());
+        mapOptional.put("note", "充值");
 
         BCPay.getInstance(getActivity()).reqAliPaymentAsync(
                 "安卓支付宝支付测试",
@@ -112,8 +115,10 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
         //对于微信支付, 手机内存太小会有OutOfResourcesException造成的卡顿, 以致无法完成支付
         //这个是微信自身存在的问题
         Map<String, String> mapOptional = new HashMap<>();
-
-        mapOptional.put("testkey1", "测试value值1");
+        UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
+        mapOptional.put("uid", userInfo.getUid());
+        mapOptional.put("loginname", userInfo.getLoginname());
+        mapOptional.put("note", "充值");
 
         if (BCPay.isWXAppInstalledAndSupported() && BCPay.isWXPaySupported()) {
 
