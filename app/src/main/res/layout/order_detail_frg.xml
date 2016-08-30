@@ -294,6 +294,11 @@
 
             <View style="@style/line_horStyle" />
 
+            <!--地图-->
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/order_detail_frg_map"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
 
             <!--订单信息-->
             <RelativeLayout
@@ -334,6 +339,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
             </RelativeLayout>
+
 
             <View style="@style/line_horStyle" />
 

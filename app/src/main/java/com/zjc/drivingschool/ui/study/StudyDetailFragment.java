@@ -4,12 +4,20 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapPoi;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
@@ -27,7 +35,7 @@ import com.zjc.drivingschool.utils.ConstantsParams;
  * @Date 2015.10.28
  * @description 预约详情界面
  */
-public class StudyDetailFragment extends ZBaseToolBarFragment {
+public class StudyDetailFragment extends ZBaseToolBarFragment implements View.OnClickListener, BaiduMap.OnMapClickListener {
     private String orderid;
     private OrderDetailResponse orderDetail;
     private Button btnCommit;
@@ -50,6 +58,8 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
 
     private TextView tvOrderNo;
     private TextView tvOrderTime;
+    private MapView mMapView;
+    private BaiduMap mBaiduMap;
 
 
     /**
@@ -73,6 +83,11 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
     }
 
     @Override
+    protected void setTitle() {
+        setTitle(mToolbar, "预约详情");
+    }
+
+    @Override
     protected int inflateContentView() {
         return R.layout.order_detail_frg;
     }
@@ -82,7 +97,9 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
         if (orderid != null) {
             initEmptyLayout(rootView);
             initView();
+            initBaiduMap();
             getDetailById();
+            getTeacherLocal();
         }
     }
 
@@ -107,6 +124,22 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
         tvOrderTime = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_order_time);
     }
 
+    private void initBaiduMap() {
+        // 获取地图控件引用
+        mMapView = (MapView) rootView.findViewById(R.id.order_detail_frg_map);
+        // 获得地图的实例
+        mBaiduMap = mMapView.getMap();
+        mBaiduMap.setTrafficEnabled(false);
+        //武汉坐标
+        LatLng currentLatlng = new LatLng(30.543622, 114.433890);
+        // 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+        MapStatus status = new MapStatus.Builder().target(currentLatlng).zoom(12).build();
+        MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(status);
+        mBaiduMap.animateMapStatus(msu);
+
+        mBaiduMap.setOnMapClickListener(this);
+    }
+
     private void getDetailById() {
         ApiHttpClient.getInstance().getOrderDetailById(SharePreferencesUtil.getInstance().readUser().getUid(), orderid, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
             @Override
@@ -117,10 +150,17 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
         });
     }
 
-    @Override
-    protected void setTitle() {
-        setTitle(mToolbar, "预约详情");
+    private void getTeacherLocal() {
+        ApiHttpClient.getInstance().getOrderDetailById(SharePreferencesUtil.getInstance().readUser().getUid(), orderid, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+            @Override
+            public void onResultSuccess(String result) {
+                LatLng currentLatlng = new LatLng(30.543622, 114.433890);
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(currentLatlng);
+                mBaiduMap.animateMapStatus(u);
+            }
+        });
     }
+
 
     private void setTextView(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
@@ -186,5 +226,21 @@ public class StudyDetailFragment extends ZBaseToolBarFragment {
 //                }
 //            }
 //        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        int i = view.getId();
+
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+    }
+
+    @Override
+    public boolean onMapPoiClick(MapPoi mapPoi) {
+        return false;
     }
 }
