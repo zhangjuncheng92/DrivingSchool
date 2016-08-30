@@ -22,6 +22,7 @@ import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.mobo.mobolibrary.util.Util;
+import com.mobo.mobolibrary.util.UtilDate;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
@@ -35,7 +36,6 @@ import com.zjc.drivingschool.db.response.UserProductResponse;
 import com.zjc.drivingschool.eventbus.StudyAddressChooseEvent;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,6 +60,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
     private TextView tv_next;
     private TextView tv_money;
     private int index;
+    private long time = 1000 * 60 * 60 * 3;//练车时间必须大于3小时
 
     private OptionsPopupWindow timeLengthOptions;
     private ArrayList<String> optionsItems = new ArrayList<>();
@@ -234,6 +235,10 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 //隐藏虚拟键盘
                 inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
                 birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
+                //如果第一次选择，初始化时间，往后延3小时10分钟
+                if (TextUtils.isEmpty(tv_time.getText())) {
+                    birthOptions.setTime(new Date(System.currentTimeMillis() + time + (1000 * 600)));
+                }
                 break;
             case R.id.tv_locale://练车地点
                 StudyAddressFragment fragment = new StudyAddressFragment();
@@ -307,36 +312,16 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         }
     }
 
-
     private void initBirthOptions() {
         birthOptions = new TimePopupWindow(getActivity(), TimePopupWindow.Type.ALL);
-        birthOptions.setRange(1900, 2050);
-        birthOptions.setTime(new Date());
-
         birthOptions.setOnTimeSelectListener(new TimePopupWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date da = new Date();
-                String time = sdf.format(da);
-                String timePick = sdf.format(date);
-                if (Integer.valueOf(time.substring(0, 4)).intValue() > Integer.valueOf(timePick.substring(0, 4)).intValue()) {
-                    Util.showCustomMsg("日期选择不正确，请重新选择");
-                    return;
-                } else if (Integer.valueOf(time.substring(5, 7)).intValue() > Integer.valueOf(timePick.substring(5, 7)).intValue()) {
-                    Util.showCustomMsg("日期选择不正确，请重新选择");
-                    return;
-                } else if (Integer.valueOf(time.substring(8, 10)).intValue() > Integer.valueOf(timePick.substring(8, 10)).intValue()) {
-                    Util.showCustomMsg("日期选择不正确，请重新选择");
-                    return;
-                } else if (Integer.valueOf(time.substring(11, 13)).intValue() > Integer.valueOf(timePick.substring(11, 13)).intValue()) {
-                    Util.showCustomMsg("日期选择不正确，请重新选择");
-                    return;
-                } else if (Integer.valueOf(time.substring(14, 16)).intValue() > Integer.valueOf(timePick.substring(14, 16)).intValue()) {
-                    Util.showCustomMsg("日期选择不正确，请重新选择");
-                    return;
+                //选择时间必须大于现在3小时
+                if (date.getTime() - System.currentTimeMillis() > time) {
+                    tv_time.setText(UtilDate.formatDate("yyyy-MM-dd HH:mm", date));
                 } else {
-                    tv_time.setText(timePick);
+                    Util.showCustomMsg("预约练车时间必须提前3小时");
                 }
             }
         });
