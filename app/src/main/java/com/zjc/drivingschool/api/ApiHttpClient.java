@@ -292,7 +292,7 @@ public class ApiHttpClient {
      * 参数：pagesize  uid offset   state  orderid creatdate
      * 调用示例：/app/student/order/list
      */
-    public void startOrders(String userId, int start, String status,AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void startOrders(String userId, int start, String status, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("offset", start);
@@ -484,5 +484,17 @@ public class ApiHttpClient {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("tid", tid);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/teacher/collect/detail", postRequest, asyncHttpResponseHandler);
+    }
+
+    /**
+     * 取消收藏教练
+     * 参数  tid  uid
+     * 调用示例： /app/student/teacher/collect/cancel
+     */
+    public void cancelCollectTeacher(String userId, String tid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("tid", tid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/teacher/collect/cancel", postRequest, asyncHttpResponseHandler);
     }
 }

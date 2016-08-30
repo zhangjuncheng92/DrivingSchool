@@ -1,7 +1,9 @@
 package com.zjc.drivingschool.ui.collect;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +24,12 @@ import com.zjc.drivingschool.ui.collect.adapter.CollectManagerAdapter;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 /**
- * Created by Administrator on 2016/8/18.
+ * @author Z
+ * @Filename CollectManagerFragment.java
+ * @Date 2016.08.30
+ * @description 收藏界面
  */
-public class CollectManagerFragment extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
+public class CollectManagerFragment extends ZBaseToolBarFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnItemLongClickListener {
     private EasyRecyclerView mRecyclerView;
     private CollectManagerAdapter mAdapter;
 
@@ -60,6 +65,7 @@ public class CollectManagerFragment extends ZBaseToolBarFragment implements Swip
     private void initAdapter() {
         mAdapter = new CollectManagerAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
+        mAdapter.setOnItemLongClickListener(this);
         mAdapter.setMore(R.layout.view_more, this);
         mAdapter.setNoMore(R.layout.view_nomore);
         mRecyclerView.setAdapter(mAdapter);
@@ -123,5 +129,43 @@ public class CollectManagerFragment extends ZBaseToolBarFragment implements Swip
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position) {
+        mRecyclerView.setTag(position);
+        showSureInfoDialog();
+    }
+
+    private void showSureInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("提示");
+        builder.setMessage("您确定取消对此教练的收藏吗？");
+        builder.setNegativeButton("确认",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        cancelCollectTeacher();
+                    }
+                });
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        builder.show();
+    }
+
+    private void cancelCollectTeacher() {
+        final int position = (int) mRecyclerView.getTag();
+        TeacherCollectItem teacherCollectItem = (TeacherCollectItem) mAdapter.getItem(position);
+        ApiHttpClient.getInstance().cancelCollectTeacher(SharePreferencesUtil.getInstance().readUser().getUid(), teacherCollectItem.getTcid(), new ResultResponseHandler(getActivity(), "正在取消收藏") {
+
+            @Override
+            public void onResultSuccess(String result) {
+                mAdapter.remove(mAdapter.getItem(position));
+                mAdapter.notifyItemRemoved(position);
+            }
+        });
     }
 }
