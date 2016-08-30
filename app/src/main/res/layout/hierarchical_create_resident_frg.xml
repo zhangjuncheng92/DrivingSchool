@@ -66,13 +66,8 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/comm_white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/layout_padding_ml"
-            android:paddingRight="@dimen/layout_padding_m">
+            style="@style/comm_layout_two"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_sex"
@@ -80,35 +75,21 @@
                 android:drawableLeft="@drawable/icon_sex"
                 android:text="@string/personal_detail_sex" />
 
-            <RelativeLayout
-                android:id="@+id/login_main_frg_rl_hospital"
+            <TextView
+                android:id="@+id/hierarchical_create_resident_frg_tv_sex"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Spinner
-                    android:id="@+id/hierarchical_create_resident_frg_sp_sex"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/hierarchical_frg_sp_type_down"
-                    android:background="@color/transparent"
-                    android:gravity="center" />
-
-                <ImageView
-                    android:id="@+id/hierarchical_frg_sp_type_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/layout_margin_l"
-                    android:src="@drawable/icon_arrow_down" />
-            </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="right" />
         </LinearLayout>
 
         <View
             style="@style/line_horStyle"
             android:layout_marginLeft="@dimen/layout_margin_ml" />
 
-        <RelativeLayout style="@style/comm_layout_two">
+        <LinearLayout
+            style="@style/comm_layout_two"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_age"
@@ -116,35 +97,21 @@
                 android:drawableLeft="@drawable/icon_age"
                 android:text="@string/personal_detail_age" />
 
-            <com.zjc.drivingschool.widget.ContainsEmojiEditText
-                android:id="@+id/hierarchical_create_resident_frg_edt_age"
-                style="@style/referral_info_status_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/layout_margin_l"
-                android:layout_toLeftOf="@+id/tv_age_unit"
-                android:layout_toRightOf="@+id/tv_age"
-                android:background="@color/transparent"
-                android:gravity="right"
-                android:inputType="numberDecimal"
-                android:maxLength="3"
-                android:singleLine="true" />
-
             <TextView
-                android:id="@+id/tv_age_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:id="@+id/hierarchical_create_resident_frg_tv_age"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:text="岁" />
-        </RelativeLayout>
+                android:gravity="right" />
+        </LinearLayout>
 
         <View
             style="@style/line_horStyle"
             android:layout_marginLeft="@dimen/layout_margin_ml" />
 
-        <RelativeLayout style="@style/comm_layout_two">
+        <LinearLayout
+            style="@style/comm_layout_two"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_education"
@@ -152,19 +119,34 @@
                 android:drawableLeft="@drawable/icon_age"
                 android:text="@string/personal_detail_education" />
 
-            <com.zjc.drivingschool.widget.ContainsEmojiEditText
-                android:id="@+id/hierarchical_create_resident_frg_edt_education"
-                style="@style/referral_info_status_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/hierarchical_create_resident_frg_tv_education"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/layout_margin_l"
-                android:background="@color/transparent"
-                android:gravity="right"
-                android:inputType="numberDecimal"
-                android:maxLength="3"
-                android:singleLine="true" />
-        </RelativeLayout>
+                android:gravity="right" />
+        </LinearLayout>
+
+        <View
+            style="@style/line_horStyle"
+            android:layout_marginLeft="@dimen/layout_margin_ml" />
+
+        <LinearLayout
+            style="@style/comm_layout_two"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/personal_detail_title"
+                android:drawableLeft="@drawable/icon_age"
+                android:text="@string/personal_detail_apply_address" />
+
+            <TextView
+                android:id="@+id/tv_locale"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="right" />
+        </LinearLayout>
 
         <View style="@style/line_horStyle" />
 

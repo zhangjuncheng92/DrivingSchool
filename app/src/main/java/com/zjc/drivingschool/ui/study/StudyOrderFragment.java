@@ -227,44 +227,40 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
     @Override
     public void onClick(View v) {
         InputMethodManager inputmanger = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        switch (v.getId()) {
-            case R.id.tv_next:
-                createResident();
-                break;
-            case R.id.tv_time:
-                //隐藏虚拟键盘
-                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
-                birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
-                //如果第一次选择，初始化时间，往后延3小时10分钟
-                if (TextUtils.isEmpty(tv_time.getText())) {
-                    birthOptions.setTime(new Date(System.currentTimeMillis() + time + (1000 * 600)));
-                }
-                break;
-            case R.id.tv_locale://练车地点
-                StudyAddressFragment fragment = new StudyAddressFragment();
-                replaceFrg(fragment, null);
-                break;
-            case R.id.tv_timeLength:
-                //隐藏虚拟键盘
-                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
-                timeLengthOptions.showAtLocation(tv_timeLength, Gravity.BOTTOM, 0, 0);
-                break;
-            case R.id.tv_subject:
-                //隐藏虚拟键盘
-                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
-                tvSubjectOptions.showAtLocation(tv_subject, Gravity.BOTTOM, 0, 0);
-                break;
-            case R.id.tv_style:
-                //隐藏虚拟键盘
-                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
-                tvStyleOptions.showAtLocation(tv_style, Gravity.BOTTOM, 0, 0);
-                break;
-            case R.id.tv_telephone://跳转联系人
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_PICK);
-                intent.setData(ContactsContract.Contacts.CONTENT_URI);
-                startActivityForResult(intent, 1);
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_next) {
+            createResident();
+
+        } else if (i == R.id.tv_time) {//隐藏虚拟键盘
+            inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+            birthOptions.showAtLocation(tv_time, Gravity.BOTTOM, 0, 0);
+            //如果第一次选择，初始化时间，往后延3小时10分钟
+            if (TextUtils.isEmpty(tv_time.getText())) {
+                birthOptions.setTime(new Date(System.currentTimeMillis() + time + (1000 * 600)));
+            }
+
+        } else if (i == R.id.tv_locale) {
+            StudyAddressFragment fragment = new StudyAddressFragment();
+            replaceFrg(fragment, null);
+
+        } else if (i == R.id.tv_timeLength) {//隐藏虚拟键盘
+            inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+            timeLengthOptions.showAtLocation(tv_timeLength, Gravity.BOTTOM, 0, 0);
+
+        } else if (i == R.id.tv_subject) {//隐藏虚拟键盘
+            inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+            tvSubjectOptions.showAtLocation(tv_subject, Gravity.BOTTOM, 0, 0);
+
+        } else if (i == R.id.tv_style) {//隐藏虚拟键盘
+            inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+            tvStyleOptions.showAtLocation(tv_style, Gravity.BOTTOM, 0, 0);
+
+        } else if (i == R.id.tv_telephone) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_PICK);
+            intent.setData(ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, 1);
+
         }
     }
 

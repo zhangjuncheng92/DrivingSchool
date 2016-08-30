@@ -27,8 +27,9 @@
     <string name="personal_detail_icon">头像</string>
     <string name="personal_detail_sex">性别</string>
     <string name="personal_detail_name">昵称</string>
-    <string name="personal_detail_age">年龄</string>
+    <string name="personal_detail_age">出生年月</string>
     <string name="personal_detail_education">学历</string>
+    <string name="personal_detail_apply_address">报名地点</string>
     <string name="personal_detail_phone">手机</string>
     <string name="personal_detail_email">邮箱</string>
     <string name="personal_detail_address">地址</string>

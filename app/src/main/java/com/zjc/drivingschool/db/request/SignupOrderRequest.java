@@ -14,7 +14,7 @@ public class SignupOrderRequest {
 
     private String uphone;// 用户电话
 
-    private Boolean gender;// 学车人性别
+    private boolean gender;// 学车人性别
 
     private String birthday;// 学车人出生年月  yyyy-MM-dd
 
@@ -22,7 +22,7 @@ public class SignupOrderRequest {
 
     private double latitude;// 开始位置纬度
 
-    private Boolean isreplace;// 是否代人下单
+    private boolean isreplace;// 是否代人下单
 
     private String education;// 学历
 
@@ -57,11 +57,11 @@ public class SignupOrderRequest {
         this.uphone = uphone;
     }
 
-    public Boolean getGender() {
+    public boolean getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(boolean gender) {
         this.gender = gender;
     }
 
@@ -81,11 +81,11 @@ public class SignupOrderRequest {
         this.contactsphone = contactsphone;
     }
 
-    public Boolean getIsreplace() {
+    public boolean getIsreplace() {
         return isreplace;
     }
 
-    public void setIsreplace(Boolean isreplace) {
+    public void setIsreplace(boolean isreplace) {
         this.isreplace = isreplace;
     }
 
