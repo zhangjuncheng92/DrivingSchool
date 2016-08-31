@@ -248,9 +248,12 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
             timeLengthOptions.showAtLocation(tv_timeLength, Gravity.BOTTOM, 0, 0);
 
         } else if (i == R.id.tv_subject) {//隐藏虚拟键盘
-            inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
-            tvSubjectOptions.showAtLocation(tv_subject, Gravity.BOTTOM, 0, 0);
-
+            if (tvSubjectOptions == null) {
+                findProducts();
+            } else {
+                inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+                tvSubjectOptions.showAtLocation(tv_subject, Gravity.BOTTOM, 0, 0);
+            }
         } else if (i == R.id.tv_style) {//隐藏虚拟键盘
             inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
             tvStyleOptions.showAtLocation(tv_style, Gravity.BOTTOM, 0, 0);
@@ -303,7 +306,11 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
                 }
 
                 //显示
-                tv_telephone.setText(name + ":" + phone);
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone)) {
+                    Util.showCustomMsg("请选择正确联系人");
+                } else {
+                    tv_telephone.setText(name + ":" + phone);
+                }
                 break;
         }
     }
@@ -315,7 +322,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
             public void onTimeSelect(Date date) {
                 //选择时间必须大于现在3小时
                 if (date.getTime() - System.currentTimeMillis() > time) {
-                    tv_time.setText(UtilDate.formatDate("yyyy-MM-dd HH:mm", date));
+                    tv_time.setText(UtilDate.formatDatetime(date));
                 } else {
                     Util.showCustomMsg("预约练车时间必须提前3小时");
                 }
