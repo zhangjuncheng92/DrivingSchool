@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
@@ -15,9 +14,12 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.parser.ApplyOrderDetailParser;
 import com.zjc.drivingschool.db.parser.OrderDetailResponseParser;
+import com.zjc.drivingschool.db.response.ApplyOrderDetail;
 import com.zjc.drivingschool.db.response.OrderDetailResponse;
 import com.zjc.drivingschool.utils.Constants;
+import com.zjc.drivingschool.utils.ConstantsParams;
 
 
 /**
@@ -28,24 +30,18 @@ import com.zjc.drivingschool.utils.Constants;
  */
 public class ApplyDetailFragment extends ZBaseToolBarFragment {
     private String orderid;
-    private OrderDetailResponse orderDetail;
+    private ApplyOrderDetail orderDetail;
     private Button btnCommit;
 
     private TextView tvStatus;
-    private TextView txtStatus;
-    private ImageView iconStatus;
 
-    private TextView tvSubject;
-    private TextView tvCart;
+    private TextView tvEducation;
     private TextView tvStudent;
-    private TextView tvLength;
     private TextView tvStudentPhone;
     private TextView tvFee;
 
-    private TextView tvStartTime;
-    private TextView tvEndTime;
+    private TextView tvReceiveTime;
     private TextView tvSchool;
-    private TextView tvTeacher;
 
     private TextView tvOrderNo;
     private TextView tvOrderTime;
@@ -73,7 +69,7 @@ public class ApplyDetailFragment extends ZBaseToolBarFragment {
 
     @Override
     protected int inflateContentView() {
-        return R.layout.order_detail_frg;
+        return R.layout.apply_detail_frg;
     }
 
     @Override
@@ -86,21 +82,15 @@ public class ApplyDetailFragment extends ZBaseToolBarFragment {
     }
 
     private void initView() {
-
-//        iconStatus = (ImageView) rootView.findViewById(R.id.registration_detail_frg_icon_status);
+        tvStudent = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_student);
+        tvStudentPhone = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_student_phone);
         tvStatus = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_status);
-        tvSubject = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_subject);
-        tvCart = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_cart);
-        tvLength = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_length);
+        tvEducation = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_education);
         tvFee = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_fee);
 
 
-        tvStudent = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_student);
-        tvStudentPhone = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_student_phone);
-        tvStartTime = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_start_time);
-        tvEndTime = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_end_time);
+        tvReceiveTime = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_receive_time);
         tvSchool = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_school);
-        tvTeacher = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_teacher);
 
         tvOrderNo = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_NO);
         tvOrderTime = (TextView) rootView.findViewById(R.id.order_detail_frg_tv_order_time);
@@ -110,7 +100,7 @@ public class ApplyDetailFragment extends ZBaseToolBarFragment {
         ApiHttpClient.getInstance().getApplyDetail(SharePreferencesUtil.getInstance().readUser().getUid(), orderid, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
             @Override
             public void onResultSuccess(String result) {
-                orderDetail = new OrderDetailResponseParser().parseResultMessage(result);
+                orderDetail = new ApplyOrderDetailParser().parseResultMessage(result);
                 setInfo();
             }
         });
@@ -132,17 +122,14 @@ public class ApplyDetailFragment extends ZBaseToolBarFragment {
     private void setInfo() {
         setStatus();
 
-        setTextView(tvCart, orderDetail.getCarsname());
-        setTextView(tvSubject, orderDetail.getSubjectname());
-        setTextView(tvLength, orderDetail.getEndtime());
+        tvStatus.setText(ConstantsParams.getStatus(orderDetail.getState()));
+        setTextView(tvEducation, orderDetail.getEducation());
         tvFee.setText(orderDetail.getTotal() + "");
 
         setTextView(tvStudent, orderDetail.getContactsname());
         setTextView(tvStudentPhone, orderDetail.getContactsphone());
-        setTextView(tvStartTime, orderDetail.getStarttime());
-        setTextView(tvEndTime, orderDetail.getEndtime());
-        setTextView(tvSchool, orderDetail.getSname());
-        setTextView(tvTeacher, orderDetail.getTname());
+        setTextView(tvReceiveTime, orderDetail.getTaketime());
+        setTextView(tvSchool, orderDetail.getTname());
 
         setTextView(tvOrderNo, orderDetail.getOrid());
         setTextView(tvOrderTime, orderDetail.getOrdertime());

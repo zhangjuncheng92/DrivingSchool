@@ -97,7 +97,7 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
 
     @Override
     protected int inflateContentView() {
-        return R.layout.order_detail_frg;
+        return R.layout.study_detail_frg;
     }
 
     @Override

@@ -1,0 +1,212 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--培训详情-->
+
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:layout_marginTop="@dimen/layout_margin_ls"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学员姓名" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系电话" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_student_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <RelativeLayout style="@style/comm_layout_two">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="学历" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_education"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <RelativeLayout style="@style/comm_layout_two">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="金额" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单状态" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="驾校名称" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_school"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="接单时间" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_receive_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <!--订单信息-->
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:layout_marginTop="@dimen/layout_margin_ls"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单编号" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_NO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View style="@style/line_horStyle" />
+
+            <RelativeLayout
+                style="@style/comm_layout_two"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/comm_subtitle_gary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下单时间" />
+
+                <TextView
+                    android:id="@+id/order_detail_frg_tv_order_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+
+            <View style="@style/line_horStyle" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.mobo.mobolibrary.ui.widget.empty.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</RelativeLayout>
