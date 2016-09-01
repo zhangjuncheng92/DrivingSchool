@@ -12,19 +12,26 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
+import com.zjc.drivingschool.db.model.City;
 import com.zjc.drivingschool.db.parser.OrderDetailResponseParser;
+import com.zjc.drivingschool.db.parser.TeacherLocalParser;
 import com.zjc.drivingschool.db.response.OrderDetailResponse;
+import com.zjc.drivingschool.db.response.TeacherLocal;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
@@ -59,7 +66,8 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
     private TextView tvOrderNo;
     private TextView tvOrderTime;
     private MapView mMapView;
-    private BaiduMap mBaiduMap;
+    private BaiduMap mBaiDuMap;
+    private TeacherLocal teacherLocal;
 
 
     /**
@@ -99,7 +107,6 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
             initView();
             initBaiduMap();
             getDetailById();
-            getTeacherLocal();
         }
     }
 
@@ -128,16 +135,16 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
         // 获取地图控件引用
         mMapView = (MapView) rootView.findViewById(R.id.order_detail_frg_map);
         // 获得地图的实例
-        mBaiduMap = mMapView.getMap();
-        mBaiduMap.setTrafficEnabled(false);
+        mBaiDuMap = mMapView.getMap();
+        mBaiDuMap.setTrafficEnabled(false);
         //武汉坐标
-        LatLng currentLatlng = new LatLng(30.543622, 114.433890);
+        City city = SharePreferencesUtil.getInstance().readCity();
         // 定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-        MapStatus status = new MapStatus.Builder().target(currentLatlng).zoom(12).build();
+        MapStatus status = new MapStatus.Builder().target(city.getLatLngLocal().getBaiduLatLngByLocal()).zoom(15).build();
         MapStatusUpdate msu = MapStatusUpdateFactory.newMapStatus(status);
-        mBaiduMap.animateMapStatus(msu);
+        mBaiDuMap.animateMapStatus(msu);
 
-        mBaiduMap.setOnMapClickListener(this);
+        mBaiDuMap.setOnMapClickListener(this);
     }
 
     private void getDetailById() {
@@ -146,21 +153,38 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
             public void onResultSuccess(String result) {
                 orderDetail = new OrderDetailResponseParser().parseResultMessage(result);
                 setInfo();
+                getTeacherLocal(orderDetail);
             }
         });
     }
 
-    private void getTeacherLocal() {
-        ApiHttpClient.getInstance().getOrderDetailById(SharePreferencesUtil.getInstance().readUser().getUid(), orderid, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+    private void getTeacherLocal(OrderDetailResponse orderDetail) {
+        //没有详情，再次请求详情
+        if (orderDetail == null) {
+            getDetailById();
+            return;
+        }
+
+        ApiHttpClient.getInstance().getTeacherLocal(SharePreferencesUtil.getInstance().readUser().getUid(), orderDetail.getTid(), new ResultResponseHandler(getActivity(), getEmptyLayout()) {
             @Override
             public void onResultSuccess(String result) {
-                LatLng currentLatlng = new LatLng(30.543622, 114.433890);
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(currentLatlng);
-                mBaiduMap.animateMapStatus(u);
+                teacherLocal = new TeacherLocalParser().parseResultMessage(result);
+                LatLng latLng = new LatLng(teacherLocal.getLatitude(), teacherLocal.getLongitude());
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(latLng);
+                mBaiDuMap.animateMapStatus(u);
+                addTargetMarker(latLng);
             }
         });
     }
 
+    public void addTargetMarker(LatLng lng) {
+        //中心点的marker
+        BitmapDescriptor markerPoint = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_point);
+        // 构建MarkerOption，用于在地图上添加Marker
+        OverlayOptions option = new MarkerOptions().position(lng).icon(markerPoint);
+        // 在地图上添加Marker，并显示
+        mBaiDuMap.addOverlay(option);
+    }
 
     private void setTextView(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
@@ -175,7 +199,7 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
 
         setTextView(tvCart, orderDetail.getCarsname());
         setTextView(tvSubject, orderDetail.getSubjectname());
-        setTextView(tvLength, orderDetail.getEndtime());
+        setTextView(tvLength, orderDetail.getNumber() + "");
         tvFee.setText(orderDetail.getTotal() + "");
 
         setTextView(tvStudent, orderDetail.getContactsname());
@@ -231,12 +255,18 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
     @Override
     public void onClick(View view) {
         int i = view.getId();
-
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
-
+        //没有教练信息，获取教练位置
+        if (teacherLocal == null) {
+            getTeacherLocal(orderDetail);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.ARGUMENT, teacherLocal);
+            startActivity(StudyMapActivity.class, bundle);
+        }
     }
 
     @Override

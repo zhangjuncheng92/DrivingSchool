@@ -94,6 +94,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--预约学车-->
+        <activity
+            android:name=".ui.study.StudyMapActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
+
         <!--驾校主页-->
         <activity
             android:name=".ui.school.SchoolActivity"

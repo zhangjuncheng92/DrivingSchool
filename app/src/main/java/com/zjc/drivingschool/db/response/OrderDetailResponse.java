@@ -31,7 +31,7 @@ public class OrderDetailResponse extends AppResponse {
 
     private double price;// 单价
 
-    private Integer number;// 数量
+    private int number;// 数量
 
     private double total;// 总价
 
@@ -151,11 +151,11 @@ public class OrderDetailResponse extends AppResponse {
         this.price = price;
     }
 
-    public Integer getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

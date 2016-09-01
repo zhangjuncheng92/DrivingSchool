@@ -408,6 +408,18 @@ public class ApiHttpClient {
     }
 
     /**
+     * 1.1.16 获取教练当前经纬度
+     * 参数：tid  uid
+     * 调用示例： position/info
+     */
+    public void getTeacherLocal(String userId, String tid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("tid", tid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/position/info", postRequest, asyncHttpResponseHandler);
+    }
+
+    /**
      * 1.1.26 学员取消学车订单
      * 参数：orid  uid
      * 调用示例：/app/student/order/cancel
