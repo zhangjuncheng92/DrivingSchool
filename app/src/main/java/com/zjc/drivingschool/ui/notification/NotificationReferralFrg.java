@@ -1,6 +1,5 @@
 package com.zjc.drivingschool.ui.notification;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alertdialogpro.AlertDialogPro;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.mobo.mobolibrary.ui.base.ZBaseFragment;
@@ -19,7 +17,6 @@ import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
-import com.zjc.drivingschool.db.model.JPushNotification;
 import com.zjc.drivingschool.db.model.MessageItem;
 import com.zjc.drivingschool.db.parser.MessageListResponseParser;
 import com.zjc.drivingschool.db.response.MessageListResponse;
@@ -38,7 +35,7 @@ import de.greenrobot.event.EventBus;
  * @Date 2016.06.13
  * @description 转诊单通知
  */
-public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnItemLongClickListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     private String noticeStatus;
     private NotificationsTypeAdapter mAdapter;
     private EasyRecyclerView mRecyclerView;
@@ -91,7 +88,6 @@ public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyc
     private void initAdapter() {
         mAdapter = new NotificationsTypeAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
-        mAdapter.setOnItemLongClickListener(this);
         mAdapter.setMore(R.layout.view_more, this);
         mAdapter.setNoMore(R.layout.view_nomore);
         mRecyclerView.setAdapter(mAdapter);
@@ -166,50 +162,6 @@ public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyc
     }
 
     @Override
-    public void onItemLongClick(View view, int position) {
-        mRecyclerView.setTag(position);
-//        showDeleteDialog();
-    }
-
-    private void showDeleteDialog() {
-        AlertDialogPro.Builder builder = new AlertDialogPro.Builder(getActivity());
-        builder.setTitle("温馨提示：");
-        builder.setMessage("确认删除该条通知消息？");
-        builder.setNegativeButton("确认",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                        deleteMessages((JPushNotification) mAdapter.getItem((int) mRecyclerView.getTag()));
-                        //  deleteMessages((JPushNotification) mAdapter.getItem(currentIndex));
-                    }
-                });
-        builder.setPositiveButton("取消",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.show();
-    }
-
-
-    private void deleteMessages(JPushNotification item) {
-
-//        ApiHttpClient.getInstance().deleteMessages(SharePreferencesUtil.getInstance().readUser().getId() + "", item.getMessageId(), new ResultResponseHandlerOfDialog<JPushNotification>(getActivity(), "请稍等", new JPushNotificationParser()) {
-//
-//            @Override
-//            public void onResultSuccess(List<JPushNotification> result) {
-//                Util.showCustomMsg("已经成功删除该条通知信息");
-//                //更新接口数据
-//                mAdapter.setNotifyOnChange(false);
-//                mAdapter.remove(mAdapter.getItem(currentIndex));
-//                mAdapter.notifyItemRemoved(currentIndex);
-//                mAdapter.setNotifyOnChange(true);
-//            }
-//        });
-    }
-
-    @Override
     public void sendRequestData() {
         if (SharePreferencesUtil.getInstance().isLogin()) {
             getNotice(getEmptyLayout());
@@ -270,6 +222,7 @@ public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyc
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(mAdapter);
     }
 
     /**

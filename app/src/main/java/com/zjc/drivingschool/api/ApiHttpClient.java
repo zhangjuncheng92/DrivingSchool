@@ -1,5 +1,6 @@
 package com.zjc.drivingschool.api;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -14,6 +15,7 @@ import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * @author Z
@@ -472,6 +474,31 @@ public class ApiHttpClient {
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "student/message/list", postRequest, asyncHttpResponseHandler);
     }
+
+    /**
+     * 1.1.31 获取消息详情
+     * 调用示例： /app/student/message/detail
+     */
+    public void getNoticeDetail(String uid, String mid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", uid);
+        postRequest.addProperty("mid", mid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/message/detail", postRequest, asyncHttpResponseHandler);
+    }
+
+    /**
+     * 1.1.31 删除消息
+     * 调用示例：  /app/student/message/delete
+     */
+    public void deleteNotice(String uid, JsonArray mids, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", uid);
+        postRequest.add("mids",mids);
+        postRequest.addProperty("rule","id");
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/message/delete", postRequest, asyncHttpResponseHandler);
+    }
+
+
 
     /**
      * ###########  收藏模块  ############

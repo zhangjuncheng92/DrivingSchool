@@ -1,0 +1,7 @@
+<com.zjc.drivingschool.widget.ZExpandableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:expandable="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expandableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    expandable:contentLayout="@layout/notification_content_item"
+    expandable:headerLayout="@layout/notification_header_item" />

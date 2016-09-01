@@ -38,6 +38,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.bigkoo:pickerview:1.0.3'
+    compile 'com.github.traex.expandablelayout:library:1.2.2'
     compile project(':mobolibrary')
     compile project(':paySdk')
     compile project(':mutiphotolibrary')
