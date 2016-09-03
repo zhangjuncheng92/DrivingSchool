@@ -126,7 +126,7 @@
                 android:textColor="@color/comm_white" />
 
             <TextView
-                android:id="@+id/order_discuss"
+                android:id="@+id/order_assess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/comm_select_orange"

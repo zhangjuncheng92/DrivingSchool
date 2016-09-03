@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author LJ
  * @date 2016年7月21日
  */
-public class OrderDetailResponse extends AppResponse {
+public class OrderDetail extends AppResponse {
     private String orid;// 订单id
 
     private String orderid;// 订单编号
@@ -64,6 +64,8 @@ public class OrderDetailResponse extends AppResponse {
     private String tid;// 教练ID
 
     private String tname;// 教练名称
+
+    private String tphoto;
 
     private String assigntime;// 分配时间
 
@@ -343,4 +345,11 @@ public class OrderDetailResponse extends AppResponse {
         this.pid = pid;
     }
 
+    public String getTphoto() {
+        return tphoto;
+    }
+
+    public void setTphoto(String tphoto) {
+        this.tphoto = tphoto;
+    }
 }

@@ -446,6 +446,22 @@ public class ApiHttpClient {
     }
 
     /**
+     * 1.1.27 用户评论订单
+     * 参数：comment  nickname oid stars tid uid
+     * 调用示例：/app/student/order/refund
+     */
+    public void assessStudyOrder(String comment, String oid,float stars,String tid, String uid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("comment", comment);
+        postRequest.addProperty("oid", oid);
+        postRequest.addProperty("stars", stars);
+        postRequest.addProperty("tid", tid);
+        postRequest.addProperty("uid", uid);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/discuss", postRequest, asyncHttpResponseHandler);
+    }
+
+
+    /**
      * ###########驾校主页############
      * 6.2接口：detail
      * 用途：地图驾校详情

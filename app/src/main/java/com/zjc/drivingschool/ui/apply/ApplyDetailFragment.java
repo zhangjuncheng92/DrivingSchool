@@ -15,9 +15,7 @@ import com.zjc.drivingschool.api.ApiHttpClient;
 import com.zjc.drivingschool.api.ResultResponseHandler;
 import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.parser.ApplyOrderDetailParser;
-import com.zjc.drivingschool.db.parser.OrderDetailResponseParser;
 import com.zjc.drivingschool.db.response.ApplyOrderDetail;
-import com.zjc.drivingschool.db.response.OrderDetailResponse;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 

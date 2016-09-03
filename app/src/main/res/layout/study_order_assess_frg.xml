@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/layout_margin_m"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/study_order_assess_frg_sd_teacher"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    fresco:actualImageScaleType="focusCrop"
+                    fresco:placeholderImageScaleType="fitCenter"
+                    fresco:roundAsCircle="true" />
+
+
+                <TextView
+                    android:id="@+id/study_order_assess_frg_tv_name"
+                    style="@style/comm_title_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/layout_margin_l"
+                    android:text="教练" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/line_horStyle"
+                    android:layout_height="1dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/order_assess_frg_tv" />
+
+                <TextView
+                    android:id="@+id/order_assess_frg_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/layout_margin_m"
+                    android:text="@string/study_order_assess_teacher"
+                    android:textColor="@color/gray" />
+
+                <TextView
+                    style="@style/line_horStyle"
+                    android:layout_height="1dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/order_assess_frg_tv" />
+            </RelativeLayout>
+
+            <RatingBar
+                android:id="@+id/study_order_assess_frg_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:rating="3"
+                android:stepSize="1" />
+
+            <EditText
+                android:id="@+id/study_order_assess_frg_edt_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_h"
+                android:background="@drawable/comm_select_edit_background"
+                android:gravity="left"
+                android:lines="5"
+                android:padding="@dimen/layout_padding_l" />
+
+            <TextView
+                android:id="@+id/study_order_assess_frg_tv_commit"
+                style="@style/comm_select_style"
+                android:layout_marginLeft="@dimen/layout_margin_m"
+                android:layout_marginRight="@dimen/layout_margin_m"
+                android:layout_marginTop="@dimen/layout_margin_h"
+                android:gravity="center"
+                android:text="提交" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.mobo.mobolibrary.ui.widget.empty.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</RelativeLayout>

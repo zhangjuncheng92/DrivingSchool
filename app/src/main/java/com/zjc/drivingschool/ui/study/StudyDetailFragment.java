@@ -30,7 +30,7 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.City;
 import com.zjc.drivingschool.db.parser.OrderDetailResponseParser;
 import com.zjc.drivingschool.db.parser.TeacherLocalParser;
-import com.zjc.drivingschool.db.response.OrderDetailResponse;
+import com.zjc.drivingschool.db.response.OrderDetail;
 import com.zjc.drivingschool.db.response.TeacherLocal;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
@@ -44,7 +44,7 @@ import com.zjc.drivingschool.utils.ConstantsParams;
  */
 public class StudyDetailFragment extends ZBaseToolBarFragment implements View.OnClickListener, BaiduMap.OnMapClickListener {
     private String orderid;
-    private OrderDetailResponse orderDetail;
+    private OrderDetail orderDetail;
     private Button btnCommit;
 
     private TextView tvStatus;
@@ -158,7 +158,7 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
         });
     }
 
-    private void getTeacherLocal(OrderDetailResponse orderDetail) {
+    private void getTeacherLocal(OrderDetail orderDetail) {
         //没有详情，再次请求详情
         if (orderDetail == null) {
             getDetailById();

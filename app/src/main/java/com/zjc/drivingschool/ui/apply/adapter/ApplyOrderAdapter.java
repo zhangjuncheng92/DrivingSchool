@@ -46,7 +46,7 @@ public class ApplyOrderAdapter extends ZBaseRecyclerViewAdapter {
             mTvTime = $(R.id.order_time);
             mTvPay = $(R.id.order_pay);
             mTvCancel = $(R.id.order_cancel);
-            mTvDiscuss = $(R.id.order_discuss);
+            mTvDiscuss = $(R.id.order_assess);
             mTvMoney = $(R.id.order_money);
         }
 

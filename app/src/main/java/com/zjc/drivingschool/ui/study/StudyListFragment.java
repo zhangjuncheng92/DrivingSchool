@@ -18,6 +18,7 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
+import com.zjc.drivingschool.eventbus.StudyOrderAssessEvent;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
 import com.zjc.drivingschool.eventbus.StudyOrderUnSubjectEvent;
 import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
@@ -157,7 +158,7 @@ public class StudyListFragment extends ZBaseFragment implements SwipeRefreshLayo
         int count = mAdapter.getCount();
         for (int i = 0; i < count; i++) {
             OrderItem item = (OrderItem) mAdapter.getItem(i);
-            if (item.getOrid() == event.getOrid()) {
+            if (item.getOrid().equals(event.getOrid())) {
                 item.setState(ConstantsParams.STUDY_ORDER_THREE);
                 mAdapter.notifyItemChanged(i);
                 break;
@@ -174,8 +175,25 @@ public class StudyListFragment extends ZBaseFragment implements SwipeRefreshLayo
         int count = mAdapter.getCount();
         for (int i = 0; i < count; i++) {
             OrderItem item = (OrderItem) mAdapter.getItem(i);
-            if (item.getOrid() == event.getOrid()) {
+            if (item.getOrid().equals(event.getOrid())) {
                 item.setState(ConstantsParams.STUDY_ORDER_NINE);
+                mAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    /**
+     * 更新预约单评价状态
+     *
+     * @param event
+     */
+    public void onEventMainThread(StudyOrderAssessEvent event) {
+        int count = mAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            OrderItem item = (OrderItem) mAdapter.getItem(i);
+            if (item.getOrid().equals(event.getOrid())) {
+                item.setState(ConstantsParams.STUDY_ORDER_EIGHT);
                 mAdapter.notifyItemChanged(i);
                 break;
             }

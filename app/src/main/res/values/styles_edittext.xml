@@ -2,7 +2,7 @@
 <resources>
 
     <style name="my_edittext_style" parent="@android:style/Widget.EditText">
-        <item name="android:background">@drawable/comm_select_edittext_background</item>
+        <item name="android:background">@drawable/comm_select_edit_background</item>
     </style>
 
 </resources>

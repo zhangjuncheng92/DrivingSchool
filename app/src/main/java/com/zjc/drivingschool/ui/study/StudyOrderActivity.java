@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.mobo.mobolibrary.ui.base.ZBaseActivity;
 import com.zjc.drivingschool.R;
-import com.zjc.drivingschool.ui.apply.ApplyFragment;
+import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.utils.Constants;
 
 
@@ -31,11 +31,21 @@ public class StudyOrderActivity extends ZBaseActivity {
             trans.addToBackStack(null);
             trans.add(R.id.root, fragment).commit();
         } else if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Constants.ARGUMENT)) {
-            String orId = (String) getIntent().getExtras().getSerializable(Constants.ARGUMENT);
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            StudyDetailFragment fragment = StudyDetailFragment.newInstance((orId));
-            trans.addToBackStack(null);
-            trans.add(R.id.root, fragment).commit();
+            if (getIntent().getExtras().getSerializable(Constants.ARGUMENT) instanceof String) {
+                //跳转到学车详情
+                String orId = (String) getIntent().getExtras().getSerializable(Constants.ARGUMENT);
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                StudyDetailFragment fragment = StudyDetailFragment.newInstance((orId));
+                trans.addToBackStack(null);
+                trans.add(R.id.root, fragment).commit();
+            } else if (getIntent().getExtras().getSerializable(Constants.ARGUMENT) instanceof OrderItem) {
+                //跳转到评价
+                OrderItem orderItem = (OrderItem) getIntent().getExtras().getSerializable(Constants.ARGUMENT);
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                StudyOrderAssessFrg fragment = StudyOrderAssessFrg.newInstance((orderItem));
+                trans.addToBackStack(null);
+                trans.add(R.id.root, fragment).commit();
+            }
         }
     }
 }

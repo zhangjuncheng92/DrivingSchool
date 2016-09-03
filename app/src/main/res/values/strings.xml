@@ -56,6 +56,8 @@
     <!--预约学车-->
     <string name="title_study">预约学车</string>
     <string name="title_study_history">学车订单</string>
+    <string name="study_history_assess">评价教练</string>
+    <string name="study_order_assess_teacher">为教练打分</string>
 
     <!--预约考试-->
     <string name="title_examination">预约考试</string>

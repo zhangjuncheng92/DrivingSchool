@@ -1,11 +1,14 @@
 package com.zjc.drivingschool.ui.study.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.mobo.mobolibrary.ui.base.ZBaseFragment;
 import com.mobo.mobolibrary.ui.base.adapter.ZBaseRecyclerViewAdapter;
 import com.zjc.drivingschool.R;
 import com.zjc.drivingschool.api.ApiHttpClient;
@@ -14,6 +17,8 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.OrderItem;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
 import com.zjc.drivingschool.eventbus.StudyOrderUnSubjectEvent;
+import com.zjc.drivingschool.ui.study.StudyOrderActivity;
+import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 import de.greenrobot.event.EventBus;
@@ -37,9 +42,8 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
         private TextView mTvStatus;
         private TextView mTvNumber;
         private TextView mTvTime;
-        private TextView mTvPay;
-        private TextView mTvCancel;
-        private TextView mTvDiscuss;
+        private TextView tvCancel;
+        private TextView tvAssess;
         private TextView tvUnSubject;
         private TextView mTvMoney;
 
@@ -49,9 +53,8 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
             mTvStatus = $(R.id.order_status);
             mTvNumber = $(R.id.order_number);
             mTvTime = $(R.id.order_time);
-            mTvPay = $(R.id.order_pay);
-            mTvCancel = $(R.id.order_cancel);
-            mTvDiscuss = $(R.id.order_discuss);
+            tvCancel = $(R.id.order_cancel);
+            tvAssess = $(R.id.order_assess);
             tvUnSubject = $(R.id.order_unsubject);
             mTvMoney = $(R.id.order_money);
         }
@@ -66,33 +69,31 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
             mTvTime.setText(service.getOrdertime());
             mTvMoney.setText(service.getTotal() + "");
             mTvStatus.setText(ConstantsParams.getStatus(service.getState()));
-            //	1.预订成功 2.已支付 3.申请退订 4.已退订 5.消费中 6.已消费 7.待评价 8.已完成 9.已取消
+            //	1.预订成功 2.已支付 3.申请退订 4.已退订 5.消费中 6.培训完成 7.待评价 8.已完成 9.已取消
             if (service.getState().equals(ConstantsParams.STUDY_ORDER_ONE)) {
-                mTvPay.setVisibility(View.GONE);
-                mTvCancel.setVisibility(View.VISIBLE);
-                mTvDiscuss.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.VISIBLE);
+                tvAssess.setVisibility(View.GONE);
                 tvUnSubject.setVisibility(View.GONE);
             } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_TWO)) {
-                mTvPay.setVisibility(View.GONE);
-                mTvCancel.setVisibility(View.GONE);
-                mTvDiscuss.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.GONE);
+                tvAssess.setVisibility(View.GONE);
                 tvUnSubject.setVisibility(View.VISIBLE);
-            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_SEVEN)) {
-                mTvPay.setVisibility(View.GONE);
-                mTvCancel.setVisibility(View.GONE);
-                mTvDiscuss.setVisibility(View.VISIBLE);
+            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_SIX)) {
+                tvCancel.setVisibility(View.GONE);
+                tvAssess.setVisibility(View.VISIBLE);
                 tvUnSubject.setVisibility(View.GONE);
             } else {
-                mTvPay.setVisibility(View.GONE);
-                mTvCancel.setVisibility(View.GONE);
-                mTvDiscuss.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.GONE);
+                tvAssess.setVisibility(View.GONE);
                 tvUnSubject.setVisibility(View.GONE);
             }
 
-            mTvCancel.setTag(service);
-            mTvCancel.setOnClickListener(new CancelOnClickListener());
+            tvCancel.setTag(service);
+            tvCancel.setOnClickListener(new CancelOnClickListener());
             tvUnSubject.setTag(service);
             tvUnSubject.setOnClickListener(new UnSubjectOnClickListener());
+            tvAssess.setTag(service);
+            tvAssess.setOnClickListener(new AssessOnClickListener());
         }
     }
 
@@ -140,5 +141,24 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
                 }
             }
         });
+    }
+
+    /**
+     * 取消点击事件
+     */
+    class AssessOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            OrderItem item = (OrderItem) v.getTag();
+            //跳转到评论界面
+            startAssessOrder(item);
+        }
+    }
+
+    private void startAssessOrder(OrderItem item) {
+        ZBaseFragment fragment = (ZBaseFragment) ((AppCompatActivity) getContext()).getSupportFragmentManager().getFragments().get(0);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.ARGUMENT, item);
+        fragment.startActivity(StudyOrderActivity.class, bundle);
     }
 }

@@ -128,7 +128,7 @@ public class ConstantsParams {
      * 已消费
      */
     public static final String STUDY_ORDER_SIX = "6";
-    public static final String STUDY_ORDER_SIX_TXT = "已消费";
+    public static final String STUDY_ORDER_SIX_TXT = "培训完成";
 
     /**
      * 待评价

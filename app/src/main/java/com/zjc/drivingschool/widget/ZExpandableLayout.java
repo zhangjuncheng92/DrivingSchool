@@ -75,12 +75,14 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
     }
 
 
-    public void setIsRead(MessageItem messageItem) {
+    public void setIsRead(final MessageItem messageItem) {
         ApiHttpClient.getInstance().getNoticeDetail(SharePreferencesUtil.getInstance().readUser().getUid(), messageItem.getMid(), new ResultResponseHandler(getContext()) {
             @Override
             public void onResultSuccess(String result) {
                 messageDetail = new MessageDetailParser().parseResultMessage(result);
                 setDetail(messageDetail);
+                messageItem.setIsread(true);
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
