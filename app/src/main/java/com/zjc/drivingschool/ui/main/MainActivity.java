@@ -24,6 +24,7 @@ import com.zjc.drivingschool.ui.account.AccountManagerActivity;
 import com.zjc.drivingschool.ui.apply.ApplyActivity;
 import com.zjc.drivingschool.ui.apply.ApplyListActivity;
 import com.zjc.drivingschool.ui.collect.CollectManagerActivity;
+import com.zjc.drivingschool.ui.coupon.CouponActivity;
 import com.zjc.drivingschool.ui.login.LoginActivity;
 import com.zjc.drivingschool.ui.notification.NotificationActivity;
 import com.zjc.drivingschool.ui.personal.PersonalActivity;
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.main_action_account) {
             Intent intent = new Intent(MainActivity.this, AccountManagerActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.main_action_coupon) {
+            Intent intent = new Intent(MainActivity.this, CouponActivity.class);
             startActivity(intent);
         } else if (id == R.id.main_action_collect) {
             Intent intent = new Intent(MainActivity.this, CollectManagerActivity.class);

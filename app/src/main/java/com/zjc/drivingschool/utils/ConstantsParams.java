@@ -172,4 +172,23 @@ public class ConstantsParams {
         }
     }
 
+
+    /***
+     * ########### 优惠券 ############
+     * 1可使用  2已使用 3已过期*/
+
+    /**
+     * 1可使用
+     */
+    public static final String COUPON_ENABLE = "1";
+
+    /**
+     * 2已使用
+     */
+    public static final String COUPON_USED = "2";
+
+    /**
+     * 3已过期
+     */
+    public static final String COUPON_OVERDUE = "3";
 }

@@ -88,7 +88,7 @@
 
     <!--我的消息-->
     <string name="title_notice">我的消息</string>
-
+    <string name="title_coupon">代金券</string>
     <string name="title_more">更多</string>
 
     <!--驾校主页-->

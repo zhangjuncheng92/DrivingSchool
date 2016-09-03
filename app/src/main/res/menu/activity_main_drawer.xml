@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/title_account" />
         <item
+            android:id="@+id/main_action_coupon"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/title_coupon" />
+        <item
             android:id="@+id/main_action_collect"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/title_collect" />

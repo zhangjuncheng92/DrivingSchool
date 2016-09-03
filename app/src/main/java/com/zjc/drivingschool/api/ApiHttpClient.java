@@ -15,7 +15,6 @@ import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * @author Z
@@ -243,6 +242,7 @@ public class ApiHttpClient {
 
 
     /**
+     * * ###########  我的账户  ############
      * 6.2接口：getMyAccount
      * 用途：获取我的账户信息
      * 参数：uid(登录用户主键)
@@ -255,20 +255,34 @@ public class ApiHttpClient {
     }
 
     /**
+     * ###########  代金券模块  ############
+     * 获取代金券券列表
+     * 参数   isoverdue	是否已过期	isused	是否已使用	uid pagesize	number
+     * 调用示例：voucher
+     */
+    public void getCouponList(String userId, int start, String state, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("offset", start);
+        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
+
+        if (state.equals(ConstantsParams.COUPON_ENABLE)) {
+            postRequest.addProperty("isoverdue", false);
+            postRequest.addProperty("isused", false);
+        } else if (state.equals(ConstantsParams.COUPON_USED)) {
+            postRequest.addProperty("isoverdue", false);
+            postRequest.addProperty("isused", true);
+        } else if (state.equals(ConstantsParams.COUPON_OVERDUE)) {
+            postRequest.addProperty("isoverdue", true);
+            postRequest.addProperty("isused", false);
+        }
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/voucher", postRequest, asyncHttpResponseHandler);
+    }
+
+
+    /**
      * * ###########   预约学车   ############
      * 1.1.22 学员报名订单创建
-     * 学车人电话	contactsphone	string	（非必传，代人下单时必填）
-     * 开始位置纬度	latitude	number
-     * 用户ID	uid	string
-     * 用户姓名	uname	string
-     * 学历	education	string
-     * 用户电话	uphone	string
-     * 学车人性别	gender	boolean
-     * 优惠券ID	vid	string	（非必传，格式:多个ID用','分割）
-     * 学车人姓名	contactsname	string	（非必传，代人下单时必填）
-     * 学车人出生年月	birthday	string	yyyy-MM-dd
-     * 开始位置经度	longitude	number
-     * 是否代人下单	isreplace	boolean
      * /app/student/order/create
      */
     public void startApply(SignupOrderRequest signupOrder, AsyncHttpResponseHandler asyncHttpResponseHandler) {
@@ -450,7 +464,7 @@ public class ApiHttpClient {
      * 参数：comment  nickname oid stars tid uid
      * 调用示例：/app/student/order/refund
      */
-    public void assessStudyOrder(String comment, String oid,float stars,String tid, String uid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void assessStudyOrder(String comment, String oid, float stars, String tid, String uid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("comment", comment);
         postRequest.addProperty("oid", oid);
@@ -509,11 +523,10 @@ public class ApiHttpClient {
     public void deleteNotice(String uid, JsonArray mids, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", uid);
-        postRequest.add("mids",mids);
-        postRequest.addProperty("rule","id");
+        postRequest.add("mids", mids);
+        postRequest.addProperty("rule", "id");
         HttpUtilsAsync.post(Constants.BASE_URL + "student/message/delete", postRequest, asyncHttpResponseHandler);
     }
-
 
 
     /**

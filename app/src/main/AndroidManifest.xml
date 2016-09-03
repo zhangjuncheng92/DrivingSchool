@@ -73,16 +73,19 @@
             android:name=".ui.personal.PersonalActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
+
         <!--我的账户-->
         <activity
             android:name=".ui.account.AccountManagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
+
         <!--报名学车-->
         <activity
             android:name=".ui.apply.ApplyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".ui.apply.ApplyListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -106,13 +109,28 @@
             android:windowSoftInputMode="adjustPan" />
 
         <!--我的订单-->
-        <activity android:name=".ui.study.StudyListActivity" />
+        <activity
+            android:name=".ui.study.StudyListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--我的订单-->
+        <activity
+            android:name=".ui.coupon.CouponActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--我的关注-->
-        <activity android:name=".ui.collect.CollectManagerActivity" />
+        <activity
+            android:name=".ui.collect.CollectManagerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--我的消息-->
-        <activity android:name=".ui.notification.NotificationActivity" />
+        <activity
+            android:name=".ui.notification.NotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--百度地图-->
         <meta-data
