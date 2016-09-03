@@ -87,9 +87,9 @@ public class MainMapFragment extends ZBaseFragment implements View.OnClickListen
      * 静态常量
      */
     public static String AK = "a49QpA1I2HVWCXL3ULMLvPxlU9Chpt98";
-    private static String KEY = "武汉";
+    public static String KEY = "武汉";
     public static int TABLE_ID = 148148;
-    private static int RADIUS = 10000;
+    public static int RADIUS = 10000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

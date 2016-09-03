@@ -37,7 +37,7 @@
                 android:drawableRight="@drawable/icon_arrow_right"
                 android:gravity="center_vertical"
                 android:hint="练车地点"
-                android:padding="@dimen/layout_padding_l"/>
+                android:padding="@dimen/layout_padding_l" />
 
             <View
                 style="@style/line_horStyle"
@@ -129,6 +129,20 @@
                 android:padding="@dimen/layout_padding_l"
                 android:visibility="gone" />
 
+
+            <View
+                style="@style/line_horStyle"
+                android:layout_marginLeft="@dimen/layout_margin_ml" />
+
+            <TextView
+                android:id="@+id/learn_apply_frg_tv_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_arrow_right"
+                android:gravity="center_vertical"
+                android:hint="优惠卷"
+                android:padding="@dimen/layout_padding_l" />
+
             <View style="@style/line_horStyle" />
         </LinearLayout>
     </ScrollView>
@@ -140,6 +154,7 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:id="@+id/left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -151,6 +166,27 @@
 
             <TextView
                 android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/comm_red"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_margin_l"
+            android:layout_toRightOf="@+id/left"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实际支付：" />
+
+            <TextView
+                android:id="@+id/tv_end_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/comm_red"

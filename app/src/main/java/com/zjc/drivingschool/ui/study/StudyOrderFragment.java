@@ -17,7 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.cloud.CloudPoiInfo;
 import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
@@ -32,9 +32,12 @@ import com.zjc.drivingschool.db.model.ProductSubject;
 import com.zjc.drivingschool.db.parser.AccountBalanceParser;
 import com.zjc.drivingschool.db.parser.UserProductResponseParser;
 import com.zjc.drivingschool.db.request.OrderCreateRequest;
+import com.zjc.drivingschool.db.response.Coupon;
 import com.zjc.drivingschool.db.response.UserProductResponse;
 import com.zjc.drivingschool.eventbus.StudyAddressChooseEvent;
+import com.zjc.drivingschool.eventbus.StudyCouponChooseEvent;
 import com.zjc.drivingschool.ui.account.AccountManagerActivity;
+import com.zjc.drivingschool.utils.ConstantsParams;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,6 +62,8 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
     private TextView tv_telephone;
     private TextView tv_next;
     private TextView tv_money;
+    private TextView tvCoupon;
+    private TextView tvEndMoney;
     private int index;
     private long time = 1000 * 60 * 60 * 3;//练车时间必须大于3小时
 
@@ -113,6 +118,8 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         tv_telephone = (TextView) rootView.findViewById(R.id.tv_telephone);
         tv_next = (TextView) rootView.findViewById(R.id.tv_next);
         tv_money = (TextView) rootView.findViewById(R.id.tv_money);
+        tvCoupon = (TextView) rootView.findViewById(R.id.learn_apply_frg_tv_coupon);
+        tvEndMoney = (TextView) rootView.findViewById(R.id.tv_end_money);
 
         tv_time.setOnClickListener(this);
         tv_locale.setOnClickListener(this);
@@ -121,6 +128,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         tv_style.setOnClickListener(this);
         tv_telephone.setOnClickListener(this);
         tv_next.setOnClickListener(this);
+        tvCoupon.setOnClickListener(this);
         jpushButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -243,27 +251,32 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
             StudyAddressFragment fragment = new StudyAddressFragment();
             replaceFrg(fragment, null);
 
-        } else if (i == R.id.tv_timeLength) {//隐藏虚拟键盘
+        } else if (i == R.id.tv_timeLength) {
             inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
             timeLengthOptions.showAtLocation(tv_timeLength, Gravity.BOTTOM, 0, 0);
 
-        } else if (i == R.id.tv_subject) {//隐藏虚拟键盘
+        } else if (i == R.id.tv_subject) {
             if (tvSubjectOptions == null) {
                 findProducts();
             } else {
                 inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
                 tvSubjectOptions.showAtLocation(tv_subject, Gravity.BOTTOM, 0, 0);
             }
-        } else if (i == R.id.tv_style) {//隐藏虚拟键盘
+        } else if (i == R.id.tv_style) {
             inputmanger.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
             tvStyleOptions.showAtLocation(tv_style, Gravity.BOTTOM, 0, 0);
 
+        } else if (i == R.id.learn_apply_frg_tv_coupon) {
+            //优惠卷
+            if (!TextUtils.isEmpty(tv_money.getText().toString())) {
+                StudyCouponFragment fragment = StudyCouponFragment.newInstance(ConstantsParams.COUPON_ENABLE);
+                replaceFrg(fragment, null);
+            }
         } else if (i == R.id.tv_telephone) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_PICK);
             intent.setData(ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(intent, 1);
-
         }
     }
 
@@ -356,13 +369,13 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         ProductSubject productSubject = (ProductSubject) tv_subject.getTag();//培训科目
         int timeLength = (int) tv_timeLength.getTag();//练车时长
 
-        PoiInfo poiInfo = (PoiInfo) tv_locale.getTag();
+        CloudPoiInfo poiInfo = (CloudPoiInfo) tv_locale.getTag();
 
 //        * 联系人姓名	contactsname	string	isreplace为true时必传
 //        * 联系人电话	contactsphone	string	isreplace为true时必传
 //        * 优惠券ID	vid	string	非必传，格式:多个ID用','分割
-        orderDetail.setLatitude(poiInfo.location.latitude);
-        orderDetail.setLongitude(poiInfo.location.longitude);
+        orderDetail.setLatitude(poiInfo.latitude);
+        orderDetail.setLongitude(poiInfo.longitude);
         orderDetail.setSubjectid(productSubject.getSid());
         orderDetail.setSubjectname(productSubject.getSubjectname());
         orderDetail.setIsvip((boolean) tv_style.getTag());
@@ -373,6 +386,10 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         orderDetail.setStarttime(tv_time.getText().toString());
         orderDetail.setLoginname(SharePreferencesUtil.getInstance().readUser().getLoginname());
         orderDetail.setNickname(SharePreferencesUtil.getInstance().readUser().getNickname());
+
+        if (tvCoupon.getTag() != null) {
+            orderDetail.setVid(((Coupon.VouchersEntity) tvCoupon.getTag()).getId());
+        }
 
         if (isReplace) {
             orderDetail.setIsreplace(isReplace);//需要动态获取
@@ -416,9 +433,19 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
     }
 
     public void onEventMainThread(StudyAddressChooseEvent event) {
-        PoiInfo poiInfo = event.getPoiInfo();
-        tv_locale.setText(poiInfo.name);
+        CloudPoiInfo poiInfo = event.getPoiInfo();
+        tv_locale.setText(poiInfo.title);
         tv_locale.setTag(poiInfo);
+    }
+
+    public void onEventMainThread(StudyCouponChooseEvent event) {
+        Coupon.VouchersEntity vouchersEntity = event.getVouchersEntity();
+        tvCoupon.setText(vouchersEntity.getVname() + "        ¥" + vouchersEntity.getAmount());
+        tvCoupon.setTag(vouchersEntity);
+        //设置实际金额
+        double result = Double.parseDouble(tv_money.getText().toString()) - vouchersEntity.getAmount();
+        tvEndMoney.setText("" + result);
+        ((View) tvEndMoney.getParent()).setVisibility(View.VISIBLE);
     }
 
     @Override

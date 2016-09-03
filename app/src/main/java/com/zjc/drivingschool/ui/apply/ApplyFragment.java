@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baidu.mapapi.cloud.CloudPoiInfo;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -169,8 +170,8 @@ public class ApplyFragment extends ZBaseToolBarFragment implements View.OnClickL
     }
 
     public void onEventMainThread(StudyAddressChooseEvent event) {
-        PoiInfo poiInfo = event.getPoiInfo();
-        tvAddress.setText(poiInfo.name);
+        CloudPoiInfo poiInfo = event.getPoiInfo();
+        tvAddress.setText(poiInfo.title);
         tvAddress.setTag(poiInfo);
     }
 
@@ -190,9 +191,9 @@ public class ApplyFragment extends ZBaseToolBarFragment implements View.OnClickL
 //        优惠券ID	vid	string	（非必传，格式:多个ID用','分割）
         SignupOrderRequest signupOrder = new SignupOrderRequest();
 
-        PoiInfo poiInfo = (PoiInfo) tvAddress.getTag();
-        signupOrder.setLatitude(poiInfo.location.latitude);
-        signupOrder.setLongitude(poiInfo.location.longitude);
+        CloudPoiInfo poiInfo = (CloudPoiInfo) tvAddress.getTag();
+        signupOrder.setLatitude(poiInfo.latitude);
+        signupOrder.setLongitude(poiInfo.longitude);
 
         signupOrder.setUid(SharePreferencesUtil.getInstance().readUser().getUid());
         signupOrder.setUname(name);

@@ -393,6 +393,8 @@ public class ApiHttpClient {
         postRequest.addProperty("starttime", orderCreateRequest.getStarttime());
         postRequest.addProperty("loginname", orderCreateRequest.getLoginname());
         postRequest.addProperty("nickname", orderCreateRequest.getNickname());
+
+        postRequest.addProperty("vid", orderCreateRequest.getVid());
         HttpUtilsAsync.post(Constants.BASE_URL + "student/order/create", postRequest, asyncHttpResponseHandler);
     }
 
