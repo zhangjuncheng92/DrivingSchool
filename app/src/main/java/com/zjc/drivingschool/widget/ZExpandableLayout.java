@@ -16,15 +16,14 @@ import com.zjc.drivingschool.db.SharePreferences.SharePreferencesUtil;
 import com.zjc.drivingschool.db.model.MessageItem;
 import com.zjc.drivingschool.db.parser.MessageDetailParser;
 import com.zjc.drivingschool.db.response.MessageDetail;
-import com.zjc.drivingschool.ui.notification.adapter.NotificationsTypeAdapter;
+import com.zjc.drivingschool.ui.notification.adapter.NotificationsItemAdapter;
 
 /**
  * Created by asus1 on 2016/9/1.
  */
 public class ZExpandableLayout extends ExpandableLayout implements View.OnClickListener, View.OnLongClickListener {
-    private MessageItem messageItem;
     private MessageDetail messageDetail;
-    private NotificationsTypeAdapter mAdapter;
+    private NotificationsItemAdapter mAdapter;
     private int position;
 
     public ZExpandableLayout(Context context) {
@@ -39,10 +38,9 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
         super(context, attrs, defStyle);
     }
 
-    public void init(NotificationsTypeAdapter notificationsTypeAdapter, MessageItem messageItem, int adapterPosition) {
-        this.messageItem = messageItem;
+    public void init(NotificationsItemAdapter notificationsItemAdapter, int adapterPosition) {
         this.position = adapterPosition;
-        this.mAdapter = notificationsTypeAdapter;
+        this.mAdapter = notificationsItemAdapter;
         getHeaderRelativeLayout().setOnClickListener(this);
         getHeaderRelativeLayout().setOnLongClickListener(this);
     }
@@ -54,7 +52,7 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
         } else {
             show();
             if (messageDetail == null) {
-                getNoticeDetail(messageItem);
+                getNoticeDetail((MessageItem) mAdapter.getItem(position));
             }
         }
     }
@@ -65,6 +63,7 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
             public void onResultSuccess(String result) {
                 messageDetail = new MessageDetailParser().parseResultMessage(result);
                 setDetail(messageDetail);
+//                setIsRead();
             }
         });
     }
@@ -75,16 +74,9 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
     }
 
 
-    public void setIsRead(final MessageItem messageItem) {
-        ApiHttpClient.getInstance().getNoticeDetail(SharePreferencesUtil.getInstance().readUser().getUid(), messageItem.getMid(), new ResultResponseHandler(getContext()) {
-            @Override
-            public void onResultSuccess(String result) {
-                messageDetail = new MessageDetailParser().parseResultMessage(result);
-                setDetail(messageDetail);
-                messageItem.setIsread(true);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+    public void setIsRead() {
+        ((MessageItem) mAdapter.getItem(position)).setIsread(true);
+        mAdapter.notifyItemChanged(position);
     }
 
     @Override
@@ -100,7 +92,7 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
         builder.setNegativeButton("确认",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        deleteMessages(messageItem);
+                        deleteMessages((MessageItem) mAdapter.getItem(position));
                     }
                 });
         builder.setPositiveButton("取消",

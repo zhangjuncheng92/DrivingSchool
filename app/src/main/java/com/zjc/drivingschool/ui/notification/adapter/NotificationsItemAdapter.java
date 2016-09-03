@@ -17,9 +17,9 @@ import com.zjc.drivingschool.widget.ZExpandableLayout;
  * @Date 2015.11.25
  * @description 通知类型适配器
  */
-public class NotificationsTypeAdapter extends ZBaseRecyclerViewAdapter {
+public class NotificationsItemAdapter extends ZBaseRecyclerViewAdapter {
 
-    public NotificationsTypeAdapter(Context context) {
+    public NotificationsItemAdapter(Context context) {
         super(context);
     }
 
@@ -50,7 +50,7 @@ public class NotificationsTypeAdapter extends ZBaseRecyclerViewAdapter {
 
         @Override
         public void setData(final MessageItem service) {
-            expandableLayout.init(NotificationsTypeAdapter.this,service,this.getAdapterPosition());
+            expandableLayout.init(NotificationsItemAdapter.this,this.getAdapterPosition());
             ImgIsRead.setSelected(!service.getIsread());
 
             tvTitle.setText(service.getTitle());

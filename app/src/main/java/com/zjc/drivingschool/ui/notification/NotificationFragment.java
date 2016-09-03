@@ -23,7 +23,7 @@ import com.zjc.drivingschool.db.response.MessageListResponse;
 import com.zjc.drivingschool.eventbus.JPushNotificationStateEvent;
 import com.zjc.drivingschool.eventbus.JpushNotificationEvent;
 import com.zjc.drivingschool.ui.login.LoginActivity;
-import com.zjc.drivingschool.ui.notification.adapter.NotificationsTypeAdapter;
+import com.zjc.drivingschool.ui.notification.adapter.NotificationsItemAdapter;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
@@ -31,23 +31,23 @@ import de.greenrobot.event.EventBus;
 
 /**
  * @author Z
- * @Filename NotificationReferralFrg.java
+ * @Filename NotificationFragment.java
  * @Date 2016.06.13
  * @description 转诊单通知
  */
-public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class NotificationFragment extends ZBaseFragment implements ZBaseRecyclerViewAdapter.OnItemClickListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     private String noticeStatus;
-    private NotificationsTypeAdapter mAdapter;
+    private NotificationsItemAdapter mAdapter;
     private EasyRecyclerView mRecyclerView;
     private MessageItem messageItem;
 
     /**
      * 传入需要的参数，设置给arguments
      */
-    public static NotificationReferralFrg newInstance(String bean) {
+    public static NotificationFragment newInstance(String bean) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.ARGUMENT, bean);
-        NotificationReferralFrg fragment = new NotificationReferralFrg();
+        NotificationFragment fragment = new NotificationFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -86,7 +86,7 @@ public class NotificationReferralFrg extends ZBaseFragment implements ZBaseRecyc
     }
 
     private void initAdapter() {
-        mAdapter = new NotificationsTypeAdapter(getActivity());
+        mAdapter = new NotificationsItemAdapter(getActivity());
         mAdapter.setOnItemClickLitener(this);
         mAdapter.setMore(R.layout.view_more, this);
         mAdapter.setNoMore(R.layout.view_nomore);

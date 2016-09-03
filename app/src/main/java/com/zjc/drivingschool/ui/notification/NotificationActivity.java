@@ -46,9 +46,9 @@ public class NotificationActivity extends ZBaseActivity {
 
     private void InitViewPager() {
         mPager = (ViewPager) findViewById(R.id.myconferenceVPager);
-        NotificationReferralFrg allFragment = NotificationReferralFrg.newInstance(ConstantsParams.STUDY_ORDER_ALL);
-        NotificationReferralFrg unPayFragment = NotificationReferralFrg.newInstance(ConstantsParams.STUDY_ORDER_ONE);
-        NotificationReferralFrg payFragment = NotificationReferralFrg.newInstance(ConstantsParams.STUDY_ORDER_TWO);
+        NotificationFragment allFragment = NotificationFragment.newInstance(ConstantsParams.STUDY_ORDER_ALL);
+        NotificationFragment unPayFragment = NotificationFragment.newInstance(ConstantsParams.STUDY_ORDER_ONE);
+        NotificationFragment payFragment = NotificationFragment.newInstance(ConstantsParams.STUDY_ORDER_TWO);
 
         mFragmentList.add(allFragment);
         mFragmentList.add(unPayFragment);
