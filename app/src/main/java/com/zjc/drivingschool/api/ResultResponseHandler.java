@@ -75,7 +75,7 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
     public ResultResponseHandler(Context mContext, EasyRecyclerView recyclerView) {
         this.mContext = mContext;
         this.recyclerView = recyclerView;
-        requestCode = Constants.REQUEST_CODE_SWIPE_REFRESH;
+        this.recyclerView.setRefreshingColorResources(R.color.google_blue, R.color.google_green, R.color.google_red, R.color.google_yellow);
     }
 
     @Override
@@ -89,8 +89,6 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
                 //如果是dialog请求
                 mProgressDialog = Util.showProgressDialog(mContext, message);
                 mProgressDialog.setOnDismissListener(this);
-            } else if (requestCode == Constants.REQUEST_CODE_SWIPE_REFRESH) {
-                recyclerView.setRefreshingColorResources(R.color.google_blue, R.color.google_green, R.color.google_red, R.color.google_yellow);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,20 +126,10 @@ public abstract class ResultResponseHandler extends TextHttpResponseHandler impl
                 onResultFailure(getFailErrorInfo());
                 return;
             }
-            if (requestCode == Constants.REQUEST_CODE_SWIPE_REFRESH) {
-                onSwipeFail();
-            } else if (requestCode == Constants.REQUEST_CODE_EMPTY) {
+            if (requestCode == Constants.REQUEST_CODE_EMPTY) {
                 //如果是遮罩布局请求
                 AppResponse resultMessage = new BaseObjectParser().parseResultMessage(s);
                 if (resultMessage.getCode().equals("200")) {
-                    //如果empty不为空，并且获取的数据为0，则显示无数据界面。
-//                        if (resultMessage.getResult() != null && resultMessage.getResult().size() == 0) {
-//                            if (emptyLayout != null) {
-//                                emptyLayout.setErrorType(EmptyLayout.NODATA_ENABLE_CLICK);
-//                            }
-//                            onNotDataSuccess(resultMessage.getResult());
-//                            return;
-//                        }
                     onSuccess(s);
                 } else {
                     onResultFailure(resultMessage);

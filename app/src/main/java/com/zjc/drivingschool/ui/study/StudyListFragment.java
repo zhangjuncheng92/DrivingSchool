@@ -99,7 +99,7 @@ public class StudyListFragment extends ZBaseFragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus, new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        ApiHttpClient.getInstance().findOrders(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, orderStatus, new ResultResponseHandler(getActivity(), mRecyclerView) {
 
             @Override
             public void onResultSuccess(String result) {

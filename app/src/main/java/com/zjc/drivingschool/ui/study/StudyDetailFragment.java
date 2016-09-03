@@ -165,7 +165,11 @@ public class StudyDetailFragment extends ZBaseToolBarFragment implements View.On
             return;
         }
 
-        ApiHttpClient.getInstance().getTeacherLocal(SharePreferencesUtil.getInstance().readUser().getUid(), orderDetail.getTid(), new ResultResponseHandler(getActivity(), getEmptyLayout()) {
+        //如果暂时没有分配教练
+        if (TextUtils.isEmpty(orderDetail.getTid())) {
+            return;
+        }
+        ApiHttpClient.getInstance().getTeacherLocal(SharePreferencesUtil.getInstance().readUser().getUid(), orderDetail.getTid(), new ResultResponseHandler(getActivity()) {
             @Override
             public void onResultSuccess(String result) {
                 teacherLocal = new TeacherLocalParser().parseResultMessage(result);

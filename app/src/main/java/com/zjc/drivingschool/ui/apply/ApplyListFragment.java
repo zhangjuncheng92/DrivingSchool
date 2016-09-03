@@ -20,7 +20,6 @@ import com.zjc.drivingschool.db.parser.OrderListResponseParser;
 import com.zjc.drivingschool.db.response.OrderListResponse;
 import com.zjc.drivingschool.eventbus.StudyOrderCancelEvent;
 import com.zjc.drivingschool.ui.apply.adapter.ApplyOrderAdapter;
-import com.zjc.drivingschool.ui.study.adapter.StudyOrderAdapter;
 import com.zjc.drivingschool.utils.Constants;
 import com.zjc.drivingschool.utils.ConstantsParams;
 
@@ -157,7 +156,7 @@ public class ApplyListFragment extends ZBaseFragment implements SwipeRefreshLayo
         int count = mAdapter.getCount();
         for (int i = 0; i < count; i++) {
             OrderItem item = (OrderItem) mAdapter.getItem(i);
-            if (item.getOrid() == event.getOrid()) {
+            if (item.getOrid().equals(event.getOrid())) {
                 item.setState(ConstantsParams.STUDY_ORDER_NINE);
                 mAdapter.notifyItemChanged(i);
                 break;

@@ -153,12 +153,6 @@ public class NotificationFragment extends ZBaseFragment implements ZBaseRecycler
     public void onItemClick(View view, int position) {
         Gson gson = new Gson();
         messageItem = ((MessageItem) mAdapter.getItem(position));
-
-
-        //如果消息未读，则修改状态
-        if (!messageItem.getIsread()) {
-            updateMessagesReadState(messageItem);
-        }
     }
 
     @Override
@@ -186,61 +180,11 @@ public class NotificationFragment extends ZBaseFragment implements ZBaseRecycler
         }
     }
 
-    /**
-     * 更新消息状态为已读
-     *
-     * @param item
-     */
-    private void updateMessagesReadState(final MessageItem item) {
-//        ApiHttpClient.getInstance().updateMessagesReadState(SharePreferencesUtil.getInstance().readUser().getId(), item.getMid(), new ResultResponseHandler(getActivity(), "加载详情") {
-//            @Override
-//            public void onResultSuccess(String result) {
-//
-//                EventBus.getDefault().post(new JPushNotificationStateEvent(item));
-//            }
-//        });
-    }
-
-    /**
-     * 更新消息状态广播
-     *
-     * @param event
-     */
-    public void onEventMainThread(JPushNotificationStateEvent event) {
-//        int count = mAdapter.getCount();
-//        for (int i = 0; i < count; i++) {
-//            JPushNotification jPushNotification = (JPushNotification) mAdapter.getItem(i);
-//            if (jPushNotification.getId() == event.getJPushNotification().getId()) {
-//                jPushNotification.setState(ConstantsParams.NOTIFICATION_YES);
-//                mAdapter.notifyItemChanged(i);
-//                break;
-//            }
-//        }
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mAdapter);
-    }
-
-    /**
-     * 获取上转转诊单详情
-     *
-     * @param id
-     */
-    private void getReferralUpById(String id) {
-
-//        ApiHttpClient.getInstance().getReferralUpById(id, new ResultResponseHandlerOfDialog<HmsUpReferral>(getActivity(), "请稍等", new HmsUpReferralParser()) {
-//
-//            @Override
-//            public void onResultSuccess(List<HmsUpReferral> result) {
-//                //我的上转接诊
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(Constants.ARGUMENT, result.get(0));
-//                startActivity(ReceptionDetailActivity.class, bundle);
-//            }
-//        });
     }
 }

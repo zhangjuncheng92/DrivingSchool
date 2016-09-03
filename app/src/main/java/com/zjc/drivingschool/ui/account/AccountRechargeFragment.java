@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobo.mobolibrary.logs.Logs;
 import com.mobo.mobolibrary.ui.base.ZBaseToolBarFragment;
@@ -217,7 +216,7 @@ public class AccountRechargeFragment extends ZBaseToolBarFragment implements Vie
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case 2:
-                    Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_SHORT).show();
+                    Util.showCustomMsg(toastMsg);
                     break;
             }
             return true;

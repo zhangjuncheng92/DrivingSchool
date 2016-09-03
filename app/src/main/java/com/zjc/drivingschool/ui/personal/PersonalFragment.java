@@ -115,7 +115,7 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
                     @Override
                     public void onResultSuccess(String result) {
                         SharePreferencesUtil.getInstance().saveUser(userInfo);
-                        getFragmentManager().popBackStack();
+                        getActivity().finish();
                     }
                 });
             }

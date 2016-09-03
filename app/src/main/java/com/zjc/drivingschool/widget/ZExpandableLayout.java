@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
@@ -63,7 +64,7 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
             public void onResultSuccess(String result) {
                 messageDetail = new MessageDetailParser().parseResultMessage(result);
                 setDetail(messageDetail);
-//                setIsRead();
+                setIsRead();
             }
         });
     }
@@ -75,8 +76,8 @@ public class ZExpandableLayout extends ExpandableLayout implements View.OnClickL
 
 
     public void setIsRead() {
-        ((MessageItem) mAdapter.getItem(position)).setIsread(true);
-        mAdapter.notifyItemChanged(position);
+        ImageView imgIsRead = (ImageView) findViewById(R.id.notification_type_item_icon);
+        imgIsRead.setSelected(false);
     }
 
     @Override
