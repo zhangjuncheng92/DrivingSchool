@@ -1,72 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/personal_main_frg_rl_detail"
+    style="@style/comm_layout_four"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/personal_main_frg_sd_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:roundAsCircle="true"
+        fresco:roundedCornerRadius="@dimen/layout_margin_lss"
+        fresco:roundingBorderColor="@color/comm_circle_gary"
+        fresco:roundingBorderWidth="1dp" />
 
     <RelativeLayout
-        android:id="@+id/personal_main_frg_rl_detail"
-        style="@style/comm_layout_four"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/layout_margin_ml"
+        android:layout_toRightOf="@+id/personal_main_frg_sd_icon"
+        android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/personal_main_frg_sd_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerVertical="true"
-            fresco:actualImageScaleType="focusCrop"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:roundAsCircle="true"
-            fresco:roundedCornerRadius="@dimen/layout_margin_lss"
-            fresco:roundingBorderColor="@color/comm_circle_gary"
-            fresco:roundingBorderWidth="1dp" />
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/personal_main_frg_tv_name"
+            style="@style/comm_title_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/layout_margin_ml"
-            android:layout_toRightOf="@+id/personal_main_frg_sd_icon"
-            android:orientation="horizontal">
+            android:singleLine="true" />
 
-            <TextView
-                android:id="@+id/personal_main_frg_tv_name"
-                style="@style/comm_title_black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:singleLine="true" />
+        <TextView
+            android:id="@+id/personal_main_frg_tv_organization"
+            style="@style/comm_body_gary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personal_main_frg_tv_name"
+            android:singleLine="true" />
 
-            <TextView
-                android:id="@+id/personal_main_frg_tv_organization"
-                style="@style/comm_body_gary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/personal_main_frg_tv_name"
-                android:singleLine="true" />
+        <TextView
+            android:id="@+id/personal_main_frg_tv_role"
+            style="@style/comm_body_gary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/personal_main_frg_tv_organization" />
 
-            <TextView
-                android:id="@+id/personal_main_frg_tv_role"
-                style="@style/comm_body_gary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/personal_main_frg_tv_organization" />
-
-            <TextView
-                android:id="@+id/personal_main_frg_tv_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/comm_label_pink"
-                android:singleLine="true"
-                android:text="二维码"
-                android:visibility="gone" />
-        </RelativeLayout>
-
+        <TextView
+            android:id="@+id/personal_main_frg_tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/comm_label_pink"
+            android:singleLine="true"
+            android:text="二维码"
+            android:visibility="gone" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
+

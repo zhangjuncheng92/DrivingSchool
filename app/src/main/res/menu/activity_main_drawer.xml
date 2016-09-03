@@ -1,44 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
             android:id="@+id/main_action_account"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/icon_account"
             android:title="@string/title_account" />
         <item
             android:id="@+id/main_action_coupon"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/icon_coupon"
             android:title="@string/title_coupon" />
         <item
             android:id="@+id/main_action_collect"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/icon_collect"
             android:title="@string/title_collect" />
         <item
             android:id="@+id/main_action_study_history"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/icon_study_history"
             android:title="@string/title_study_history" />
         <item
             android:id="@+id/main_action_apply_history"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/icon_apply_history"
             android:title="@string/title_apply_history" />
         <item
             android:id="@+id/main_action_notice"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/icon_notice"
             android:title="@string/title_notice" />
         <item
             android:id="@+id/main_action_more"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/icon_more"
             android:title="@string/title_more" />
     </group>
-
-    <item android:title="@string/login_cancel">
-        <menu>
-            <item
-                android:id="@+id/main_action_logout"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/login_cancel" />
-        </menu>
-    </item>
-
 </menu>
