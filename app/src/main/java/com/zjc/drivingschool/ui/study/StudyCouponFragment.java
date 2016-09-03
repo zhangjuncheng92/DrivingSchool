@@ -37,15 +37,17 @@ import de.greenrobot.event.EventBus;
  */
 public class StudyCouponFragment extends ZBaseToolBarFragment implements ZBaseRecyclerViewAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
     private String couponStatus;
+    private double total;
     private CouponItemAdapter mAdapter;
     private EasyRecyclerView mRecyclerView;
 
     /**
      * 传入需要的参数，设置给arguments
      */
-    public static StudyCouponFragment newInstance(String bean) {
+    public static StudyCouponFragment newInstance(String bean, double total) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.ARGUMENT, bean);
+        bundle.putDouble("total", total);
         StudyCouponFragment fragment = new StudyCouponFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -58,6 +60,7 @@ public class StudyCouponFragment extends ZBaseToolBarFragment implements ZBaseRe
         Bundle bundle = getArguments();
         if (bundle != null) {
             couponStatus = (String) bundle.getSerializable(Constants.ARGUMENT);
+            total = bundle.getDouble("total");
         }
     }
 
@@ -111,7 +114,7 @@ public class StudyCouponFragment extends ZBaseToolBarFragment implements ZBaseRe
 
     @Override
     public void onRefresh() {
-        ApiHttpClient.getInstance().getCouponList(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, couponStatus, new ResultResponseHandler(getActivity(), mRecyclerView) {
+        ApiHttpClient.getInstance().getEnableCoupon(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, total, new ResultResponseHandler(getActivity(), mRecyclerView) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -124,7 +127,7 @@ public class StudyCouponFragment extends ZBaseToolBarFragment implements ZBaseRe
     }
 
     private void getNotice(EmptyLayout emptyLayout) {
-        ApiHttpClient.getInstance().getCouponList(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, couponStatus, new ResultResponseHandler(getActivity(), emptyLayout) {
+        ApiHttpClient.getInstance().getEnableCoupon(SharePreferencesUtil.getInstance().readUser().getUid(), ConstantsParams.PAGE_START, total, new ResultResponseHandler(getActivity(), emptyLayout) {
             @Override
             public void onResultSuccess(String result) {
                 Coupon coupon = new CouponParser().parseResultMessage(result);
@@ -137,7 +140,7 @@ public class StudyCouponFragment extends ZBaseToolBarFragment implements ZBaseRe
     @Override
     public void onLoadMore() {
         int start = mAdapter.getCount();
-        ApiHttpClient.getInstance().getCouponList(SharePreferencesUtil.getInstance().readUser().getUid(), start, couponStatus, new ResultResponseHandler(getActivity()) {
+        ApiHttpClient.getInstance().getEnableCoupon(SharePreferencesUtil.getInstance().readUser().getUid(), start, total, new ResultResponseHandler(getActivity()) {
 
             @Override
             public void onResultSuccess(String result) {
@@ -152,6 +155,11 @@ public class StudyCouponFragment extends ZBaseToolBarFragment implements ZBaseRe
      * 加载完成
      */
     public boolean isLoadFinish(int size) {
+        if (size == 0) {
+            getEmptyLayout().setErrorType(EmptyLayout.NODATA_ENABLE_CLICK);
+            return true;
+        }
+
         if (size < ConstantsParams.PAGE_SIZE) {
             mAdapter.stopMore();
             mAdapter.setNoMore(R.layout.view_nomore);

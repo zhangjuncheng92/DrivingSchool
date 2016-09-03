@@ -27,7 +27,6 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
@@ -69,7 +68,7 @@ public class StudyAddressFragment extends ZBaseToolBarFragment implements View.O
      * 定位相关
      */
     LocationClient mLocClient;
-    public MyLocationListenner myListener = new MyLocationListenner();
+    public MyLocationListener myListener = new MyLocationListener();
 
     GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     /**
@@ -223,7 +222,7 @@ public class StudyAddressFragment extends ZBaseToolBarFragment implements View.O
     /**
      * 定位SDK监听函数
      */
-    public class MyLocationListenner implements BDLocationListener {
+    public class MyLocationListener implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {

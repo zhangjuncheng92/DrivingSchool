@@ -279,6 +279,17 @@ public class ApiHttpClient {
         HttpUtilsAsync.post(Constants.BASE_URL + "student/voucher", postRequest, asyncHttpResponseHandler);
     }
 
+    public void getEnableCoupon(String userId, int start, double total, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+        JsonObject postRequest = new JsonObject();
+        postRequest.addProperty("uid", userId);
+        postRequest.addProperty("offset", start);
+        postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
+        postRequest.addProperty("isoverdue", false);
+        postRequest.addProperty("isused", false);
+        postRequest.addProperty("total", total);
+        HttpUtilsAsync.post(Constants.BASE_URL + "student/voucher", postRequest, asyncHttpResponseHandler);
+    }
+
 
     /**
      * * ###########   预约学车   ############

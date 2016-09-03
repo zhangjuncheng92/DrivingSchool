@@ -61,7 +61,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
     private TextView tv_style;
     private TextView tv_telephone;
     private TextView tv_next;
-    private TextView tv_money;
+    private TextView tvMoney;
     private TextView tvCoupon;
     private TextView tvEndMoney;
     private int index;
@@ -117,7 +117,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         tv_style = (TextView) rootView.findViewById(R.id.tv_style);
         tv_telephone = (TextView) rootView.findViewById(R.id.tv_telephone);
         tv_next = (TextView) rootView.findViewById(R.id.tv_next);
-        tv_money = (TextView) rootView.findViewById(R.id.tv_money);
+        tvMoney = (TextView) rootView.findViewById(R.id.tv_money);
         tvCoupon = (TextView) rootView.findViewById(R.id.learn_apply_frg_tv_coupon);
         tvEndMoney = (TextView) rootView.findViewById(R.id.tv_end_money);
 
@@ -199,7 +199,12 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         } else {
             money = timeLength * 100.0;
         }
-        tv_money.setText(money + "");
+        tvMoney.setText(money + "");
+
+        //清空优惠信息
+        tvCoupon.setText("");
+        tvCoupon.setTag(null);
+        ((View) tvEndMoney.getParent()).setVisibility(View.GONE);
     }
 
     private void findProducts() {
@@ -268,8 +273,9 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
 
         } else if (i == R.id.learn_apply_frg_tv_coupon) {
             //优惠卷
-            if (!TextUtils.isEmpty(tv_money.getText().toString())) {
-                StudyCouponFragment fragment = StudyCouponFragment.newInstance(ConstantsParams.COUPON_ENABLE);
+            if (!TextUtils.isEmpty(tvMoney.getText().toString())) {
+                double result = Double.parseDouble(tvMoney.getText().toString());
+                StudyCouponFragment fragment = StudyCouponFragment.newInstance(ConstantsParams.COUPON_ENABLE, result);
                 replaceFrg(fragment, null);
             }
         } else if (i == R.id.tv_telephone) {
@@ -412,7 +418,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
             @Override
             public void onResultSuccess(String result) {
                 AccountBalance accountBalance = new AccountBalanceParser().parseResultMessage(result);
-                double money = Double.parseDouble(tv_money.getText().toString().trim());//价格
+                double money = Double.parseDouble(tvMoney.getText().toString().trim());//价格
                 if (accountBalance.getBalance() > money) {
                     commitOrder();
                 } else {
@@ -443,7 +449,7 @@ public class StudyOrderFragment extends ZBaseToolBarFragment implements View.OnC
         tvCoupon.setText(vouchersEntity.getVname() + "        ¥" + vouchersEntity.getAmount());
         tvCoupon.setTag(vouchersEntity);
         //设置实际金额
-        double result = Double.parseDouble(tv_money.getText().toString()) - vouchersEntity.getAmount();
+        double result = Double.parseDouble(tvMoney.getText().toString()) - vouchersEntity.getAmount();
         tvEndMoney.setText("" + result);
         ((View) tvEndMoney.getParent()).setVisibility(View.VISIBLE);
     }
